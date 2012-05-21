@@ -1,0 +1,13 @@
+{% extends "base.html"  %}
+
+{% load i18n %}
+{% block content %}
+	
+	{% for new in news %}
+	<div>
+		{{ new.title }} {{ new.release_date|date:"d.m.Y H:i" }}<br />
+		{{ new.body|safe }}
+	</div><br />
+	{% endfor %}
+
+{% endblock %}

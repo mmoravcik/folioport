@@ -1,0 +1,48 @@
+{% extends "base.html"  %}
+{% load thumbnail %}
+{% load i18n %}
+{% block content %}
+
+
+	<div style='width:300px;height:500px;float:left'>
+	<h1>{{ project.name }}</h1>
+	Summary: {{ project.summary }} <br />
+	Description: {{ project.description }}
+	<br />
+	Tags: 
+		{% for tag in project.get_tags %}
+			{{ tag.name }}
+		{% endfor %}
+	
+	<Br />
+	{% include 'widgets/social_share.html' %}
+	</div>
+	
+	<div style='width:800px;float:left'>
+		{% for image in project.get_images %}
+			{% thumbnail image image.get_solr_thumbnail_geometry as im %}
+				<div style='margin:3px;border:solid 0px red;width:{{ im.width }}px;float:left'>
+				<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ im.url }}' />
+				<br />
+				{{ image.caption }}
+				</div>
+			{% endthumbnail %}
+				
+			
+		{% endfor %}
+	</div>
+	
+	<div class='clear'></div>
+	
+	{% if project.related_projects %}
+		Related projects:<br />
+		{% for related_project in project.related_projects %}
+			{% thumbnail related_project.thumbnail related_project.get_solr_thumbnail_geometry as im %}
+				<a href='{{ related_project.get_absolute_url }}'>
+					<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ related_project.name }}' />
+				</a>
+			{% endthumbnail %}
+		{% endfor %}
+	{% endif %}
+	
+{% endblock %}

@@ -1,0 +1,85 @@
+import tagging
+
+from django.db import models
+
+from mptt.models import MPTTModel, TreeForeignKey
+
+from tagging.fields import TagField
+from tagging.models import Tag, TaggedItem
+
+from folioport.models import CommonInfo
+
+from folioport.utils import get_solr_thumbnail_geometry
+
+class AbstractCategory(MPTTModel):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=128)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    active = models.BooleanField(default=True)
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+    
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        abstract = True
+        
+class AbstractImage(CommonInfo):
+    project = models.ForeignKey('project.Project')
+    image = models.ImageField(upload_to='images/project_images')
+    caption = models.TextField(blank=True)
+    width = models.IntegerField(default=300)
+    height = models.IntegerField(default=0)
+    order = models.IntegerField(default=1)
+
+    def get_solr_thumbnail_geometry(self):
+        return get_solr_thumbnail_geometry(self.width, self.height)
+    
+    def __unicode__(self):
+        return self.image.name
+    
+    class Meta:
+        abstract = True
+    
+class AbstractProject(CommonInfo):
+    name = models.CharField(max_length=128)
+    category = models.ManyToManyField('project.Category')
+    slug = models.SlugField(max_length=128)
+    active = models.BooleanField(default=True)
+    summary = models.TextField()
+    description = models.TextField()
+    release_date = models.DateField(null=True, blank=True)
+    thumbnail = models.ImageField(upload_to='images/project_thumbnails')
+    thumbnail_height = models.IntegerField(default=0)
+    thumbnail_width = models.IntegerField(default=100)
+    order = models.IntegerField(default=1)
+    
+    tags = TagField()
+    
+    def get_images(self):
+        return self.image_set.all().order_by('order')
+    
+    def get_absolute_url(self):
+        return ('/projects/%s-%d/' % (self.slug, self.id))
+    
+    def set_tags(self, tags):
+        Tag.objects.update_tags(self, tags)
+
+    def get_tags(self):
+        return Tag.objects.get_for_object(self)
+
+    def __unicode__(self):
+        return self.name
+    
+    def get_solr_thumbnail_geometry(self):
+        return get_solr_thumbnail_geometry(self.thumbnail_width, self.thumbnail_height)
+    
+    def related_projects(self, limit=3):
+       objects = TaggedItem.objects.get_related(self, self.__class__)
+       return objects[:limit]
+    
+    class Meta:
+        abstract = True
+    

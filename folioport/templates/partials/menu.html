@@ -1,0 +1,31 @@
+{% load filters %}
+{% load flatpages %}
+
+<div style='width:110px;float:left;margin-left:50px'>
+		<a href='/'><img width='90' src='/static/images/oko_logo.png' alt='this is oko' /></a>
+</div>
+
+<div class='menu_partial contact_section' style='margin-left:30px;width:180px'>
+	<a href='mailto:mpaukova@gmail.com'>OKO@GMAIL.COM</a><br />
+	07553 009 223
+</div>
+
+   {% for row in project_categories|columns:3 %}
+       <div style='' class='menu_partial'>
+       	{% for item in row %}
+          		<a href='{% url folioport:project:category item.slug %}'>{{ item }}</a><br />
+       	{% endfor %}
+       </div>
+   {% endfor %}
+   
+<div style='' class='menu_partial links_section'>
+	
+	{% get_flatpages as flatpages %}
+	
+	    {% for page in flatpages %}
+	        <a href="{{ page.url }}">{{ page.title }}</a><br />
+	    {% endfor %}
+	<a href='#' onclick='alert("jump to thumblr");return false'>BLOG</a>
+</div>
+
+<div class='clear'></div>

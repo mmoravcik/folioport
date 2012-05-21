@@ -1,0 +1,35 @@
+{% extends "base.html"  %}
+{% load i18n %}
+{% load thumbnail %}
+{% block content %}
+
+<div id="container">
+
+	{% for project in projects %}
+		
+		{% thumbnail project.thumbnail project.get_solr_thumbnail_geometry as im %}
+			<div class="mansory_box" style='width:{{ im.width }}px; height:{{ im.height}}px;'>
+				<a href='{{ project.get_absolute_url }}'>
+					<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ project.name }}' />
+				</a>
+			</div>
+		{% endthumbnail %}
+			
+	
+	{% endfor %}
+</div>
+
+<script type='text/javascript'>
+	var $container = $('#container');
+	$container.imagesLoaded(function(){
+	  $container.masonry({
+		  singleMode: false,
+		  columnWidth: 20,
+		  itemSelector: '.mansory_box',
+		  resizeable: true,
+		  saveOptions: true
+	  });
+	});
+</script>
+
+{% endblock %}
