@@ -20,9 +20,6 @@ setup(name='folioport',
       platforms=['linux'],
       packages=find_packages(exclude=["sandbox*", "tests*"]),
       include_package_data=True,
-      package_data = {
-          '': ['*.html'],
-      },
       install_requires=[
           'django==1.4',
           'PIL==1.1.7',
