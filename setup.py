@@ -21,7 +21,7 @@ setup(name='folioport',
       packages=find_packages(exclude=["sandbox*", "tests*"]),
       include_package_data=True,
       package_data = {
-          'folioport': ['templates/*', 'templates/*/*', 'templates/*/*/*'],
+          '': ['*.html'],
       },
       install_requires=[
           'django==1.4',
