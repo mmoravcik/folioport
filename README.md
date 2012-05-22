@@ -1,4 +1,0 @@
-folioport
-=========
-
-Simple portfolio project
