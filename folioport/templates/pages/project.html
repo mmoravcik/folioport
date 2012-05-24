@@ -34,15 +34,6 @@
 	
 	<div class='clear'></div>
 	
-	{% if project.related_projects %}
-		Related projects:<br />
-		{% for related_project in project.related_projects %}
-			{% thumbnail related_project.thumbnail related_project.get_solr_thumbnail_geometry as im %}
-				<a href='{{ related_project.get_absolute_url }}'>
-					<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ related_project.name }}' />
-				</a>
-			{% endthumbnail %}
-		{% endfor %}
-	{% endif %}
+	{% include 'widgets/related_projects.html' with project=project %}
 	
 {% endblock %}
