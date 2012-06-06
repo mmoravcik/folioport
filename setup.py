@@ -26,6 +26,7 @@ setup(name='folioport',
           'South==0.7.3',
           'sorl-thumbnail==11.12',
           'django-mptt',
+          'ipdb',
           ],
       # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Environment :: Web Environment',

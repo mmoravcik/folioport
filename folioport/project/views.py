@@ -11,6 +11,13 @@ class ProjectView(DetailView):
     model = Project
     context_name = 'project'
 
+    def get_context_data(self, **kwargs):
+        context = DetailView.get_context_data(self, **kwargs)
+        category_slug = self.request.GET.get('cat', None)
+        context['category_slug'] = category_slug
+        context['next_project'] = self.get_object().next(category_slug)
+        context['previous_project'] = self.get_object().previous(category_slug)
+        return context
     
 class CategoryView(TemplateView):
     template_name = 'home.html'
@@ -18,5 +25,6 @@ class CategoryView(TemplateView):
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
         category = Category.objects.get(slug=self.kwargs['category_slug'])
-        context['projects'] = Project.objects.filter(active=True, category=category).order_by('order')
+        context['projects'] = Project.active_objects.filter(category=category).order_by('order')
+        context['category_slug'] = self.kwargs['category_slug']
         return context

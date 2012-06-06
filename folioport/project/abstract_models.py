@@ -11,6 +11,10 @@ from folioport.models import CommonInfo
 
 from folioport.utils import get_solr_thumbnail_geometry
 
+class ActiveCategoryManager(models.Manager):
+    def get_query_set(self):
+        return super(ActiveCategoryManager, self).get_query_set().filter(active=True)
+
 class AbstractCategory(MPTTModel):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=128)
@@ -25,7 +29,11 @@ class AbstractCategory(MPTTModel):
 
     class Meta:
         abstract = True
-        
+
+    objects = models.Manager()
+    active_objects = ActiveCategoryManager()
+
+
 class AbstractImage(CommonInfo):
     project = models.ForeignKey('project.Project')
     image = models.ImageField(upload_to='images/project_images')
@@ -42,7 +50,12 @@ class AbstractImage(CommonInfo):
     
     class Meta:
         abstract = True
-    
+
+
+class ActiveProjectManager(models.Manager):
+    def get_query_set(self):
+        return super(ActiveProjectManager, self).get_query_set().filter(active=True)
+
 class AbstractProject(CommonInfo):
     name = models.CharField(max_length=128)
     category = models.ManyToManyField('project.Category')
@@ -54,7 +67,7 @@ class AbstractProject(CommonInfo):
     thumbnail = models.ImageField(upload_to='images/project_thumbnails')
     thumbnail_height = models.IntegerField(default=0)
     thumbnail_width = models.IntegerField(default=100)
-    order = models.IntegerField(default=1)
+    order = models.IntegerField(default=-1)
     
     tags = TagField()
     
@@ -62,6 +75,7 @@ class AbstractProject(CommonInfo):
         return self.image_set.all().order_by('order')
     
     def get_absolute_url(self):
+
         return ('/projects/%s-%d/' % (self.slug, self.id))
     
     def set_tags(self, tags):
@@ -79,7 +93,36 @@ class AbstractProject(CommonInfo):
     def related_projects(self, limit=3):
        objects = TaggedItem.objects.get_related(self, self.__class__)
        return objects[:limit]
-    
+
+    def next(self, category_slug = None):
+        qs = self._get_filterered_qs(category_slug)
+        p = qs.filter(order__gte=self.order).order_by('order','pk')
+        return p[0] if p else None;
+
+    def previous(self, category_slug = None):
+        qs = self._get_filterered_qs(category_slug)
+        p = qs.filter(order__lte=self.order).order_by('-order','-pk')
+        return p[0] if p else None;
+
+    def _get_filterered_qs(self, category_slug = None):
+        Project = models.get_model('project', 'Project')
+        Category = models.get_model('project', 'Category')
+        if category_slug:
+            categories = Category.active_objects.filter(slug=category_slug)
+            if categories:
+                return Project.active_objects.filter(category=categories[0]).exclude(id=self.id)
+
+        return Project.active_objects.all().exclude(id=self.id)
+
     class Meta:
         abstract = True
-    
+
+
+    def save(self, *args, **kwargs):
+        super(AbstractProject, self).save(*args, **kwargs)
+        if self.order == -1:
+            self.order = self.id
+            self.save()
+
+    objects = models.Manager()
+    active_objects = ActiveProjectManager()

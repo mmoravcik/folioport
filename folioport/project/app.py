@@ -12,6 +12,7 @@ class ProjectApplication(Application):
         urlpatterns = super(ProjectApplication, self).get_urls()
         urlpatterns += patterns('',
             (r'^(?P<product_slug>[\w-]*)-(?P<pk>\d+)/$', self.project_view.as_view()),
+            (r'^(?P<product_slug>[\w-]*)-(?P<pk>\d+)/(?P<category_slug>[\w-]*)$', self.project_view.as_view()),
             url(r'^(?P<category_slug>[\w-]*)/$', self.category_view.as_view(), name="category"),
 
             

@@ -19,21 +19,25 @@
 	</div>
 	
 	<div style='width:800px;float:left'>
-		{% for image in project.get_images %}
+		{%for image in project.get_images %}
 			{% thumbnail image image.get_solr_thumbnail_geometry as im %}
 				<div style='margin:3px;border:solid 0px red;width:{{ im.width }}px;float:left'>
-				<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ im.url }}' />
+				<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
 				<br />
 				{{ image.caption }}
 				</div>
 			{% endthumbnail %}
-				
-			
-		{% endfor %}
+		{%endfor %}
 	</div>
-	
+	Links <Br />
+        {% if next_project %}
+        <a href="{{ next_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">next</a><br />
+        {% endif %}
+        {% if previous_project %}
+        <a href="{{ previous_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">previous</a><br />
+        {% endif %}
+
 	<div class='clear'></div>
-	
 	{% include 'widgets/related_projects.html' with project=project %}
 	
 {% endblock %}

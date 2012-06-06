@@ -8,5 +8,5 @@ class HomeView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
-        context['projects'] = Project.objects.filter(active=True).order_by('order')
+        context['projects'] = Project.active_objects.all().order_by('order')
         return context
