@@ -1,6 +1,7 @@
 import tagging
 
 from django.db import models
+from django.db.models import Max
 
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -117,11 +118,19 @@ class AbstractProject(CommonInfo):
     class Meta:
         abstract = True
 
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        Project = models.get_model('project', 'Project')
+        if Project.objects.filter(order=self.order).exclude(id=self.id) and self.order <> -1:
+            msg = 'Project with this order already exists!'
+            raise ValidationError(msg)
 
     def save(self, *args, **kwargs):
         super(AbstractProject, self).save(*args, **kwargs)
         if self.order == -1:
-            self.order = self.id
+            Project = models.get_model('project', 'Project')
+            max_price = Project.objects.all().aggregate(Max('order'))
+            self.order = max_price['order__max'] + 1
             self.save()
 
     objects = models.Manager()

@@ -7,6 +7,7 @@ class ProjectImageInline(admin.TabularInline):
 
 class ProjectAdmin(admin.ModelAdmin):
     inlines = (ProjectImageInline, )
+    list_filter = ('category', 'active', )
     
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Category)
