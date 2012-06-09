@@ -6,6 +6,7 @@
 
 	<div style='width:300px;height:500px;float:left'>
 	<h1>{{ project.name }}</h1>
+    {% include 'widgets/rating.html' with object=project link='projects/rate' %}
 	Summary: {{ project.summary }} <br />
 	Description: {{ project.description }}
 	<br />
@@ -38,6 +39,8 @@
         {% endif %}
 
 	<div class='clear'></div>
-	{% include 'widgets/related_projects.html' with project=project %}
+    {% include 'widgets/comments.html' with object=project %}
+
+    {% include 'widgets/related_projects.html' with project=project %}
 	
 {% endblock %}

@@ -8,6 +8,8 @@ from mptt.models import MPTTModel, TreeForeignKey
 from tagging.fields import TagField
 from tagging.models import Tag, TaggedItem
 
+from djangoratings.fields import AnonymousRatingField
+
 from folioport.models import CommonInfo
 
 from folioport.utils import get_solr_thumbnail_geometry
@@ -71,12 +73,15 @@ class AbstractProject(CommonInfo):
     order = models.IntegerField(default=-1)
     
     tags = TagField()
-    
+    rating = AnonymousRatingField(range=10, can_change_vote=True)
+
+    def __unicode__(self):
+        return self.name
+
     def get_images(self):
         return self.image_set.all().order_by('order')
     
     def get_absolute_url(self):
-
         return ('/projects/%s-%d/' % (self.slug, self.id))
     
     def set_tags(self, tags):
@@ -85,9 +90,9 @@ class AbstractProject(CommonInfo):
     def get_tags(self):
         return Tag.objects.get_for_object(self)
 
-    def __unicode__(self):
-        return self.name
-    
+    def get_rating(self):
+        return int(round(self.rating.get_rating(), 0))
+
     def get_solr_thumbnail_geometry(self):
         return get_solr_thumbnail_geometry(self.thumbnail_width, self.thumbnail_height)
     
