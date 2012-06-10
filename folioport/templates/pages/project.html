@@ -31,12 +31,12 @@
 		{%endfor %}
 	</div>
 	Links <Br />
-        {% if next_project %}
-        <a href="{{ next_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">next</a><br />
+    {% if next_project %}
+        <a hre f="{{ next_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">next</a><br />
         {% endif %}
         {% if previous_project %}
         <a href="{{ previous_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">previous</a><br />
-        {% endif %}
+     {% endif %}
 
 	<div class='clear'></div>
     {% include 'widgets/comments.html' with object=project %}

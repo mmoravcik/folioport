@@ -11,6 +11,12 @@
 				<a href='{{ project.get_absolute_url }}{%if category_slug %}?cat={{ category_slug }}{% endif %}'>
 					<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ project.name }}' />
 				</a>
+                <div class='project-caption'>
+                    {{ project.name }}<br />
+                    {% for category in project.category.all %}
+                        {{ category.name }},
+                    {% endfor %}
+                </div>
 			</div>
 		{% endthumbnail %}
 			

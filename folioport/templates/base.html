@@ -1,11 +1,6 @@
 <html>
 <head>
-	<title>{% block title %}{% endblock %}</title>
-	<script src="{{ STATIC_URL }}js/jquery1.5.2.js" type="text/javascript"></script>
-	<script src="{{ STATIC_URL }}js/jquery-stars.js" type="text/javascript"></script>
-	<script src="{{ STATIC_URL }}js/mansory.js" type="text/javascript"></script>
-	<script src="{{ STATIC_URL }}js/setip.js" type="text/javascript"></script>
-	<link href="{{ STATIC_URL }}css/style.css?a=3" rel="stylesheet" type="text/css" />
+    {% include 'partials/head.html' %}
 </head>
 
 <body>
@@ -18,8 +13,5 @@
 	</div>
 	
 	{% include 'partials/footer.html' %}
-		
-	
-	
 </body>
 </html>
