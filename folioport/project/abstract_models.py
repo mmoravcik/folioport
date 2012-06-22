@@ -36,14 +36,24 @@ class AbstractCategory(MPTTModel):
     objects = models.Manager()
     active_objects = ActiveCategoryManager()
 
-
-class AbstractImage(CommonInfo):
+class AbstractMedia(CommonInfo):
     project = models.ForeignKey('project.Project')
-    image = models.ImageField(upload_to='images/project_images')
     caption = models.TextField(blank=True)
     width = models.IntegerField(default=300)
     height = models.IntegerField(default=0)
     order = models.IntegerField(default=1)
+
+class AbstractEmbed(AbstractMedia):
+    embed_code = models.TextField()
+
+    def __unicode__(self):
+        return self.caption
+
+    class Meta:
+        abstract = True
+
+class AbstractImage(AbstractMedia):
+    image = models.ImageField(upload_to='images/project_images')
 
     def get_solr_thumbnail_geometry(self):
         return get_solr_thumbnail_geometry(self.width, self.height)
@@ -53,7 +63,6 @@ class AbstractImage(CommonInfo):
     
     class Meta:
         abstract = True
-
 
 class ActiveProjectManager(models.Manager):
     def get_query_set(self):
