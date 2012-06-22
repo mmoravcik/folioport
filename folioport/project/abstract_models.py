@@ -93,6 +93,9 @@ class AbstractProject(CommonInfo):
     def get_images(self):
         return self.image_set.all().order_by('order')
 
+    def get_embeds(self):
+        return self.embed_set.all().order_by('order')
+
     def get_absolute_url(self):
         return ('/projects/%s-%d/' % (self.slug, self.id))
 
