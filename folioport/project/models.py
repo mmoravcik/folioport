@@ -1,4 +1,4 @@
-from folioport.project.abstract_models import AbstractCategory, AbstractImage, AbstractProject, AbstractEmbed
+from folioport.project.abstract_models import AbstractCategory, AbstractImage, AbstractProject
 
 class Category(AbstractCategory):
     pass
