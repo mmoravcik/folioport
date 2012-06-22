@@ -5,10 +5,15 @@ class ProjectImageInline(admin.TabularInline):
     model = Image
     extra = 1
 
+class ProjectEmbedInline(admin.TabularInline):
+    model = Embed
+    extra = 1
+
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = (ProjectImageInline, )
+    inlines = (ProjectImageInline, ProjectEmbedInline,)
     list_filter = ('category', 'active', )
     
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Category)
 admin.site.register(Image)
+admin.site.register(Embed)

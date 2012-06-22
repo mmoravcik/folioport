@@ -76,8 +76,8 @@ class AbstractProject(CommonInfo):
     category = models.ManyToManyField('project.Category')
     slug = models.SlugField(max_length=128)
     active = models.BooleanField(default=True)
-    summary = models.TextField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
+    summary = models.TextField()
+    description = models.TextField()
     release_date = models.DateField(null=True, blank=True)
     thumbnail = models.ImageField(upload_to='images/project_thumbnails')
     thumbnail_height = models.IntegerField(default=0)
@@ -92,9 +92,6 @@ class AbstractProject(CommonInfo):
 
     def get_images(self):
         return self.image_set.all().order_by('order')
-
-    def get_embeds(self):
-        return self.embed_set.all().order_by('order')
 
     def get_absolute_url(self):
         return ('/projects/%s-%d/' % (self.slug, self.id))
@@ -112,8 +109,8 @@ class AbstractProject(CommonInfo):
         return get_solr_thumbnail_geometry(self.thumbnail_width, self.thumbnail_height)
 
     def related_projects(self, limit=3):
-        objects = TaggedItem.objects.get_related(self, self.__class__)
-        return objects[:limit]
+       objects = TaggedItem.objects.get_related(self, self.__class__)
+       return objects[:limit]
 
     def next(self, category_slug = None):
         qs = self._get_filterered_qs(category_slug)
