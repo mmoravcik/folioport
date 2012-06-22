@@ -43,6 +43,9 @@ class AbstractMedia(CommonInfo):
     height = models.IntegerField(default=0)
     order = models.IntegerField(default=1)
 
+    class Meta:
+        abstract = True
+
 class AbstractEmbed(AbstractMedia):
     embed_code = models.TextField()
 
