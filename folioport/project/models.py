@@ -1,4 +1,4 @@
-from folioport.project.abstract_models import AbstractCategory, AbstractImage, AbstractProject
+from folioport.project.abstract_models import AbstractCategory, AbstractImage, AbstractProject, AbstractEmbed
 
 class Category(AbstractCategory):
     pass
@@ -9,5 +9,5 @@ class Image(AbstractImage):
 class Project(AbstractProject):
     pass
 
-#class Embed(AbstractEmbed):
-#    pass
+class Embed(AbstractEmbed):
+    pass

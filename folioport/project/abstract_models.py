@@ -26,7 +26,7 @@ class AbstractCategory(MPTTModel):
 
     class MPTTMeta:
         order_insertion_by = ['name']
-    
+
     def __unicode__(self):
         return self.name
 
@@ -36,24 +36,36 @@ class AbstractCategory(MPTTModel):
     objects = models.Manager()
     active_objects = ActiveCategoryManager()
 
-
-class AbstractImage(CommonInfo):
+class AbstractMedia(CommonInfo):
     project = models.ForeignKey('project.Project')
-    image = models.ImageField(upload_to='images/project_images')
     caption = models.TextField(blank=True)
     width = models.IntegerField(default=300)
     height = models.IntegerField(default=0)
     order = models.IntegerField(default=1)
 
-    def get_solr_thumbnail_geometry(self):
-        return get_solr_thumbnail_geometry(self.width, self.height)
-    
-    def __unicode__(self):
-        return self.image.name
-    
     class Meta:
         abstract = True
 
+class AbstractEmbed(AbstractMedia):
+    embed_code = models.TextField()
+
+    def __unicode__(self):
+        return self.caption
+
+    class Meta:
+        abstract = True
+
+class AbstractImage(AbstractMedia):
+    image = models.ImageField(upload_to='images/project_images')
+
+    def get_solr_thumbnail_geometry(self):
+        return get_solr_thumbnail_geometry(self.width, self.height)
+
+    def __unicode__(self):
+        return self.image.name
+
+    class Meta:
+        abstract = True
 
 class ActiveProjectManager(models.Manager):
     def get_query_set(self):
@@ -71,7 +83,7 @@ class AbstractProject(CommonInfo):
     thumbnail_height = models.IntegerField(default=0)
     thumbnail_width = models.IntegerField(default=100)
     order = models.IntegerField(default=-1)
-    
+
     tags = TagField()
     rating = AnonymousRatingField(range=10, can_change_vote=True)
 
@@ -80,10 +92,10 @@ class AbstractProject(CommonInfo):
 
     def get_images(self):
         return self.image_set.all().order_by('order')
-    
+
     def get_absolute_url(self):
         return ('/projects/%s-%d/' % (self.slug, self.id))
-    
+
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)
 
@@ -95,10 +107,10 @@ class AbstractProject(CommonInfo):
 
     def get_solr_thumbnail_geometry(self):
         return get_solr_thumbnail_geometry(self.thumbnail_width, self.thumbnail_height)
-    
+
     def related_projects(self, limit=3):
-       objects = TaggedItem.objects.get_related(self, self.__class__)
-       return objects[:limit]
+        objects = TaggedItem.objects.get_related(self, self.__class__)
+        return objects[:limit]
 
     def next(self, category_slug = None):
         qs = self._get_filterered_qs(category_slug)
