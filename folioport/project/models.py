@@ -9,5 +9,5 @@ class Image(AbstractImage):
 class Project(AbstractProject):
     pass
 
-class Embed(AbstractEmbed):
-    pass
+#class Embed(AbstractEmbed):
+#    pass
