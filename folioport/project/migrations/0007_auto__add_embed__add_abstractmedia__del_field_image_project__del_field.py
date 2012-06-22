@@ -53,7 +53,7 @@ class Migration(SchemaMigration):
         db.delete_column('project_image', 'height')
 
         # Adding field 'Image.abstractmedia_ptr'
-        db.add_column('project_image', 'abstractmedia_ptr', self.gf('django.db.models.fields.related.OneToOneField')(default=1, to=orm['project.AbstractMedia'], unique=True, primary_key=True), keep_default=False)
+        db.add_column('project_image', 'abstractmedia_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['project.AbstractMedia'], unique=True, primary_key=True), keep_default=False)
 
 
     def backwards(self, orm):
