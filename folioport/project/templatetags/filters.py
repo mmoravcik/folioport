@@ -174,7 +174,7 @@ def joinby(value, arg):
     return arg.join(value)
 
 def splitby(value, arg):
-    return arg.split(value)
+    return value.split(arg)
 
 register.filter(rows)
 register.filter(rows_distributed)
