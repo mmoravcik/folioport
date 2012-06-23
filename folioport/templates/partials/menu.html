@@ -5,13 +5,13 @@
 		<a href='/'><img width='90' src='/static/images/oko_logo.png' alt='this is oko' /></a>
 </div>
 
-<div class='menu_partial contact_section' style='margin-left:30px;width:180px'>
+<div class='menu_partial contact_section' style='margin-left:30px;width:180px;float:left'>
 	<a href='mailto:mpaukova@gmail.com'>OKO@GMAIL.COM</a><br />
 	07553 009 223
 </div>
 
    {% for row in project_categories|columns:3 %}
-       <div style='' class='menu_partial'>
+       <div style='float:left;width:200px' class='menu_partial'>
        	{% for item in row %}
           		<a href='{% url folioport:project:category item.slug %}'>{{ item }}</a><br />
        	{% endfor %}

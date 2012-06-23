@@ -149,16 +149,6 @@ def columns(thelist, n):
         split += 1
     return [thelist[i::split] for i in range(split)]
 
-register.filter(rows)
-register.filter(rows_distributed)
-register.filter(columns)
-
-def _test():
-    import doctest
-    doctest.testmod()
-
-if __name__ == "__main__":
-    _test()
 
 def get_range( value ):
     """
@@ -180,4 +170,15 @@ def get_range( value ):
     """
     return range( 1, value + 1, 1  )
 
+register.filter(rows)
+register.filter(rows_distributed)
+register.filter(columns)
 register.filter(get_range)
+
+def _test():
+    import doctest
+    doctest.testmod()
+
+if __name__ == "__main__":
+    _test()
+
