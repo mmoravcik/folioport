@@ -88,7 +88,7 @@ class AbstractProject(CommonInfo):
     rating = AnonymousRatingField(range=10, can_change_vote=True)
 
     def __unicode__(self):
-        return self.name
+        return '%s (%s)' % (self.name, self.order)
 
     def get_images(self):
         return self.image_set.all().order_by('order')
@@ -150,7 +150,7 @@ class AbstractProject(CommonInfo):
         if self.order == -1:
             Project = models.get_model('project', 'Project')
             max_price = Project.objects.all().aggregate(Max('order'))
-            self.order = max_price['order__max'] + 1
+            self.order = max_price['order__max'] + 10
             self.save()
 
     objects = models.Manager()
