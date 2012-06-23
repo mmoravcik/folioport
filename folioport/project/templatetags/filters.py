@@ -173,8 +173,12 @@ def get_range( value ):
 def joinby(value, arg):
     return arg.join(value)
 
+def splitby(value, arg):
+    return arg.split(value)
+
 register.filter(rows)
 register.filter(rows_distributed)
 register.filter(columns)
 register.filter(get_range)
 register.filter(joinby)
+register.filter(splitby)
