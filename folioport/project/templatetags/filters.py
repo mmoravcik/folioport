@@ -170,15 +170,11 @@ def get_range( value ):
     """
     return range( 1, value + 1, 1  )
 
+def joinby(value, arg):
+    return arg.join(value)
+
 register.filter(rows)
 register.filter(rows_distributed)
 register.filter(columns)
 register.filter(get_range)
-
-def _test():
-    import doctest
-    doctest.testmod()
-
-if __name__ == "__main__":
-    _test()
-
+register.filter(joinby)
