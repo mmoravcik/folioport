@@ -1,7 +1,7 @@
 from django.db import models
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
-from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 Project = models.get_model('project', 'Project')
 Category = models.get_model('project', 'Category')
@@ -14,17 +14,24 @@ class ProjectView(DetailView):
     def get_context_data(self, **kwargs):
         context = DetailView.get_context_data(self, **kwargs)
         category_slug = self.request.GET.get('cat', None)
-        context['category_slug'] = category_slug
+        category = get_category_by_slug(category_slug)
+        context['category'] = category
         context['next_project'] = self.get_object().next(category_slug)
         context['previous_project'] = self.get_object().previous(category_slug)
         return context
-    
+
 class CategoryView(TemplateView):
     template_name = 'home.html'
        
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
-        category = Category.objects.get(slug=self.kwargs['category_slug'])
+        category = get_category_by_slug(self.kwargs['category_slug'])
         context['projects'] = Project.active_objects.filter(category=category).order_by('order')
-        context['category_slug'] = self.kwargs['category_slug']
+        context['category'] = category
         return context
+
+def get_category_by_slug(category_slug):
+    try:
+        return Category.objects.get(slug=category_slug)
+    except ObjectDoesNotExist:
+        return None

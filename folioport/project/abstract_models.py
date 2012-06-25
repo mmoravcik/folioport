@@ -142,8 +142,7 @@ class AbstractProject(CommonInfo):
         from django.core.exceptions import ValidationError
         Project = models.get_model('project', 'Project')
         if Project.objects.filter(order=self.order).exclude(id=self.id) and self.order <> -1:
-            msg = 'Project with this order already exists!'
-            raise ValidationError(msg)
+            raise ValidationError('Project with this order already exists')
 
     def save(self, *args, **kwargs):
         super(AbstractProject, self).save(*args, **kwargs)
