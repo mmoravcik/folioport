@@ -118,11 +118,15 @@ class AbstractProject(CommonInfo):
     def next(self, category_slug = None):
         qs = self._get_filterered_qs(category_slug)
         p = qs.filter(order__gte=self.order).order_by('order','pk')
+        if not p:
+            p = qs.order_by('order','pk')
         return p[0] if p else None;
 
     def previous(self, category_slug = None):
         qs = self._get_filterered_qs(category_slug)
         p = qs.filter(order__lte=self.order).order_by('-order','-pk')
+        if not p:
+            p = qs.order_by('-order','-pk')
         return p[0] if p else None;
 
     def _get_filterered_qs(self, category_slug = None):
