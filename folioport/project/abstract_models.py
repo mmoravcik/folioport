@@ -56,7 +56,15 @@ class AbstractEmbed(AbstractMedia):
         abstract = True
 
 class AbstractImage(AbstractMedia):
+    JPEG, PNG = "JPEG","PNG"
+
+    THUMBNAIL_TYPE_CHOICE = (
+        (JPEG, 'jpeg'),
+        (PNG, 'png'),
+    )
+
     image = models.ImageField(upload_to='images/project_images')
+    thumbnail_type = models.CharField(max_length=4, choices=THUMBNAIL_TYPE_CHOICE, default=JPEG)
 
     def get_solr_thumbnail_geometry(self):
         return get_solr_thumbnail_geometry(self.width, self.height)
@@ -72,16 +80,24 @@ class ActiveProjectManager(models.Manager):
         return super(ActiveProjectManager, self).get_query_set().filter(active=True)
 
 class AbstractProject(CommonInfo):
+    JPEG, PNG = "JPEG", "PNG"
+
+    THUMBNAIL_TYPE_CHOICE = (
+        (JPEG, 'jpeg'),
+        (PNG, 'png'),
+    )
+
     name = models.CharField(max_length=128)
     category = models.ManyToManyField('project.Category')
     slug = models.SlugField(max_length=128)
     active = models.BooleanField(default=True)
-    summary = models.TextField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
+    summary = models.TextField(default="", null=True, blank=True)
+    description = models.TextField(default="", null=True, blank=True)
     release_date = models.DateField(null=True, blank=True)
     thumbnail = models.ImageField(upload_to='images/project_thumbnails')
     thumbnail_height = models.IntegerField(default=0)
     thumbnail_width = models.IntegerField(default=100)
+    thumbnail_type = models.CharField(max_length=4, choices=THUMBNAIL_TYPE_CHOICE, default=JPEG)
     order = models.IntegerField(default=-1)
 
     tags = TagField()
