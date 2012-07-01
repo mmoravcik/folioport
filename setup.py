@@ -28,6 +28,8 @@ setup(name='folioport',
           'django-mptt',
           'ipdb',
           'django-ratings',
+          'django-tagging',
+          'django-disqus',
           ],
       # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Environment :: Web Environment',
