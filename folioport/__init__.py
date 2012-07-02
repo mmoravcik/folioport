@@ -5,7 +5,7 @@ FOLIOPORT_PARENT_TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/t
 # Use 'final' as the 4th element to indicate
 # a full release
 
-VERSION = (0, 0, 8, 'alpha', 0)
+VERSION = (0, 0, 9, 'alpha', 0)
     
 def get_short_version():
     return '%s.%s' % (VERSION[0], VERSION[1])
