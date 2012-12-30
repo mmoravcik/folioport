@@ -18,7 +18,7 @@ class ProjectApplication(Application):
             url(r'^(?P<category_slug>[\w-]*)/$', self.category_view.as_view(), name="category"),
             url(r'^rate/(?P<object_id>\d+)/(?P<score>\d+)/', AddRatingFromModel(), {
                 'app_label': 'project',
-                'model': 'Project',
+                'model': 'project',
                 'field_name': 'rating',
                 }, name='rate_project'),
         )

@@ -14,9 +14,11 @@ from folioport.models import CommonInfo
 
 from folioport.utils import get_solr_thumbnail_geometry
 
+
 class ActiveCategoryManager(models.Manager):
     def get_query_set(self):
         return super(ActiveCategoryManager, self).get_query_set().filter(active=True)
+
 
 class AbstractCategory(MPTTModel):
     name = models.CharField(max_length=50, unique=True)
@@ -36,6 +38,7 @@ class AbstractCategory(MPTTModel):
     objects = models.Manager()
     active_objects = ActiveCategoryManager()
 
+
 class AbstractMedia(CommonInfo):
     project = models.ForeignKey('project.Project')
     caption = models.TextField(blank=True)
@@ -46,6 +49,7 @@ class AbstractMedia(CommonInfo):
     class Meta:
         abstract = True
 
+
 class AbstractEmbed(AbstractMedia):
     embed_code = models.TextField()
 
@@ -54,6 +58,7 @@ class AbstractEmbed(AbstractMedia):
 
     class Meta:
         abstract = True
+
 
 class AbstractImage(AbstractMedia):
     JPEG, PNG = "JPEG","PNG"
@@ -75,9 +80,11 @@ class AbstractImage(AbstractMedia):
     class Meta:
         abstract = True
 
+
 class ActiveProjectManager(models.Manager):
     def get_query_set(self):
         return super(ActiveProjectManager, self).get_query_set().filter(active=True)
+
 
 class AbstractProject(CommonInfo):
     JPEG, PNG = "JPEG", "PNG"
@@ -94,7 +101,7 @@ class AbstractProject(CommonInfo):
     summary = models.TextField(default="", null=True, blank=True)
     description = models.TextField(default="", null=True, blank=True)
     release_date = models.DateField(null=True, blank=True)
-    thumbnail = models.ImageField(upload_to='images/project_thumbnails')
+    thumbnail = models.ImageField(null=True, blank=True, upload_to='images/project_thumbnails')
     thumbnail_height = models.IntegerField(default=0)
     thumbnail_width = models.IntegerField(default=100)
     thumbnail_type = models.CharField(max_length=4, choices=THUMBNAIL_TYPE_CHOICE, default=JPEG)

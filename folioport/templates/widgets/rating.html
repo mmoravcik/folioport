@@ -36,8 +36,8 @@
     function submit_vote(id, value) {
         $.get("/{{ link }}/" + id + "/" + value + "/",
                 function(response) {
-                    alert(response);
-                    //$.growl('rating', response);
+                    //alert(response);
+                    $.growl('rating', response);
                 });
     }
 </script>
