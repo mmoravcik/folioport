@@ -14,9 +14,9 @@ $(document).ready(function() {
     $('#star').raty({
         score: {{object.get_rating}} / 2,
         half: true,
-        starOn: '/static/folioport/img/star-on.png',
-        starOff: '/static/folioport/img/star-off.png',
-        starHalf: '/static/folioport/img/star-half.png',
+        starOn: '{% static 'folioport/img/star-on.png' %}',
+        starOff: '{% static 'folioport/img/star-off.png' %}',
+        starHalf: '{% static 'folioport/img/star-half.png' %}',
         click: function(score, evt) {
             submit_vote({{ object.id }}, score * 2);
         },
