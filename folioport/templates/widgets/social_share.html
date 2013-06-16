@@ -1,3 +1,6 @@
+{% extends 'widgets/base.html' %}
+
+{% block content %}
 <!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style ">
 	<a class="addthis_button_preferred_1"></a>
@@ -8,11 +11,13 @@
 	<a class="addthis_counter addthis_bubble_style"></a>
 </div>
 <!-- AddThis Button END -->
+{% endblock %}
 
-<script>
+
+{% block onbodyload %}
 	$(document).ready(function() {
 	    $.getScript("http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4ef7514d30954557", function() {
-	        //loaded and executed
+            //loaded and executed
 	    });
 	});
-</script>
+{% endblock %}

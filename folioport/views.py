@@ -1,12 +1,13 @@
-from django.db import models
+from django.db.models import get_model
 from django.views.generic.base import TemplateView
 
-Project = models.get_model('project', 'Project')
+Project = get_model('project', 'Project')
+
 
 class HomeView(TemplateView):
     template_name = 'home.html'
     
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
-        context['projects'] = Project.active_objects.all().order_by('order')
+        context['projects'] = Project.active_objects.all()
         return context

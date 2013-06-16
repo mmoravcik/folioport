@@ -8,10 +8,17 @@
 	
 	{% include 'partials/menu.html' %}
 	
-	<div id='content'>	
+	<div id='content'>
 		{% block content %}{% endblock %}
 	</div>
-	
 	{% include 'partials/footer.html' %}
+
+    {% block extrascripts %}{% endblock %}
+
+    <script type="text/javascript">
+        $(function() {
+            {% block onbodyload %}{% endblock %}
+        });
+    </script>
 </body>
 </html>
