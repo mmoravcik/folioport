@@ -1,8 +1,9 @@
 {% extends "base.html"  %}
 {% load thumbnail %}
 
+{% block title %} Folioport {% endblock %}
+
 {% block content %}
-<div id="container">
 	{% for project in projects %}
 		
 		{% thumbnail project.thumbnail project.get_solr_thumbnail_geometry as im %}
@@ -14,6 +15,5 @@
 		{% endthumbnail %}
 
 	{% endfor %}
-</div>
 
 {% endblock %}

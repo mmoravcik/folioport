@@ -1,22 +1,24 @@
 {% load filters %}
 {% load flatpages %}
+{% get_flatpages as flatpages %}
 
-<div>
-    <a href='/'>home</a>
-</div>
 
-{% for row in folioport_project_categories|columns:3 %}
-   <div>
-    {% for item in row %}
-            <a href="{% url 'folioport:project:category' item.slug %}">{{ item }}</a><br />
-    {% endfor %}
-   </div>
-{% endfor %}
-   
-<div>
-    {% get_flatpages as flatpages %}
+<div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href='/'>home</a>
 
-    {% for page in flatpages %}
-        <a href="{{ page.url }}">{{ page.title }}</a><br />
-    {% endfor %}
+            Categories:
+            {% for row in folioport_project_categories|columns:3 %}
+                {% for item in row %}
+                    <a href="{% url 'folioport:project:category' item.slug %}">{{ item }}</a><br />
+                {% endfor %}
+            {% endfor %}
+
+            Flatpages:
+            {% for page in flatpages %}
+                <a href="{{ page.url }}">{{ page.title }}</a><br />
+            {% endfor %}
+        </div>
+    </div>
 </div>

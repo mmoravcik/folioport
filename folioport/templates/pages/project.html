@@ -3,6 +3,8 @@
 {% load i18n %}
 {% block content %}
 
+
+{% block title %} {{ project.name }} {% endblock %}
 <div>
 
 	<h1>{{ project.name }}</h1>
@@ -34,11 +36,9 @@
 		{%endfor %}
 	</div>
 
-
-	Links <Br />
     {% if next_project %}
         <a href="{{ next_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">
-            next<
+            next
         </a><br />
     {% endif %}
     {% if previous_project %}
