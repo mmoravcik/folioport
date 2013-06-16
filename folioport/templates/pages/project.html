@@ -3,43 +3,52 @@
 {% load i18n %}
 {% block content %}
 
+<div>
 
-	<div style='width:300px;height:500px;float:left'>
 	<h1>{{ project.name }}</h1>
+
     {% include 'widgets/rating.html' with object=project link='projects/rate' %}
-	Summary: {{ project.summary }} <br />
+
+    Summary: {{ project.summary }} <br />
 	Description: {{ project.description }}
 	<br />
-	Tags: 
+
+    Tags:
 		{% for tag in project.get_tags %}
 			{{ tag.name }}
 		{% endfor %}
 	
-	<Br />
+	<br />
 	{% include 'widgets/social_share.html' %}
 	</div>
 	
-	<div style='width:800px;float:left'>
+	<div>
 		{%for image in project.get_images %}
 			{% thumbnail image image.get_solr_thumbnail_geometry as im %}
-				<div style='margin:3px;border:solid 0px red;width:{{ im.width }}px;float:left'>
-				<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
-				<br />
-				{{ image.caption }}
+				<div>
+                    <!--#todo escape ALT-->
+				    <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
+				    <br />
+				    {{ image.caption }}
 				</div>
 			{% endthumbnail %}
 		{%endfor %}
 	</div>
+
+
 	Links <Br />
     {% if next_project %}
-        <a hre f="{{ next_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">next</a><br />
-        {% endif %}
-        {% if previous_project %}
-        <a href="{{ previous_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">previous</a><br />
-     {% endif %}
+        <a href="{{ next_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">
+            next<
+        </a><br />
+    {% endif %}
+    {% if previous_project %}
+        <a href="{{ previous_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">
+            previous
+        </a><br />
+    {% endif %}
 
 	<div class='clear'></div>
-    {% include 'widgets/comments.html' with object=project %}
 
     {% include 'widgets/related_projects.html' with project=project %}
 	

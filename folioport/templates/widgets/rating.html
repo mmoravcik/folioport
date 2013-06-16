@@ -1,10 +1,13 @@
+{% extends 'widgets/base.html' %}
 {% load filters %}
+{% load staticfiles %}
 
+{% block content %}
 <style type='text/css'>
     /* jQuery.Rating Plugin CSS - http://www.fyneworks.com/jquery/star-rating/ */
     div.rating-cancel,div.star-rating{float:left;width:17px;height:15px;text-indent:-999em;cursor:pointer;display:block;background:transparent;overflow:hidden}
-    div.rating-cancel,div.rating-cancel a{background:url(/static/images/delete.gif) no-repeat 0 -16px}
-    div.star-rating,div.star-rating a{background:url(/static/images/star.gif) no-repeat 0 0px}
+    div.rating-cancel,div.rating-cancel a{background:url({% static 'folioport/img/delete.gif'%}) no-repeat 0 -16px}
+    div.star-rating,div.star-rating a{background:url({% static 'folioport/img/star.gif'%}) no-repeat 0 0px}
     div.rating-cancel a,div.star-rating a{display:block;width:16px;height:100%;background-position:0 0px;border:0}
     div.star-rating-on a{background-position:0 -16px!important}
     div.star-rating-hover a{background-position:0 -32px}
@@ -23,9 +26,10 @@
 {% for i in 10|get_range %}
     <input class="auto-submit-star" type="radio" value="{{ i }}" {% if i = object.get_rating %} checked {%endif%}/>
 {% endfor %}
+{% endblock %}
 
-<script>
-    jQuery(document).ready(function() {
+{% block onbodyload %}
+    $(document).ready(function() {
         $('.auto-submit-star').rating({
             callback: function(value, link){
                 submit_vote({{ object.id }}, value);
@@ -40,4 +44,4 @@
                     $.growl('rating', response);
                 });
     }
-</script>
+{% endblock %}
