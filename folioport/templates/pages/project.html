@@ -3,7 +3,6 @@
 {% load i18n %}
 {% block content %}
 
-
 {% block title %} {{ project.name }} {% endblock %}
 <div>
 
@@ -28,8 +27,14 @@
 			{% thumbnail image image.get_solr_thumbnail_geometry as im %}
 				<div>
                     <!--#todo escape ALT-->
-				    <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
-				    <br />
+                    {% if next_project %}
+                        <a href="{{ next_project.get_absolute_url  }}{%if category.slug %}?cat={{ category.slug }}{%endif%}">
+				    {% endif%}
+                        <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
+                    {% if next_project %}
+                        </a>
+                    {% endif%}
+                    <br />
 				    {{ image.caption }}
 				</div>
 			{% endthumbnail %}
@@ -37,12 +42,12 @@
 	</div>
 
     {% if next_project %}
-        <a href="{{ next_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">
+        <a href="{{ next_project.get_absolute_url  }}{%if category.slug %}?cat={{ category.slug }}{%endif%}">
             next
         </a><br />
     {% endif %}
     {% if previous_project %}
-        <a href="{{ previous_project.get_absolute_url  }}{%if category_slug %}?cat={{ category_slug }}{%endif%}">
+        <a href="{{ previous_project.get_absolute_url  }}{%if category.slug %}?cat={{ category.slug }}{%endif%}">
             previous
         </a><br />
     {% endif %}

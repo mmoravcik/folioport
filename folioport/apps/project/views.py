@@ -23,7 +23,7 @@ class ProjectView(DetailView):
 
 
 class CategoryView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'pages/project_category.html'
        
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
