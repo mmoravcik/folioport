@@ -1,4 +1,4 @@
-{% extends "base.html"  %}
+{% extends "layout.html"  %}
 {% load thumbnail %}
 {% load i18n %}
 {% block content %}
@@ -8,8 +8,8 @@
 
 	<h1>{{ project.name }}</h1>
 
-    {% include 'widgets/rating.html' with object=project link='projects/rate' %}
-    {% include 'widgets/social_share.html' %}
+    {% include 'widgets/rating/widget.html' %}
+    {% include 'widgets/social_add_this/widget.html' %}
 
     Summary: {{ project.summary }} <br />
 	Description: {{ project.description }}
@@ -55,6 +55,12 @@
 
 	<div class='clear'></div>
 
-    {% include 'widgets/related_projects.html' with project=project %}
+    {% include 'widgets/related_projects/widget.html' with project=project %}
 	
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    {% include 'widgets/rating/widget.js.html'  with object=project link='projects/rate' %}
+    {% include 'widgets/social_add_this/widget.js.html' %}
 {% endblock %}
