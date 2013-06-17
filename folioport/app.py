@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, include
 
 from folioport.apps.project.app import application as project_app
-from folioport.apps.base.app import Application
-from folioport.views import HomeView
+from folioport.base.app import Application
+from folioport.base.views import HomeView
 
 
 class FolioportApplication(Application):

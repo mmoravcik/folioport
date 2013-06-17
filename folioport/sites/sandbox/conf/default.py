@@ -139,7 +139,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'folioport',
-    'folioport.apps.base',
     'folioport.apps.project',
     'folioport.apps.news',
 

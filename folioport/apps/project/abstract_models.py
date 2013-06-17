@@ -8,7 +8,7 @@ from djangoratings.fields import AnonymousRatingField
 from django.db import models
 from django.db.models import Max
 
-from folioport.apps.base.utils import get_solr_thumbnail_geometry
+from folioport.base.utils import get_solr_thumbnail_geometry
 
 
 class ActiveCategoryManager(models.Manager):

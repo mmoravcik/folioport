@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from folioport.apps.base.app import Application
+from folioport.base.app import Application
 from folioport.apps.project.views import ProjectView, CategoryView
 
 from djangoratings.views import AddRatingFromModel
