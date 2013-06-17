@@ -10,15 +10,15 @@
 
             Categories:
             {% for row in folioport_project_categories|columns:3 %}
-                {% for item in row %}
-                    <a href="{% url 'folioport:project:category' item.slug %}">{{ item }}</a>
-                    {% if not forloop.last %}, {% endif %}
-                {% endfor %}
+            {% for item in row %}
+            <a href="{% url 'folioport:project:category' item.slug %}">{{ item }}</a>
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
             {% endfor %}
             <br />
             Flatpages:
             {% for page in flatpages %}
-                <a href="{{ page.url }}">{{ page.title }}</a><br />
+            <a href="{{ page.url }}">{{ page.title }}</a><br />
             {% endfor %}
         </div>
     </div>

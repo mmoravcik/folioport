@@ -1,6 +1,7 @@
 import os
 
-FOLIOPORT_PARENT_TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/templates'
+FOLIOPORT_PARENT_TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__)) + \
+                                '/templates/folioport'
 
 # Use 'final' as the 4th element to indicate
 # a full release
