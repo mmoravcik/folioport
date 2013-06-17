@@ -8,7 +8,7 @@
 
 {% endblock %}
 
-{% block onbodyload %}
+{% block widget_javascript %}
     $('#star').raty({
         score: {{object.get_rating}} / 2,
         half: true,

@@ -2,7 +2,7 @@
     var oldOnload = window.onload;
 
     var func = function() {
-        {% block onbodyload %}{% endblock %}
+        {% block widget_javascript %}{% endblock %}
     }
 
     if (typeof window.onload != 'function') {

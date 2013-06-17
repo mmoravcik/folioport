@@ -1,0 +1,9 @@
+#ajax_loading {
+    display: none;
+    color: white;
+    background-color: red;
+    padding: 3px;
+    position:absolute;
+    top: 0;
+    left: 0;
+}
