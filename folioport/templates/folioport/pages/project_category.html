@@ -1,7 +1,7 @@
 {% extends "layout.html"  %}
 {% load thumbnail %}
 
-{% block title %} Folioport {% endblock %}
+{% block title %}Category {{ category.name }}{% endblock %}
 
 {% block content %}
 {% for project in projects %}
