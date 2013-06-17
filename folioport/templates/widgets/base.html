@@ -1,10 +1,18 @@
 <script type="text/javascript">
     var oldOnload = window.onload;
 
-    window.onload = function() {
+    var func = function() {
         {% block onbodyload %}{% endblock %}
-        if (oldOnload) {
-            oldOnload();
+    }
+
+    if (typeof window.onload != 'function') {
+        window.onload = func;
+    } else {
+        window.onload = function() {
+            func();
+            if (typeof oldOnload == 'function') {
+                oldOnload();
+            }
         }
     }
 </script>

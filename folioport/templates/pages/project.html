@@ -9,6 +9,7 @@
 	<h1>{{ project.name }}</h1>
 
     {% include 'widgets/rating.html' with object=project link='projects/rate' %}
+    {% include 'widgets/social_share.html' %}
 
     Summary: {{ project.summary }} <br />
 	Description: {{ project.description }}

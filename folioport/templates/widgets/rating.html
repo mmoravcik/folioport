@@ -9,8 +9,6 @@
 {% endblock %}
 
 {% block onbodyload %}
-$(document).ready(function() {
-
     $('#star').raty({
         score: {{object.get_rating}} / 2,
         half: true,
@@ -31,6 +29,4 @@ $(document).ready(function() {
                 $.growl('rating', response);
             });
     }
-});
-
 {% endblock %}

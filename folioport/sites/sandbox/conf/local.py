@@ -1,5 +1,5 @@
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = False
 
 DATABASES = {
     'default': {
@@ -11,3 +11,5 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+INTERNAL_IPS = ('127.0.0.1',)
