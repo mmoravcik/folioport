@@ -27,7 +27,7 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-folioport/conf/local.py
+folioport/sites/sandbox/conf/local.py
 folioport/sites/sandbox/assets/*
 folioport/sites/sandbox/*.sqlite
 
