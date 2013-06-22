@@ -5,6 +5,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 from djangoratings.fields import AnonymousRatingField
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Max
 
@@ -117,9 +118,8 @@ class AbstractProject(models.Model):
     def get_embeds(self):
         return self.embed_set.all().order_by('order')
 
-    #todo review all absolute urls
     def get_absolute_url(self):
-        return ('/projects/%s-%d/' % (self.slug, self.id))
+        return reverse('folioport:project:project-detail', args=[self.slug, self.id])
 
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)

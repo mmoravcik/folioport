@@ -10,7 +10,7 @@
             Categories:
             {% for row in folioport_project_categories|columns:3 %}
             {% for item in row %}
-            <a href="{% url 'folioport:project:category' item.slug %}">{{ item }}</a>
+            <a href="{% url 'folioport:project:category-detail' item.slug %}">{{ item }}</a>
             {% if not forloop.last %}, {% endif %}
             {% endfor %}
             {% endfor %}
