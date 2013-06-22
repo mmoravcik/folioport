@@ -124,7 +124,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.csrf',
-    'folioport.apps.project.context_processors.folioport_project',
+    'folioport.base.context_processors.folioport_project',
         
 )
 
