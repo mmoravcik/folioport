@@ -1,7 +1,6 @@
 {% load thumbnail %}
 
 {% if project.related_projects %}
-	Related projects:<br />
 	{% for related_project in project.related_projects %}
 		{% thumbnail related_project.thumbnail related_project.get_solr_thumbnail_geometry as im %}
 			<a href='{{ related_project.get_absolute_url }}'>
