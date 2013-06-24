@@ -4,18 +4,7 @@
 {% block title %}Category {{ category.name }}{% endblock %}
 
 {% block content %}
-{% for project in projects %}
 
-{% thumbnail project.thumbnail project.get_solr_thumbnail_geometry as im %}
-<div>
-    <a href='{{ project.get_absolute_url }}{%if category_slug %}?cat={{ category_slug }}{% endif %}'>
-        <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ project.name }}' />
-        <br />
-        {{ project.name }}<br />
-    </a>
-</div>
-{% endthumbnail %}
-
-{% endfor %}
+    {% include 'partials/project_list.html' %}
 
 {% endblock %}
