@@ -21,7 +21,7 @@ setup(name='folioport',
       packages=find_packages(exclude=["sandbox*", "tests*"]),
       include_package_data=True,
       install_requires=[
-          'django==1.5',
+          'django==1.5.1',
           'PIL==1.1.7',
           'South==0.7.6',
           'sorl-thumbnail==11.12',
