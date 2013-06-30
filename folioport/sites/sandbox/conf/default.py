@@ -125,7 +125,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.csrf',
     'folioport.base.context_processors.folioport_project',
-        
 )
 
 INSTALLED_APPS = (
@@ -140,6 +139,7 @@ INSTALLED_APPS = (
 
     'folioport',
     'folioport.apps.project',
+    'folioport.apps.mycss',
 
     'tagging',
     'sorl.thumbnail',
@@ -149,3 +149,5 @@ INSTALLED_APPS = (
     'debug_toolbar',
 )
 
+MYCSS_ROOT= MEDIA_ROOT + '/css/'
+MYCSS_PATH = MEDIA_URL + '/css/'
