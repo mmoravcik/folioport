@@ -1,0 +1,8 @@
+{% extends 'folioport/base.html' %}
+
+{% load mycss %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="{% mycss 0 %}" rel="stylesheet" type="text/css" />
+{% endblock %}
