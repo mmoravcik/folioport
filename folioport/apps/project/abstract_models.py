@@ -58,11 +58,12 @@ class AbstractEmbed(AbstractMedia):
 
 
 class AbstractImage(AbstractMedia):
-    JPEG, PNG = "JPEG","PNG"
+    JPEG, PNG, GIF = "JPEG","PNG", "GIF"
 
     THUMBNAIL_TYPE_CHOICE = (
         (JPEG, 'jpeg'),
         (PNG, 'png'),
+        (GIF, 'gif'),
     )
 
     image = models.ImageField(upload_to='images/project_images')
@@ -84,11 +85,12 @@ class ActiveProjectManager(models.Manager):
 
 
 class AbstractProject(models.Model):
-    JPEG, PNG = "JPEG", "PNG"
+    JPEG, PNG, GIF = "JPEG", "PNG", "GIF"
 
     THUMBNAIL_TYPE_CHOICE = (
         (JPEG, 'jpeg'),
         (PNG, 'png'),
+        (GIF, 'gif'),
     )
 
     name = models.CharField(max_length=128)
