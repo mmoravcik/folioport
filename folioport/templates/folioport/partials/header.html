@@ -19,6 +19,8 @@
             {% for page in flatpages %}
             <a href="{{ page.url }}">{{ page.title }}</a><br />
             {% endfor %}
+            <a href="{% url 'folioport:blog:post-list' %}">Blog</a><br />
+
         </div>
     </div>
 </div>
