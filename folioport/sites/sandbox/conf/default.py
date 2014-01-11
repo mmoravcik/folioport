@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'djangoratings',
     'debug_toolbar',
+    'envelope',
 )
 
 MYCSS_ROOT= MEDIA_ROOT + '/css/'

@@ -29,6 +29,7 @@ setup(name='folioport',
           'django-ratings==0.3.7',
           'django-tagging==0.3.1',
           'django-disqus==0.4.1',
+	  'django-envelope==0.7',
           ],
       # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Environment :: Web Environment',

@@ -1,0 +1,10 @@
+{% extends "layout.html"  %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+    {% load envelope_tags %}
+
+    {% render_contact_form %}
+
+{% endblock %}

@@ -19,6 +19,7 @@ class FolioportApplication(Application):
         urlpatterns += patterns('',
             (r'projects/', include(self.project_app.urls)),
             (r'blog/', include(self.blog_app.urls)),
+
             (r'^$', self.home_view.as_view()),
         )
         return urlpatterns

@@ -12,6 +12,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
+    (r'contact/', include('envelope.urls')),
     (r'', include(folioport_application.urls)),
 )
 
