@@ -13,7 +13,7 @@ class BlogApplication(Application):
         urlpatterns = super(BlogApplication, self).get_urls()
         urlpatterns += patterns('',
             url(r'^(?P<post_slug>[\w-]*)-(?P<pk>\d+)/$', self.post_view.as_view(), name='post-detail'),
-            url(r'list/$', self.list_view.as_view(), name='post-list'),
+            url(r'', self.list_view.as_view(), name='post-list'),
         )
         return urlpatterns
 
