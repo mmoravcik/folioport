@@ -27,7 +27,7 @@ class AbstractCategory(MPTTModel):
         order_insertion_by = ['name']
 
     def __unicode__(self):
-        return self.name
+        return u"%s" % self.name
 
     class Meta:
         abstract = True
@@ -51,7 +51,7 @@ class AbstractEmbed(AbstractMedia):
     embed_code = models.TextField()
 
     def __unicode__(self):
-        return self.caption
+        return u"%s" % self.caption
 
     class Meta:
         abstract = True
@@ -73,7 +73,7 @@ class AbstractImage(AbstractMedia):
         return get_solr_thumbnail_geometry(self.width, self.height)
 
     def __unicode__(self):
-        return self.image.name
+        return u"%s" % self.image.name
 
     class Meta:
         abstract = True
@@ -112,7 +112,7 @@ class AbstractProject(models.Model):
     rating = AnonymousRatingField(range=10, can_change_vote=True)
 
     def __unicode__(self):
-        return '%s (%s)' % (self.name, self.order)
+        return u'%s (%s)' % (self.name, self.order)
 
     def get_images(self):
         return self.image_set.all().order_by('order')

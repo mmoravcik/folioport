@@ -10,8 +10,6 @@ class AbstractMyCSS(models.Model):
     def save(self):
         super(AbstractMyCSS, self).save()
 
-        print self.css
-
         filename = 'mycss.css'
         path = settings.MYCSS_ROOT + filename
 

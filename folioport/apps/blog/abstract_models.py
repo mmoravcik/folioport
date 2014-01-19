@@ -26,7 +26,7 @@ class AbstractPost(models.Model):
     tags = TagField()
 
     def __unicode__(self):
-        return '%s (%s)' % (self.title, self.order)
+        return u'%s (%s)' % (self.title, self.order)
 
     def get_absolute_url(self):
         return reverse('folioport:blog:post-detail', args=[self.slug, self.id])
