@@ -5,7 +5,12 @@ Post = get_model('blog', 'Post')
 
 
 class PostForm(forms.ModelForm):
-    content = forms.CharField(widget=forms.Textarea(attrs={'class':'wysiwyg-editor-full'}))
-    title = forms.CharField(widget=forms.Textarea(attrs={'class':'wysiwyg-editor-lite'}))
+    content = forms.CharField(widget=forms.Textarea(
+        attrs={
+            'class': 'wysiwyg-editor-full',
+            })
+    )
+
     class Meta:
         model = Post
+        fields = ('title', 'content', 'thumbnail', 'tags', 'active',)

@@ -1,31 +1,16 @@
 {% extends 'dashboard/layout.html' %}
 {% load i18n %}
 
-{% block meta %}
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="utf-8">
-{% endblock %}
-
 {% block title %} Folioport admin {% endblock %}
 
 {% block content %}
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">CREATE THE POST</h1>
-    </div>
-</div>
+    <h1 class="page-header">CREATE THE POST</h1>
 
-<div class='row'>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Update" />
+    <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Create" />
     </form>
-</div>
 
-{% endblock %}
-
-{% block extrascripts %}
-{{block.super}}
-{% include 'widgets/ckeditor/widget.js.html' %}
 {% endblock %}
