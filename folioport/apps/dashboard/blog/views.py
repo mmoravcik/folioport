@@ -5,17 +5,18 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
 
+from folioport.base.mixins import LoginRequiredMixin
 from folioport.apps.blog.forms import PostForm
 
 Post = models.get_model('blog', 'Post')
 
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     template_name = 'dashboard/blog/list.html'
     model = Post
 
 
-class PostEditView(UpdateView):
+class PostEditView(LoginRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'dashboard/blog/edit.html'
@@ -28,7 +29,7 @@ class PostEditView(UpdateView):
         return super(PostEditView, self).form_valid(form)
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'dashboard/blog/create.html'
@@ -41,7 +42,7 @@ class PostCreateView(CreateView):
         return super(PostCreateView, self).form_valid(form)
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'dashboard/blog/delete.html'
 
