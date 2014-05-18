@@ -1,8 +1,6 @@
 from tagging.fields import TagField
 from tagging.models import Tag, TaggedItem
 
-from mptt.models import MPTTModel, TreeForeignKey
-
 from djangoratings.fields import AnonymousRatingField
 
 from django.core.urlresolvers import reverse
@@ -10,73 +8,6 @@ from django.db import models
 from django.db.models import Max
 
 from folioport.base.utils import get_solr_thumbnail_geometry
-
-
-class ActiveCategoryManager(models.Manager):
-    def get_query_set(self):
-        return super(ActiveCategoryManager, self).get_query_set().filter(active=True)
-
-
-class AbstractCategory(MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(max_length=128)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
-    active = models.BooleanField(default=True)
-
-    class MPTTMeta:
-        order_insertion_by = ['name']
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        abstract = True
-
-    objects = models.Manager()
-    active_objects = ActiveCategoryManager()
-
-
-class AbstractMedia(models.Model):
-    project = models.ForeignKey('project.Project')
-    caption = models.TextField(blank=True)
-    width = models.IntegerField(default=300)
-    height = models.IntegerField(default=0)
-    order = models.IntegerField(default=1)
-
-    class Meta:
-        abstract = True
-
-
-class AbstractEmbed(AbstractMedia):
-    embed_code = models.TextField()
-
-    def __unicode__(self):
-        return self.caption
-
-    class Meta:
-        abstract = True
-
-
-class AbstractImage(AbstractMedia):
-    JPEG, PNG, GIF = "JPEG","PNG", "GIF"
-
-    THUMBNAIL_TYPE_CHOICE = (
-        (JPEG, 'jpeg'),
-        (PNG, 'png'),
-        (GIF, 'gif'),
-    )
-
-    image = models.ImageField(upload_to='images/project_images')
-    thumbnail_type = models.CharField(max_length=4, choices=THUMBNAIL_TYPE_CHOICE, default=JPEG)
-
-    def get_solr_thumbnail_geometry(self):
-        return get_solr_thumbnail_geometry(self.width, self.height)
-
-    def __unicode__(self):
-        return self.image.name
-
-    class Meta:
-        abstract = True
 
 
 class ActiveProjectManager(models.Manager):
@@ -91,7 +22,7 @@ class AbstractProject(models.Model):
         (JPEG, 'jpeg'),
         (PNG, 'png'),
         (GIF, 'gif'),
-    )
+        )
 
     name = models.CharField(max_length=128)
     category = models.ManyToManyField('project.Category')

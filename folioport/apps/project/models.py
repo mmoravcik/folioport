@@ -1,5 +1,8 @@
-from folioport.apps.project.abstract_models import AbstractCategory, \
-    AbstractImage, AbstractProject, AbstractEmbed
+from django.db import models
+
+from folioport.apps.project.abstract_models import AbstractProject
+from folioport.base.abstract_models import AbstractEmbed, AbstractImage,\
+    AbstractCategory
 
 
 class Category(AbstractCategory):
@@ -7,7 +10,7 @@ class Category(AbstractCategory):
 
 
 class Image(AbstractImage):
-    pass
+    project = models.ForeignKey('project.Project')
 
 
 class Project(AbstractProject):
@@ -15,4 +18,4 @@ class Project(AbstractProject):
 
 
 class Embed(AbstractEmbed):
-    pass
+    project = models.ForeignKey('project.Project')
