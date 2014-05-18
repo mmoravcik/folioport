@@ -15,6 +15,9 @@
         </li>
     </ul>
 
+    {% for message in messages %}
+        {{ message }}<br />
+    {% endfor %}
 
     {% block content %}
     {% endblock %}
