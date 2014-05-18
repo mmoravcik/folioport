@@ -19,9 +19,9 @@ class FolioportApplication(Application):
     def get_urls(self):
         urlpatterns = super(FolioportApplication, self).get_urls()
         urlpatterns += patterns('',
-            (r'projects/', include(self.project_app.urls)),
-            (r'dashboard/', include(self.dashboard_app.urls)),
-            (r'blog/', include(self.blog_app.urls)),
+            (r'^projects/', include(self.project_app.urls)),
+            (r'^dashboard/', include(self.dashboard_app.urls)),
+            (r'^blog/', include(self.blog_app.urls)),
             (r'^$', self.home_view.as_view()),
         )
         return urlpatterns

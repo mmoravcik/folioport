@@ -6,7 +6,7 @@
 {% block content %}
 
     <h1 class="page-header">CREATE THE POST</h1>
-
+    {{ form.media }}
     <form enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form }}

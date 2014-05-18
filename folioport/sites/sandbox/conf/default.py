@@ -56,7 +56,7 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = location("assets/media")
+MEDIA_ROOT = location("public/media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -147,8 +147,21 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'djangoratings',
-    'debug_toolbar',
+    #'debug_toolbar',
+    'ckeditor',
 )
 
 MYCSS_ROOT= MEDIA_ROOT + '/css/'
 MYCSS_PATH = MEDIA_URL + '/css/'
+
+CKEDITOR_UPLOAD_PATH = 'ckuploads'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'height': 600,
+        'width': '70%',
+        },
+    }
+
