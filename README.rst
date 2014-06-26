@@ -1,7 +1,7 @@
-folioport
+Folioport
 =========
 
-Simple portfolio project
+Simple portfolio management project
 
 Install
 -------
