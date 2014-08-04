@@ -9,9 +9,14 @@ class Category(AbstractCategory):
     pass
 
 
+class HoverOnImage(AbstractImage):
+    pass
+
+
 class Image(AbstractImage):
     project = models.ForeignKey('project.Project')
-
+    hover_on = models.ForeignKey('project.HoverOnImage',
+        related_name='hover_on_image', blank=True, null=True)
 
 class Project(AbstractProject):
     pass

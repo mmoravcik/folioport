@@ -2,6 +2,7 @@ from django.db.models import get_model
 from django.contrib import admin
 
 Image = get_model('project', 'Image')
+HoverOnImage = get_model('project', 'HoverOnImage')
 Embed = get_model('project', 'Embed')
 Category = get_model('project', 'Category')
 Project = get_model('project', 'Project')
@@ -31,3 +32,4 @@ admin.site.register(Project, ProjectAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Image)
 admin.site.register(Embed)
+admin.site.register(HoverOnImage)
