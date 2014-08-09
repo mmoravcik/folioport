@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'folioport.apps.project',
     'folioport.apps.mycss',
     'folioport.apps.blog',
+    'folioport.apps.cms',
 
     'tagging',
     'sorl.thumbnail',
@@ -149,6 +150,8 @@ INSTALLED_APPS = (
     'djangoratings',
     #'debug_toolbar',
     'ckeditor',
+    'floppyforms',
+    'crispy_forms',
 )
 
 MYCSS_ROOT= MEDIA_ROOT + '/css/'
@@ -165,3 +168,4 @@ CKEDITOR_CONFIGS = {
         },
     }
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

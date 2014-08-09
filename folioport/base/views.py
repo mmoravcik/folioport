@@ -2,6 +2,7 @@ from django.db.models import get_model
 from django.views.generic.base import TemplateView
 
 Project = get_model('project', 'Project')
+Container = get_model('cms', 'Container')
 
 
 class HomeView(TemplateView):
@@ -10,4 +11,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
         context['projects'] = Project.active_objects.all()
+
+        container = Container.objects.get(id=1)
+        context['cms'] = container.render()
         return context
