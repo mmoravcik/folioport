@@ -1,4 +1,5 @@
 from django.db import models
+from django.template import loader, Context
 
 
 class AbstractContainer(models.Model):
@@ -12,10 +13,12 @@ class AbstractContainer(models.Model):
 
     def render(self):
         html = ''
-        for item in self.item_set.all():
+        for item in self.item_set.all().order_by('containeritems__position'):
             Item = models.get_model('cms', item.item_class)
-            item = Item.objects.get(pk=item.item_id)
-            html += item.render()
+            item_object = Item.objects.get(pk=item.item_id)
+            if item.template:
+                item_object.template = item.template
+            html += item_object.render()
         return html
 
 
@@ -37,11 +40,11 @@ class AbstractContainerItems(models.Model):
     item = models.ForeignKey('Item')
     position = models.SmallIntegerField()
 
-    def __unicode__(self):
-        return "%s - %s" % (self.container, self.item)
-
     class Meta:
         abstract = True
+
+    def __unicode__(self):
+        return "%s - %s" % (self.container, self.item)
 
 
 class AbstractItemText(models.Model):
@@ -55,7 +58,9 @@ class AbstractItemText(models.Model):
         return self.text
 
     def render(self):
-        return self.text
+        t = loader.get_template(self.template)
+        c = Context({'text': self.text})
+        return t.render(c)
 
 
 class AbstractItemImage(models.Model):
@@ -65,6 +70,20 @@ class AbstractItemImage(models.Model):
     class Meta:
         abstract = True
 
+    def render(self):
+        t = loader.get_template(self.template)
+        c = Context({'image': self.image})
+        return t.render(c)
+
+
+class AbstractRandomImage(models.Model):
+    template = 'cms/content_items/random_image.html'
+    image = models.ManyToManyField('cms.Image')
+
+    class Meta:
+        abstract = True
 
     def render(self):
-        return str(self.image.image)
+        t = loader.get_template(self.template)
+        c = Context({'image': self.image.all().order_by('?')[0]})
+        return t.render(c)
