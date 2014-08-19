@@ -1,5 +1,9 @@
-from folioport.apps.blog.abstract_models import  AbstractPost
+from folioport.apps.blog import abstract_models
 
 
-class Post(AbstractPost):
+class Post(abstract_models.AbstractPost):
+    pass
+
+
+class BlogPost(abstract_models.AbstractBlogPost):
     pass

@@ -2,6 +2,7 @@ from django.db.models import get_model
 from django.contrib import admin
 
 Post = get_model('blog', 'Post')
+BlogPost = get_model('blog', 'BlogPost')
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -10,3 +11,4 @@ class PostAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Post, PostAdmin)
+admin.site.register(BlogPost)

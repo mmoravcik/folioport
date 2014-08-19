@@ -13,6 +13,11 @@
                 <i class="glyphicon glyphicon-bold"></i> Blog
             </a>
         </li>
+        <li>
+            <a href="{% url 'folioport:dashboard:cms:container-list' %}">
+                <i class="glyphicon glyphicon-bold"></i> CMS
+            </a>
+        </li>
     </ul>
 
     {% for message in messages %}

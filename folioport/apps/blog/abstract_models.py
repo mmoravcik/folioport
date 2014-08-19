@@ -13,6 +13,27 @@ class ActivePostManager(models.Manager):
         return super(ActivePostManager, self).get_query_set().filter(active=True)
 
 
+
+class AbstractBlogPost(models.Model):
+    title = models.CharField(max_length=128)
+    slug = models.SlugField(max_length=128)
+    active = models.BooleanField(default=True)
+    content = models.TextField(default="", null=True, blank=True)
+    release_date = models.DateField(null=True, blank=True)
+    order = models.IntegerField(null=True, blank=True)
+    container = models.ForeignKey('cms.Container')
+
+    class Meta:
+        abstract = True
+
+    def __unicode__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('folioport:blog:post-detail', args=[self.slug, self.id])
+
+
+
 class AbstractPost(models.Model):
     title = models.CharField(max_length=128)
     slug = models.SlugField(max_length=128)

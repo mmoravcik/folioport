@@ -1,0 +1,21 @@
+{% extends 'dashboard/layout.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <h1 class="page-header">{% trans 'EDIT THE CONTAINER' %}</h1>
+    {{ form.media }}
+    <form enctype="multipart/form-data" action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <br />
+        <input class='btn btn-primary' type="submit" value="{% trans 'Update' %}" />
+        &nbsp; <a href="{% url 'folioport:dashboard:cms:container-list' %}">{% trans 'Cancel' %}</a>
+    </form>
+
+    {% for item in object.get_items %}
+        {{ item.render }}
+        <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk  %}">edit</a>
+    {% endfor %}
+
+{% endblock %}

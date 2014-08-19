@@ -11,14 +11,21 @@ class AbstractContainer(models.Model):
     class Meta:
         abstract = True
 
-    def render(self):
-        html = ''
+    def get_items(self):
+        items = []
         for item in self.item_set.all().order_by('containeritems__position'):
             Item = models.get_model('cms', item.item_class)
             item_object = Item.objects.get(pk=item.item_id)
+            item_object.class_name = item.item_class
             if item.template:
                 item_object.template = item.template
-            html += item_object.render()
+            items.append(item_object)
+        return items
+
+    def render(self):
+        html = ''
+        for item in self.get_items():
+            html += item.render()
         return html
 
 
