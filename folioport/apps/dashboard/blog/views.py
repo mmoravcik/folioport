@@ -8,7 +8,7 @@ from django.contrib import messages
 from folioport.base.mixins import LoginRequiredMixin
 from folioport.apps.blog.forms import PostForm
 
-Post = models.get_model('blog', 'Post')
+Post = models.get_model('blog', 'BlogPost')
 
 
 class PostListView(LoginRequiredMixin, ListView):
@@ -35,7 +35,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/blog/create.html'
 
     def get_success_url(self):
-        return reverse_lazy('folioport:dashboard:blog:post-list')
+        return reverse_lazy('folioport:dashboard:blog:post-edit',
+            kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         messages.info(self.request, 'Post has been created!')
