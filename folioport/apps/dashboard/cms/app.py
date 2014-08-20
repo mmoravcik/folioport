@@ -24,6 +24,13 @@ class CmsApplication(Application):
                 self.edit_item_view.as_view(),
                 name='item-edit'),
 
+            url(r'/create_item_redirect/(?P<class_name>\w+)/(?P<pk>\d+)/$',
+                self.edit_create_view.as_view(),
+                name='item-create-redirect'),
+            url(r'/create_item/(?P<class_name>\w+)/(?P<pk>\d+)/$',
+                self.edit_create_view.as_view(),
+                name='item-create'),
+
             url(r'/delete/(?P<pk>\d+)/$',
                 self.delete_view.as_view(),
                 name='container-delete'),

@@ -44,6 +44,22 @@ class ItemEditView(LoginRequiredMixin, UpdateView):
         return super(ItemEditView, self).form_valid(form)
 
 
+class ItemCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'dashboard/cms/item_create.html'
+
+    def get_queryset(self):
+        self.model = models.get_model('cms', self.kwargs['class_name'])
+        return self.model.objects.filter(id=self.kwargs['pk'])
+
+    def get_success_url(self):
+        return reverse_lazy('folioport:dashboard:cms:container-list')
+
+    def form_valid(self, form):
+        messages.info(self.request, 'Item has been created!')
+        return super(ItemCreateView, self).form_valid(form)
+
+
+
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm

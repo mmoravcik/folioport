@@ -1,6 +1,8 @@
 from django.db import models
 from django.template import loader, Context
 
+from folioport.base import abstract_models
+
 
 class AbstractContainer(models.Model):
     title = models.CharField(max_length=128)
@@ -70,16 +72,15 @@ class AbstractItemText(models.Model):
         return t.render(c)
 
 
-class AbstractItemImage(models.Model):
+class AbstractItemImage(abstract_models.AbstractImage):
     template = 'cms/content_items/image.html'
-    image = models.ForeignKey('cms.Image')
 
     class Meta:
         abstract = True
 
     def render(self):
         t = loader.get_template(self.template)
-        c = Context({'image': self.image})
+        c = Context({'image': self})
         return t.render(c)
 
 
