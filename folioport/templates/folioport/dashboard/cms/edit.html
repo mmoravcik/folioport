@@ -18,4 +18,15 @@
         <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk  %}">edit</a>
     {% endfor %}
 
+
+    <form action='{% url 'folioport:dashboard:cms:item-create-redirect' %}'>
+        <select name='class_name'>
+            <option value='ItemImage'>Image</option>
+            <option value='ItemText'>Text</option>
+            <option value='ItemRandomImage'>Random image</option>
+        </select>
+        <input type='hidden' name='container_id' value='{{ object.id }}' />
+        <input type='submit' value='Add new item' />
+    </form>
+
 {% endblock %}
