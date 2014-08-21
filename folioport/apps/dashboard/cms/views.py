@@ -74,6 +74,22 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
         return response
 
 
+class ItemDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = 'dashboard/cms/item_delete.html'
+
+    def dispatch(self, *args, **kwargs):
+        self.model = models.get_model('cms', self.kwargs['class_name'])
+        return super(ItemDeleteView, self).dispatch(*args, **kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('folioport:dashboard:cms:container-list')
+
+    def delete(self, request, *args, **kwargs):
+        Item.objects.filter(
+            item_class=self.get_object().__class__.__name__, item_id=self.get_object().pk).delete()
+        return super(ItemDeleteView, self).delete(request, *args, **kwargs)
+
+
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm

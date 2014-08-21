@@ -11,6 +11,7 @@ class CmsApplication(Application):
     edit_container_view = views.ContainerEditView
     edit_item_view = views.ItemEditView
     create_item_view = views.ItemCreateView
+    delete_item_view = views.ItemDeleteView
     create_item_redirect_view = views.ItemCreateRedirectView
     create_view = views.PostCreateView
     delete_view = views.PostDeleteView
@@ -35,12 +36,9 @@ class CmsApplication(Application):
                 self.edit_item_view.as_view(),
                 name='item-edit'),
 
-            url(r'/create_item_redirect/(?P<class_name>\w+)/(?P<pk>\d+)/$',
-                self.edit_create_view.as_view(),
-                name='item-create-redirect'),
-            url(r'/create_item/(?P<class_name>\w+)/(?P<pk>\d+)/$',
-                self.edit_create_view.as_view(),
-                name='item-create'),
+            url(r'/delete_item/(?P<class_name>\w+)/(?P<pk>\d+)/$',
+                self.delete_item_view.as_view(),
+                name='item-delete'),
 
             url(r'/delete/(?P<pk>\d+)/$',
                 self.delete_view.as_view(),

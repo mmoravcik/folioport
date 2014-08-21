@@ -16,6 +16,7 @@
     {% for item in object.get_items %}
         {{ item.render }}
         <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk %}">edit</a>
+        <a href="{% url 'folioport:dashboard:cms:item-delete' item.class_name item.pk %}">delete</a>
     {% endfor %}
 
 
