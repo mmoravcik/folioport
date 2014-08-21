@@ -1,8 +1,8 @@
-from django.views.generic.edit import CreateView
+from django.views.generic import RedirectView
 from django.core.urlresolvers import reverse_lazy
 from django.db import models
 from django.views.generic.list import ListView
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib import messages
 
 from folioport.base.mixins import LoginRequiredMixin
@@ -10,6 +10,8 @@ from folioport.apps.blog.forms import PostForm
 
 Post = models.get_model('blog', 'Post')
 Container = models.get_model('cms', 'Container')
+ContainerItems = models.get_model('cms', 'ContainerItems')
+Item = models.get_model('cms', 'Item')
 
 
 class ContainerListView(LoginRequiredMixin, ListView):
@@ -44,20 +46,32 @@ class ItemEditView(LoginRequiredMixin, UpdateView):
         return super(ItemEditView, self).form_valid(form)
 
 
+class ItemCreateRedirectView(LoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse_lazy('folioport:dashboard:cms:item-create',
+            kwargs={'class_name': self.request.GET['class_name'],
+                    'container_id': self.request.GET['container_id']})
+
+
 class ItemCreateView(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/cms/item_create.html'
 
-    def get_queryset(self):
+    def dispatch(self, *args, **kwargs):
         self.model = models.get_model('cms', self.kwargs['class_name'])
-        return self.model.objects.filter(id=self.kwargs['pk'])
+        return super(ItemCreateView, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:cms:container-list')
 
     def form_valid(self, form):
+        response = super(ItemCreateView, self).form_valid(form)
+        new_item = Item.objects.create(item_class=self.kwargs['class_name'],
+            item_id=form.instance.pk)
+        container = Container.objects.get(pk=self.kwargs['container_id'])
+        ContainerItems.objects.create(container=container,
+            item=new_item, position=100)
         messages.info(self.request, 'Item has been created!')
-        return super(ItemCreateView, self).form_valid(form)
-
+        return response
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
