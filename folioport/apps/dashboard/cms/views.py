@@ -70,11 +70,7 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         response = super(ItemCreateView, self).form_valid(form)
-        new_item = Item.objects.create(item_class=self.kwargs['class_name'],
-            item_id=form.instance.pk)
-        container = Container.objects.get(pk=self.kwargs['container_id'])
-        ContainerItems.objects.create(container=container,
-            item=new_item, position=100)
+        self.object.assign_to_container(self.kwargs['container_id'])
         messages.info(self.request, 'Item has been created!')
         return response
 
@@ -89,10 +85,8 @@ class ItemDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:cms:container-list')
 
-    def delete(self, request, *args, **kwargs):
-        Item.objects.filter(
-            item_class=self.get_object().__class__.__name__, item_id=self.get_object().pk).delete()
-        return super(ItemDeleteView, self).delete(request, *args, **kwargs)
+    # def delete(self, request, *args, **kwargs):
+    #     return super(ItemDeleteView, self).delete(request, *args, **kwargs)
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
