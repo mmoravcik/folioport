@@ -18,6 +18,10 @@ class ItemText(abstract_models.AbstractItemText):
     pass
 
 
+class ItemRichText(abstract_models.AbstractItemRichText):
+    pass
+
+
 class Image(AbstractImage):
     pass
 

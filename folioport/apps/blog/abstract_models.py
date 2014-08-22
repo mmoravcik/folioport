@@ -10,8 +10,8 @@ from django.db.models import Max
 
 class ActivePostManager(models.Manager):
     def get_query_set(self):
-        return super(ActivePostManager, self).get_query_set().filter(active=True)
-
+        return super(ActivePostManager, self).\
+            get_query_set().filter(active=True)
 
 
 class AbstractBlogPost(models.Model):
@@ -37,8 +37,8 @@ class AbstractBlogPost(models.Model):
             self.save()
 
     def get_absolute_url(self):
-        return reverse('folioport:blog:post-detail', args=[self.slug, self.id])
-
+        return reverse('folioport:blog:post-detail',
+                       args=[self.slug, self.id])
 
 
 class AbstractPost(models.Model):
@@ -47,7 +47,8 @@ class AbstractPost(models.Model):
     active = models.BooleanField(default=True)
     content = models.TextField(default="", null=True, blank=True)
     release_date = models.DateField(null=True, blank=True)
-    thumbnail = models.ImageField(null=True, blank=True, upload_to='images/blog_thumbnails')
+    thumbnail = models.ImageField(null=True, blank=True,
+                                  upload_to='images/blog_thumbnails')
     order = models.IntegerField(null=True, blank=True)
 
     #todo review tagging
@@ -57,7 +58,8 @@ class AbstractPost(models.Model):
         return '%s (%s)' % (self.title, self.order)
 
     def get_absolute_url(self):
-        return reverse('folioport:blog:post-detail', args=[self.slug, self.id])
+        return reverse('folioport:blog:post-detail',
+                       args=[self.slug, self.id])
 
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)

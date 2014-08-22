@@ -1,5 +1,6 @@
 from django.db import models
 from django.template import loader, Context
+from django.utils.html import mark_safe
 
 from folioport.base import abstract_models
 
@@ -57,7 +58,12 @@ class AbstractContainerItems(models.Model):
 
 
 class ContentItemMixin(object):
-    def get_form_class(self):
+    @staticmethod
+    def get_form_class():
+        return None
+
+    @staticmethod
+    def get_edit_create_template():
         return None
 
     def render(self):
@@ -96,13 +102,39 @@ class AbstractItemText(ContentItemMixin, models.Model):
         return t.render(c)
 
 
+class AbstractItemRichText(ContentItemMixin, models.Model):
+    template = 'cms/content_items/rich_text.html'
+    text = models.TextField(default='')
+
+    class Meta:
+        abstract = True
+
+    def __unicode__(self):
+        return self.text
+
+    @staticmethod
+    def get_form_class():
+        from forms import ItemRichText
+        return ItemRichText
+
+    @staticmethod
+    def get_edit_create_template():
+        return 'cms/content_items/admin/rich_text.html'
+
+    def render(self):
+        t = loader.get_template(self.template)
+        c = Context({'text': mark_safe(self.text)})
+        return t.render(c)
+
+
 class AbstractItemImage(ContentItemMixin, abstract_models.AbstractImage):
     template = 'cms/content_items/image.html'
 
     class Meta:
         abstract = True
 
-    def get_form_class(self):
+    @staticmethod
+    def get_form_class():
         from forms import ItemImageForm
         return ItemImageForm
 

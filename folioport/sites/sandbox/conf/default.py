@@ -163,10 +163,8 @@ CKEDITOR_IMAGE_BACKEND = 'pillow'
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'Full',
+        'toolbar': 'Basic',
         'height': 600,
         'width': '70%',
         },
     }
-
-CRISPY_TEMPLATE_PACK = 'bootstrap3'

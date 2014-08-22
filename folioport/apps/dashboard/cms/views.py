@@ -39,8 +39,8 @@ class ItemEditView(LoginRequiredMixin, UpdateView):
         return self.model.objects.filter(id=self.kwargs['pk'])
 
     def get_form_class(self):
-        if self.get_object().get_form_class():
-            return self.get_object().get_form_class()
+        if self.model.get_form_class():
+            return self.model.get_form_class()
         return super(ItemEditView, self).get_form_class()
 
     def get_success_url(self):
@@ -61,9 +61,19 @@ class ItemCreateRedirectView(LoginRequiredMixin, RedirectView):
 class ItemCreateView(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/cms/item_create.html'
 
-    def get_queryset(self):
+    def get_template_names(self):
+        if self.model.get_edit_create_template():
+            return [self.model.get_edit_create_template()]
+        return [self.template_name]
+
+    def get_form_class(self):
+        if self.model.get_form_class():
+            return self.model.get_form_class()
+        return super(ItemCreateView, self).get_form_class()
+
+    def dispatch(self, *args, **kwargs):
         self.model = models.get_model('cms', self.kwargs['class_name'])
-        return self.model.objects.all()
+        return super(ItemCreateView, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:cms:container-list')
