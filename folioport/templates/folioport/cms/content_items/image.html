@@ -1,7 +1,6 @@
 {% load thumbnail %}
 
-
-{% thumbnail image.image image.get_solr_thumbnail_geometry as im %}
+{% thumbnail image.image image.get_solr_thumbnail_geometry format=image.thumbnail_type as im %}
 <div>
     <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
 </div>
