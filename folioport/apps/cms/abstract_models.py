@@ -56,7 +56,15 @@ class AbstractContainerItems(models.Model):
         return "%s - %s" % (self.container, self.item)
 
 
-class AbstractItemText(models.Model):
+class ContentItemMixin(object):
+    def get_form_class(self):
+        return None
+
+    def render(self):
+        return ""
+
+
+class AbstractItemText(ContentItemMixin, models.Model):
     template = 'cms/content_items/text.html'
     text = models.TextField(default='')
 
@@ -72,11 +80,15 @@ class AbstractItemText(models.Model):
         return t.render(c)
 
 
-class AbstractItemImage(abstract_models.AbstractImage):
+class AbstractItemImage(ContentItemMixin, abstract_models.AbstractImage):
     template = 'cms/content_items/image.html'
 
     class Meta:
         abstract = True
+
+    def get_form_class(self):
+        from forms import ItemImageForm
+        return ItemImageForm
 
     def render(self):
         t = loader.get_template(self.template)
@@ -84,7 +96,7 @@ class AbstractItemImage(abstract_models.AbstractImage):
         return t.render(c)
 
 
-class AbstractRandomImage(models.Model):
+class AbstractRandomImage(ContentItemMixin, models.Model):
     template = 'cms/content_items/random_image.html'
     image = models.ManyToManyField('cms.Image')
 

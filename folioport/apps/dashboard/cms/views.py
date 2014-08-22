@@ -38,6 +38,11 @@ class ItemEditView(LoginRequiredMixin, UpdateView):
         self.model = models.get_model('cms', self.kwargs['class_name'])
         return self.model.objects.filter(id=self.kwargs['pk'])
 
+    def get_form_class(self):
+        if self.get_object().get_form_class():
+            return self.get_object().get_form_class()
+        return super(ItemEditView, self).get_form_class()
+
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:cms:container-list')
 
@@ -56,9 +61,9 @@ class ItemCreateRedirectView(LoginRequiredMixin, RedirectView):
 class ItemCreateView(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/cms/item_create.html'
 
-    def dispatch(self, *args, **kwargs):
+    def get_queryset(self):
         self.model = models.get_model('cms', self.kwargs['class_name'])
-        return super(ItemCreateView, self).dispatch(*args, **kwargs)
+        return self.model.objects.all()
 
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:cms:container-list')
@@ -77,9 +82,9 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
 class ItemDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'dashboard/cms/item_delete.html'
 
-    def dispatch(self, *args, **kwargs):
+    def get_queryset(self):
         self.model = models.get_model('cms', self.kwargs['class_name'])
-        return super(ItemDeleteView, self).dispatch(*args, **kwargs)
+        return self.model.objects.filter(id=self.kwargs['pk'])
 
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:cms:container-list')
