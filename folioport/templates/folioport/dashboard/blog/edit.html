@@ -22,14 +22,6 @@
     {% endfor %}
 
 
-    <form action='{% url 'folioport:dashboard:cms:item-create-redirect' %}'>
-    <select name='class_name'>
-        <option value='ItemImage'>Image</option>
-        <option value='ItemText'>Text</option>
-        <option value='ItemRandomImage'>Random image</option>
-    </select>
-    <input type='hidden' name='container_id' value='{{ object.container.id }}' />
-    <input type='submit' value='Add new item' />
-    </form>
+    {% include 'dashboard/cms/includes/add_content_type.html' %}
 
 {% endblock %}

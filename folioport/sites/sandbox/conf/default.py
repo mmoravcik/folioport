@@ -168,3 +168,11 @@ CKEDITOR_CONFIGS = {
         'width': '70%',
         },
     }
+
+FOLIOPORT_CONTENT_TYPES = [
+    'ItemImage',
+    'Text',
+    'ItemRandomImage',
+    'ItemRichText',
+    'ItemEmbed',
+]
