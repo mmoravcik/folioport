@@ -98,7 +98,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -149,10 +149,9 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'djangoratings',
-    #'debug_toolbar',
+    'debug_toolbar',
     'ckeditor',
-    'floppyforms',
-    'crispy_forms',
+    'ajaxuploader',
 )
 
 MYCSS_ROOT= MEDIA_ROOT + '/css/'
@@ -168,3 +167,7 @@ CKEDITOR_CONFIGS = {
         'width': '70%',
         },
     }
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TEMPLATE_CONTEXT': True,
+}
