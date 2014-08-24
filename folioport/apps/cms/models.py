@@ -32,3 +32,7 @@ class ItemImage(abstract_models.AbstractItemImage):
 
 class ItemRandomImage(abstract_models.AbstractRandomImage):
     pass
+
+
+class ItemEmbed(abstract_models.AbstractItemEmbed):
+    pass
