@@ -11,3 +11,7 @@
 .image_picker_image {
     width:250px;
 }
+
+ul.thumbnails.image_picker_selector li .thumbnail a{
+    color: black;
+}

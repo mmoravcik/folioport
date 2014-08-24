@@ -70,14 +70,15 @@ class ContentItemMixin(object):
         return ""
 
     def assign_to_container(self, container_id, position=100):
-        Item = models.get_model('cms', 'Item')
-        Container = models.get_model('cms', 'Container')
-        ContainerItems = models.get_model('cms', 'ContainerItems')
-        new_item = Item.objects.create(
-            item_class=self.__class__.__name__, item_id=self.id)
-        container = Container.objects.get(pk=container_id)
-        ContainerItems.objects.create(
-            container=container, item=new_item, position=position)
+        if container_id and container_id != '0':
+            Item = models.get_model('cms', 'Item')
+            Container = models.get_model('cms', 'Container')
+            ContainerItems = models.get_model('cms', 'ContainerItems')
+            new_item = Item.objects.create(
+                item_class=self.__class__.__name__, item_id=self.id)
+            container = Container.objects.get(pk=container_id)
+            ContainerItems.objects.create(
+                container=container, item=new_item, position=position)
 
     def delete(self):
         Item = models.get_model('cms', 'Item')

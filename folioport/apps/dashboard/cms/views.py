@@ -60,7 +60,7 @@ class ItemCreateRedirectView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         return reverse_lazy('folioport:dashboard:cms:item-create',
             kwargs={'class_name': self.request.GET['class_name'],
-                    'container_id': self.request.GET['container_id']})
+                    'container_id': self.request.GET.get('container_id', 0)})
 
 
 class ItemCreateView(LoginRequiredMixin, CreateView):
