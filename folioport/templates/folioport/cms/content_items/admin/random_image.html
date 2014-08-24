@@ -1,0 +1,71 @@
+{% extends 'dashboard/layout.html' %}
+{% load staticfiles %}
+
+{% block extrascripts %}
+
+    {{ block.super }}
+    <script src="{% static 'folioport/js/lib/fileuploader.js' %}" ></script>
+    <script src="{% static 'folioport/js/lib/image-picker.js' %}" ></script>
+    <script>
+        $(function(){
+            var uploader = new qq.FileUploader({
+                action: "{% url 'folioport:my_ajax_upload' %}",
+                element: $('#file-uploader')[0],
+                multiple: true,
+                onComplete: function(id, fileName, responseJSON) {
+                    if(responseJSON.success) {
+                        alert("success!");
+                    } else {
+                        alert("upload failed!");
+                    }
+                },
+                onAllComplete: function(uploads) {
+                    // uploads is an array of maps
+                    // the maps look like this: {file: FileObject, response: JSONServerResponse}
+                    alert("All complete!");
+                },
+                params: {
+                    'csrf_token': '{{ csrf_token }}',
+                    'csrf_name': 'csrfmiddlewaretoken',
+                    'csrf_xname': 'X-CSRFToken'
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="{% static 'folioport/css/fileuploader.css' %}" media="screen" rel="stylesheet" type="text/css" />
+    <link href="{% static 'folioport/css/image-picker.css' %}" media="screen" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+<form action='.' method="POST">
+    {{ form }}
+    {% csrf_token %}
+    <br />
+    <input type='submit' value="Save" />
+</form>
+
+
+<div id="file-uploader">
+    <noscript>
+        <p>Please enable JavaScript to use file uploader.</p>
+    </noscript>
+</div>
+{% endblock %}
+
+{% block onbodyload %}
+    $("#id_image option").each(function(){
+        $(this).attr("data-img-src", '/static/' + $(this).text());
+    });
+
+
+    $("#id_image").imagepicker();
+
+    $(".image_picker_image").each(function(){
+        //$(this)
+    });
+{% endblock %}

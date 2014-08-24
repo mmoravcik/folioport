@@ -43,6 +43,11 @@ class ItemEditView(LoginRequiredMixin, UpdateView):
             return self.model.get_form_class()
         return super(ItemEditView, self).get_form_class()
 
+    def get_template_names(self):
+        if self.model.get_edit_create_template():
+            return [self.model.get_edit_create_template()]
+        return [self.template_name]
+
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:cms:container-list')
 

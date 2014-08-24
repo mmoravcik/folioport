@@ -1,10 +1,10 @@
-from django.conf.urls import patterns, include
+from django.conf.urls import patterns, include, url
 
 from folioport.apps.project.app import application as project_app
 from folioport.apps.blog.app import application as blog_app
 from folioport.apps.dashboard.app import application as dashboard_app
 from folioport.base.app import Application
-from folioport.base.views import HomeView
+from folioport.base import views
 
 
 class FolioportApplication(Application):
@@ -12,7 +12,7 @@ class FolioportApplication(Application):
 
     project_app = project_app
     base_app = Application
-    home_view = HomeView
+    home_view = views.HomeView
     blog_app = blog_app
     dashboard_app = dashboard_app
 
@@ -22,6 +22,8 @@ class FolioportApplication(Application):
             (r'^projects/', include(self.project_app.urls)),
             (r'^dashboard/', include(self.dashboard_app.urls)),
             (r'^blog/', include(self.blog_app.urls)),
+            url(r'start$', views.start, name="start"),
+            url(r'ajax-upload$', views.import_uploader, name="my_ajax_upload"),
             (r'^$', self.home_view.as_view()),
         )
         return urlpatterns

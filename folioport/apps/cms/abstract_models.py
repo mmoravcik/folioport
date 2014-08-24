@@ -151,6 +151,10 @@ class AbstractRandomImage(ContentItemMixin, models.Model):
     class Meta:
         abstract = True
 
+    @staticmethod
+    def get_edit_create_template():
+        return 'cms/content_items/admin/random_image.html'
+
     def render(self):
         t = loader.get_template(self.template)
         c = Context({'image': self.image.all().order_by('?')[0]})
