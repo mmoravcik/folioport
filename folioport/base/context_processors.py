@@ -10,4 +10,5 @@ def folioport_project(request):
         'folioport_project_categories' : Category.objects.filter(active=1),
         'GOOGLE_ANALYTICS_ACCOUNT': settings.GOOGLE_ANALYTICS_ACCOUNT,
         'folioport_projects': Project.active_objects.all(),
+        'folioport_content_types': settings.FOLIOPORT_CONTENT_TYPES,
     }

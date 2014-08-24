@@ -144,6 +144,23 @@ class AbstractItemImage(ContentItemMixin, abstract_models.AbstractImage):
         return t.render(c)
 
 
+class AbstractItemEmbed(ContentItemMixin, abstract_models.AbstractEmbed):
+    template = 'cms/content_items/embed.html'
+
+    class Meta:
+        abstract = True
+
+    @staticmethod
+    def get_form_class():
+        from forms import ItemEmbedForm
+        return ItemEmbedForm
+
+    def render(self):
+        t = loader.get_template(self.template)
+        c = Context({'embed': self})
+        return t.render(c)
+
+
 class AbstractRandomImage(ContentItemMixin, models.Model):
     template = 'cms/content_items/random_image.html'
     image = models.ManyToManyField('cms.Image')
