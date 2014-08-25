@@ -4,6 +4,6 @@
         <option value='{{ content_type }}'>{{ content_type }}</option>
         {% endfor %}
     </select>
-    <input type='hidden' name='container_id' value='{{ object.id }}' />
+    <input type='hidden' name='container_id' value='{{ object.container.id }}' />
     <input type='submit' value='Add new item' />
 </form>
