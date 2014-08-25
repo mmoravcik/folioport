@@ -13,7 +13,7 @@ class HomeView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
-        context['projects'] = Project.active_objects.all()
+        context['projects'] = Project.objects.all()
 
         container = Container.objects.get(id=1)
         context['cms'] = container.render()

@@ -10,11 +10,6 @@ from django.db.models import Max
 from folioport.base.utils import get_solr_thumbnail_geometry
 
 
-class ActiveProjectManager(models.Manager):
-    def get_query_set(self):
-        return super(ActiveProjectManager, self).get_query_set().filter(active=True)
-
-
 class AbstractProject(models.Model):
     JPEG, PNG, GIF = "JPEG", "PNG", "GIF"
 
@@ -28,14 +23,13 @@ class AbstractProject(models.Model):
     category = models.ManyToManyField('project.Category')
     slug = models.SlugField(max_length=128)
     active = models.BooleanField(default=True)
-    summary = models.TextField(default="", null=True, blank=True)
-    description = models.TextField(default="", null=True, blank=True)
     release_date = models.DateField(null=True, blank=True)
     thumbnail = models.ImageField(null=True, blank=True, upload_to='images/project_thumbnails')
     thumbnail_height = models.IntegerField(default=0)
     thumbnail_width = models.IntegerField(default=100)
     thumbnail_type = models.CharField(max_length=4, choices=THUMBNAIL_TYPE_CHOICE, default=JPEG)
     order = models.IntegerField(null=True, blank=True)
+    container = models.ForeignKey('cms.Container', null=True, blank=True)
 
     #todo review tagging
     tags = TagField()
@@ -44,12 +38,6 @@ class AbstractProject(models.Model):
 
     def __unicode__(self):
         return '%s (%s)' % (self.name, self.order)
-
-    def get_images(self):
-        return self.image_set.all().order_by('order')
-
-    def get_embeds(self):
-        return self.embed_set.all().order_by('order')
 
     def get_absolute_url(self):
         return reverse('folioport:project:project-detail', args=[self.slug, self.id])
@@ -91,9 +79,9 @@ class AbstractProject(models.Model):
         if category_slug:
             categories = Category.active_objects.filter(slug=category_slug)
             if categories:
-                return Project.active_objects.filter(category=categories[0]).exclude(id=self.id)
+                return Project.objects.filter(category=categories[0]).exclude(id=self.id)
 
-        return Project.active_objects.all().exclude(id=self.id)
+        return Project.objects.all().exclude(id=self.id)
 
     class Meta:
         abstract = True
@@ -101,6 +89,11 @@ class AbstractProject(models.Model):
 
     def save(self, *args, **kwargs):
         super(AbstractProject, self).save(*args, **kwargs)
+        if self.container is None:
+            Container = models.get_model('cms', 'Container')
+            container = Container.objects.create(title=self.name)
+            self.container = container
+            self.save()
         if self.order is None:
             Project = models.get_model('project', 'Project')
             max_order = Project.objects.all().aggregate(Max('order'))['order__max']
@@ -108,5 +101,3 @@ class AbstractProject(models.Model):
             self.order = max_order + 10
             self.save()
 
-    objects = models.Manager()
-    active_objects = ActiveProjectManager()

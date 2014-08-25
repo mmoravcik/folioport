@@ -1,4 +1,17 @@
 GOOGLE_ANALYTICS_ACCOUNT = 'test'
 
-ENABLED_WIDGETS = ['google_analytics', 'rating',
-                   'related_projects', 'social_share']
+FOLIOPORT_CONTENT_TYPES = [
+    'ItemImage',
+    'ItemText',
+    'ItemRandomImage',
+    'ItemRichText',
+    'ItemEmbed',
+    ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Basic',
+        'height': 600,
+        'width': '70%',
+        },
+    }

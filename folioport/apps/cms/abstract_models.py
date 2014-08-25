@@ -115,8 +115,8 @@ class AbstractItemRichText(ContentItemMixin, models.Model):
 
     @staticmethod
     def get_form_class():
-        from forms import ItemRichText
-        return ItemRichText
+        from forms import ItemRichTextForm
+        return ItemRichTextForm
 
     @staticmethod
     def get_edit_create_template():
