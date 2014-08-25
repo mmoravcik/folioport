@@ -1,0 +1,51 @@
+{% extends 'dashboard/layout.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<h1 class="page-header">PROJECTS!</h1>
+<a href='{% url "folioport:dashboard:project:create" %}'
+   class='btn btn-primary btn-lg pull-right'>+ Add new projet</a>
+
+<h2>List of your current projects</h2>
+
+
+    {% if object_list %}
+    <div class='responsive-table'>
+        <table class="table table-hover" style="width:600px;">
+            <tr>
+                <th>{% trans 'project title' %}</th>
+                <th>{% trans 'Active' %}</th>
+                <th>{% trans 'Actions' %}</th>
+            </tr>
+
+            {% for project in object_list %}
+            <tr>
+                <td>{{ project.name }}</td>
+                <td class='text-center'>
+                    {% if project.active %}
+                    <i class="glyphicon glyphicon-ok" style="color:green"></i>
+                    {% else %}
+                    <i class="glyphicon glyphicon-remove" style="color:red"></i>
+                    {% endif %}
+                </td>
+                <td class='text-center'>
+                    <a href='{% url "folioport:dashboard:project:edit" project.id %}'
+                       class='btn btn-outline btn-primary btn-xs'>
+                        {% trans 'edit' %} <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a href='{% url "folioport:dashboard:project:delete" project.id %}'
+                       class='btn btn-outline btn-danger btn-xs'>
+                        delete <i class="fa fa-times"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    {% trans 'No projects yet!' %}
+    {% endif %}
+
+
+{% endblock %}

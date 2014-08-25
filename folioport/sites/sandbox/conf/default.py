@@ -173,10 +173,4 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TEMPLATE_CONTEXT': True,
 }
 
-FOLIOPORT_CONTENT_TYPES = [
-    'ItemImage',
-    'Text',
-    'ItemRandomImage',
-    'ItemRichText',
-    'ItemEmbed',
-]
+
