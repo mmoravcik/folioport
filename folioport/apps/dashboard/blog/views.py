@@ -8,7 +8,7 @@ from django.contrib import messages
 from folioport.base.mixins import LoginRequiredMixin
 from folioport.apps.blog.forms import PostForm
 
-Post = models.get_model('blog', 'BlogPost')
+Post = models.get_model('blog', 'Post')
 
 
 class PostListView(LoginRequiredMixin, ListView):
