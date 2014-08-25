@@ -6,4 +6,5 @@
     </select>
     <input type='hidden' name='container_id' value='{{ object.container.id }}' />
     <input type='submit' value='Add new item' />
+    <input type='hidden' name='next' value='{{ request.get_full_path }}' />
 </form>

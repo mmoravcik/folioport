@@ -1,0 +1,9 @@
+Content<br />
+{% for item in object.container.get_items %}
+<div style='width:1000px; float:left; border:solid 1px #333; padding: 15px; margin:15px'>
+    {{ item.render }}
+    <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk %}?next={{ request.get_full_path }}">edit</a>
+    <a href="{% url 'folioport:dashboard:cms:item-delete' item.class_name item.pk %}">delete</a>
+</div>
+{% endfor %}
+{% include 'dashboard/cms/includes/add_content_type.html' %}

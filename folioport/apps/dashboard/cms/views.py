@@ -49,6 +49,8 @@ class ItemEditView(LoginRequiredMixin, UpdateView):
         return [self.template_name]
 
     def get_success_url(self):
+        if self.request.GET.get('next'):
+            return self.request.GET.get('next')
         return reverse_lazy('folioport:dashboard:cms:container-list')
 
     def form_valid(self, form):
@@ -58,9 +60,10 @@ class ItemEditView(LoginRequiredMixin, UpdateView):
 
 class ItemCreateRedirectView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-        return reverse_lazy('folioport:dashboard:cms:item-create',
+        return "%s?next=%s" % (reverse_lazy('folioport:dashboard:cms:item-create',
             kwargs={'class_name': self.request.GET['class_name'],
-                    'container_id': self.request.GET.get('container_id', 0)})
+                    'container_id': self.request.GET.get('container_id', 0)}),
+        self.request.GET.get('next', ''))
 
 
 class ItemCreateView(LoginRequiredMixin, CreateView):
@@ -81,6 +84,8 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
         return super(ItemCreateView, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
+        if self.request.GET.get('next'):
+            return self.request.GET.get('next')
         return reverse_lazy('folioport:dashboard:cms:container-list')
 
     def form_valid(self, form):

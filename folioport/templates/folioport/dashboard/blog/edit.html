@@ -5,23 +5,16 @@
 
     <h1 class="page-header">{% trans 'EDIT THE POST' %}</h1>
     {{ form.media }}
-    <form enctype="multipart/form-data" action="" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <br />
-        <input class='btn btn-primary' type="submit" value="{% trans 'Update post' %}" />
-        &nbsp; <a href="{% url 'folioport:dashboard:blog:post-list' %}">{% trans 'Cancel' %}</a>
-    </form>
+    <div style='float:left;width:300px;'>
+        <form enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <br />
+            <input class='btn btn-primary' type="submit" value="{% trans 'Update post' %}" />
+            &nbsp; <a href="{% url 'folioport:dashboard:blog:post-list' %}">{% trans 'Cancel' %}</a>
+        </form>
+    </div>
+    {% include 'dashboard/cms/includes/container_content.html' %}
 
-    {% for item in object.container.get_items %}
-       <div style='width:80%; border:solid 1px #333; padding: 15px; margin:15px'>
-            {{ item.render }}
-            <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk %}">edit</a>
-            <a href="{% url 'folioport:dashboard:cms:item-delete' item.class_name item.pk %}">delete</a>
-        </div>
-    {% endfor %}
-
-
-    {% include 'dashboard/cms/includes/add_content_type.html' %}
 
 {% endblock %}

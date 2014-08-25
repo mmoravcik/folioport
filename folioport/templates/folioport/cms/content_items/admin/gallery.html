@@ -24,7 +24,7 @@
 </form>
 
 
-<a href="{% url 'folioport:dashboard:cms:item-create-redirect' %}?class_name=GalleryImage">Add image</a>
+<a href="{% url 'folioport:dashboard:cms:item-create-redirect' %}?class_name=GalleryImage&amp;next={{ request.get_full_path }}">Add image</a>
 
 {% endblock %}
 
