@@ -30,6 +30,13 @@ class Image(ContentItemMixin, AbstractImage):
         return ImageForm
 
 
+class GalleryImage(ContentItemMixin, AbstractImage):
+    @staticmethod
+    def get_form_class():
+        from forms import GalleryImageForm
+        return GalleryImageForm
+
+
 class ItemImage(abstract_models.AbstractItemImage):
     pass
 
@@ -39,4 +46,8 @@ class ItemRandomImage(abstract_models.AbstractRandomImage):
 
 
 class ItemEmbed(abstract_models.AbstractItemEmbed):
+    pass
+
+
+class ItemGallery(abstract_models.AbstractItemGallery):
     pass

@@ -16,6 +16,12 @@ class ImageForm(forms.ModelForm):
         fields = ('image', 'caption', 'width', 'thumbnail_type')
 
 
+class GalleryImageForm(forms.ModelForm):
+    class Meta:
+        model = get_model('cms', 'GalleryImage')
+        fields = ('image', 'caption', 'width', 'thumbnail_type')
+
+
 class ItemEmbedForm(forms.ModelForm):
     class Meta:
         model = get_model('cms', 'ItemEmbed')

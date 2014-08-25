@@ -1,0 +1,9 @@
+{% load thumbnail %}
+
+{% for image in images %}
+    {% thumbnail image.image image.get_solr_thumbnail_geometry as im %}
+<div class='image-container' style='margin:0 12px 12px 0;border:solid 0px red;width:{{ im.width }}px;float:left;'>
+        <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
+    </div>
+    {% endthumbnail %}
+{% endfor %}

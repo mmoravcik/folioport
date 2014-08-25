@@ -14,11 +14,9 @@ class Migration(SchemaMigration):
             ('title', self.gf('django.db.models.fields.CharField')(max_length=128)),
             ('slug', self.gf('django.db.models.fields.SlugField')(max_length=128)),
             ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('content', self.gf('django.db.models.fields.TextField')(default='', null=True, blank=True)),
             ('release_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('thumbnail', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
             ('order', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('tags', self.gf('tagging.fields.TagField')()),
+            ('container', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['cms.Container'], null=True, blank=True)),
         ))
         db.send_create_signal(u'blog', ['Post'])
 
@@ -30,15 +28,18 @@ class Migration(SchemaMigration):
 
     models = {
         u'blog.post': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Post'},
+            'Meta': {'object_name': 'Post'},
             'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'content': ('django.db.models.fields.TextField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
+            'container': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['cms.Container']", 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'release_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '128'}),
-            'tags': ('tagging.fields.TagField', [], {}),
-            'thumbnail': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '128'})
+        },
+        u'cms.container': {
+            'Meta': {'object_name': 'Container'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '128'})
         }
     }

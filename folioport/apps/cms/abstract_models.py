@@ -177,3 +177,20 @@ class AbstractRandomImage(ContentItemMixin, models.Model):
         t = loader.get_template(self.template)
         c = Context({'image': self.image.all().order_by('?')[0]})
         return t.render(c)
+
+
+class AbstractItemGallery(ContentItemMixin, models.Model):
+    template = 'cms/content_items/gallery.html'
+    image = models.ManyToManyField('cms.GalleryImage')
+
+    class Meta:
+        abstract = True
+
+    @staticmethod
+    def get_edit_create_template():
+        return 'cms/content_items/admin/gallery.html'
+
+    def render(self):
+        t = loader.get_template(self.template)
+        c = Context({'images': self.image.all()})
+        return t.render(c)

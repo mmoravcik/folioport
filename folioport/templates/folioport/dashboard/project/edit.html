@@ -4,6 +4,9 @@
 {% block content %}
 
     <h1 class="page-header">{% trans 'EDIT PROJECT' %}</h1>
+
+
+    <div style='float:left;width:300px;'>
     {{ form.media }}
     <form enctype="multipart/form-data" action="" method="post">
         {% csrf_token %}
@@ -12,7 +15,12 @@
         <input class='btn btn-primary' type="submit" value="{% trans 'Update' %}" />
         &nbsp; <a href="{% url 'folioport:dashboard:project:list' %}">{% trans 'Cancel' %}</a>
     </form>
+    </div>
 
+
+    <div style="float:left">
+        Content<br />
+        {% include 'dashboard/cms/includes/add_content_type.html' %}
     {% for item in object.container.get_items %}
        <div style='width:80%; border:solid 1px #333; padding: 15px; margin:15px'>
             {{ item.render }}
@@ -20,8 +28,8 @@
             <a href="{% url 'folioport:dashboard:cms:item-delete' item.class_name item.pk %}">delete</a>
         </div>
     {% endfor %}
+        {% include 'dashboard/cms/includes/add_content_type.html' %}
+    </div>
 
-
-    {% include 'dashboard/cms/includes/add_content_type.html' %}
 
 {% endblock %}

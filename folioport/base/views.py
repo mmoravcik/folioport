@@ -15,8 +15,6 @@ class HomeView(TemplateView):
         context = TemplateView.get_context_data(self, **kwargs)
         context['projects'] = Project.objects.all()
 
-        container = Container.objects.get(id=1)
-        context['cms'] = container.render()
         return context
 
 

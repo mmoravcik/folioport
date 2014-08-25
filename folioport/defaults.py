@@ -6,6 +6,7 @@ FOLIOPORT_CONTENT_TYPES = [
     'ItemRandomImage',
     'ItemRichText',
     'ItemEmbed',
+    'ItemGallery',
     ]
 
 CKEDITOR_CONFIGS = {

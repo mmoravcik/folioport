@@ -1,0 +1,44 @@
+{% extends 'dashboard/layout.html' %}
+{% load staticfiles %}
+
+{% block extrascripts %}
+
+    {{ block.super }}
+    <script src="{% static 'folioport/js/lib/image-picker.js' %}" ></script>
+
+{% endblock %}
+
+{% block css %}
+
+    <link href="{% static 'folioport/css/image-picker.css' %}" media="screen" rel="stylesheet" type="text/css" />
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+<form action='.' method="POST">
+    {{ form }}
+    {% csrf_token %}
+    <br />
+    <input type='submit' value="Save" />
+</form>
+
+
+<a href="{% url 'folioport:dashboard:cms:item-create-redirect' %}?class_name=GalleryImage">Add image</a>
+
+{% endblock %}
+
+{% block onbodyload %}
+    $("#id_image option").each(function(){
+        $(this).attr("data-img-src", '/static/' + $(this).text());
+        var edit_url = "{% url 'folioport:dashboard:cms:item-edit' 'GalleryImage' '99999999999' %}";
+        var correct_edit_url = edit_url.replace(/99999999999/, $(this).attr('value'));
+
+        var delete_url = "{% url 'folioport:dashboard:cms:item-delete' 'GalleryImage' '99999999999' %}";
+        var correct_delete_url = delete_url.replace(/99999999999/, $(this).attr('value'));
+        $(this).attr("data-img-label", '<a href="' + correct_edit_url +'">edit</a> &nbsp; <a href="' + correct_delete_url +'">delete</a>' );
+
+    });
+
+    $("#id_image").imagepicker({show_label: true});
+{% endblock %}
