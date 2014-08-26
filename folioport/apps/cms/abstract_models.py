@@ -25,6 +25,11 @@ class AbstractContainer(models.Model):
             items.append(item_object)
         return items
 
+    def delete(self):
+        for item in self.item_set.all():
+            item.delete()
+        return super(AbstractContainer, self).delete()
+
     def render(self):
         html = ''
         for item in self.get_items():

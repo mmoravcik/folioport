@@ -24,5 +24,10 @@ class AbstractPost(models.Model):
             self.container = container
             self.save()
 
+    def delete(self):
+        if self.container:
+            self.container.delete()
+        return super(AbstractPost, self).delete()
+
     def get_absolute_url(self):
         return reverse('folioport:blog:post-detail', args=[self.slug, self.id])

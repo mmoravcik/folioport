@@ -101,3 +101,8 @@ class AbstractProject(models.Model):
             self.order = max_order + 10
             self.save()
 
+    def delete(self):
+        if self.container:
+            self.container.delete()
+        return super(AbstractProject, self).delete()
+
