@@ -74,7 +74,7 @@ class ContentItemMixin(object):
             Item = models.get_model('cms', 'Item')
             Container = models.get_model('cms', 'Container')
             ContainerItems = models.get_model('cms', 'ContainerItems')
-            new_item = Item.objects.create(
+            new_item, created = Item.objects.get_or_create(
                 item_class=self.__class__.__name__, item_id=self.id)
             container = Container.objects.get(pk=container_id)
             ContainerItems.objects.create(
