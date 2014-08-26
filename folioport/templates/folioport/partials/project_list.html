@@ -1,14 +1,16 @@
 {% load thumbnail %}
 {% for project in projects %}
 
-    {% thumbnail project.thumbnail project.get_solr_thumbnail_geometry as im %}
+
     <div>
         <a href='{{ project.get_absolute_url }}{%if category_slug %}?cat={{ category_slug }}{% endif %}'>
-            <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ project.name }}' />
-            <br />
+            {% thumbnail project.thumbnail project.get_solr_thumbnail_geometry as im %}
+            <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ project.name }}' /><br />
+            {% endthumbnail %}
+
             {{ project.name }}<br />
         </a>
     </div>
-    {% endthumbnail %}
+
 
 {% endfor %}

@@ -4,8 +4,6 @@
 {% block content %}
 
 <h1 class="page-header">CMS!</h1>
-<a href='{% url "folioport:dashboard:cms:container-create" %}'
-   class='btn btn-primary btn-lg pull-right'>+ Add new container</a>
 
 <h2>List of your current containers</h2>
 
@@ -33,10 +31,6 @@
                     <a href='{% url "folioport:dashboard:cms:container-edit" object.id %}'
                        class='btn btn-outline btn-primary btn-xs'>
                         {% trans 'edit' %} <i class="glyphicon glyphicon-edit"></i>
-                    </a>
-                    <a href='{% url "folioport:dashboard:cms:container-delete" object.id %}'
-                       class='btn btn-outline btn-danger btn-xs'>
-                        delete <i class="fa fa-times"></i>
                     </a>
                 </td>
             </tr>
