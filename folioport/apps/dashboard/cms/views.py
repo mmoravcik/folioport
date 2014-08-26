@@ -104,28 +104,3 @@ class ItemDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:cms:container-list')
-
-    # def delete(self, request, *args, **kwargs):
-    #     return super(ItemDeleteView, self).delete(request, *args, **kwargs)
-
-
-class PostCreateView(LoginRequiredMixin, CreateView):
-    model = Post
-    form_class = PostForm
-    template_name = 'dashboard/blog/create.html'
-
-    def get_success_url(self):
-        return reverse_lazy('folioport:dashboard:blog:post-list')
-
-    def form_valid(self, form):
-        messages.info(self.request, 'Post has been created!')
-        return super(PostCreateView, self).form_valid(form)
-
-
-class PostDeleteView(LoginRequiredMixin, DeleteView):
-    model = Post
-    template_name = 'dashboard/blog/delete.html'
-
-    def get_success_url(self):
-        messages.info(self.request, 'Post has been deleted!')
-        return reverse_lazy('folioport:dashboard:blog:post-list')
