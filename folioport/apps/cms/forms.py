@@ -29,10 +29,10 @@ class ItemEmbedForm(forms.ModelForm):
 
 
 class ItemRichTextForm(forms.ModelForm):
-     text = forms.CharField(
-         widget=CKEditorWidget()
-     )
+    text = forms.CharField(
+        widget=CKEditorWidget()
+    )
 
-     class Meta:
+    class Meta:
         model = get_model('cms', 'ItemRichText')
         fields = ('text',)

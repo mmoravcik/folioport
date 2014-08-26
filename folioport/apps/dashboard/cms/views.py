@@ -103,4 +103,6 @@ class ItemDeleteView(LoginRequiredMixin, DeleteView):
         return self.model.objects.filter(id=self.kwargs['pk'])
 
     def get_success_url(self):
+        if self.request.GET.get('next'):
+            return self.request.GET.get('next')
         return reverse_lazy('folioport:dashboard:cms:container-list')
