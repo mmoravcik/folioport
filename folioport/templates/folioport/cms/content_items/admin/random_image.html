@@ -17,6 +17,7 @@
 {% endblock %}
 
 {% block content %}
+<h3>Please select images you'd like to use</h3>
 
 <form action='' method="POST">
     {{ form }}
@@ -39,13 +40,14 @@
 {% endblock %}
 
 {% block onbodyload %}
-    $("#id_image option").each(function(){
+    $("#id_image option").each(function() {
+        var next_url = "?next={{ request.get_full_path}}";
         $(this).attr("data-img-src", '/static/' + $(this).text());
         var edit_url = "{% url 'folioport:dashboard:cms:item-edit' 'Image' '99999999999' %}";
-        var correct_edit_url = edit_url.replace(/99999999999/, $(this).attr('value'));
+        var correct_edit_url = edit_url.replace(/99999999999/, $(this).attr('value')) + next_url;
 
         var delete_url = "{% url 'folioport:dashboard:cms:item-delete' 'Image' '99999999999' %}";
-        var correct_delete_url = delete_url.replace(/99999999999/, $(this).attr('value'));
+        var correct_delete_url = delete_url.replace(/99999999999/, $(this).attr('value')) + next_url;
         $(this).attr("data-img-label", '<a href="' + correct_edit_url +'">edit</a> &nbsp; <a href="' + correct_delete_url +'">delete</a>' );
 
     });
