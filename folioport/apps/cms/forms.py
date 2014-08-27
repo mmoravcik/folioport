@@ -19,7 +19,7 @@ class ImageForm(forms.ModelForm):
 class GalleryImageForm(forms.ModelForm):
     class Meta:
         model = get_model('cms', 'GalleryImage')
-        fields = ('image', 'caption', 'width', 'thumbnail_type')
+        fields = ('image', 'hover_image', 'caption', 'width', 'thumbnail_type')
 
 
 class ItemEmbedForm(forms.ModelForm):

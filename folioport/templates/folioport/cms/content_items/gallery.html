@@ -2,8 +2,14 @@
 
 {% for image in images %}
     {% thumbnail image.image image.get_solr_thumbnail_geometry as im %}
-<div class='image-container' style='margin:0 12px 12px 0;border:solid 0px red;width:{{ im.width }}px;float:left;'>
-        <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
+    <div class='image-container' style='margin:0 12px 12px 0;border:solid 0px red;width:{{ im.width }}px;float:left;'>
+        {% if image.hover_image %}
+            {% thumbnail image.hover_image image.get_solr_thumbnail_geometry as hover_im %}
+                <img class='hover_image' style='display:none' width='{{ hover_im.width }}' height='{{ hover_im.height }}' src='{{ hover_im.url }}' alt='{{ hover_im.url }}' />
+            {% endthumbnail %}
+        {% endif %}
+
+        <img class='normal_image' width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
     </div>
     {% endthumbnail %}
 {% endfor %}

@@ -1,3 +1,5 @@
+from django.db import models
+
 from folioport.apps.cms import abstract_models
 from folioport.base.abstract_models import AbstractImage
 from folioport.apps.cms.abstract_models import ContentItemMixin
@@ -31,6 +33,9 @@ class Image(ContentItemMixin, AbstractImage):
 
 
 class GalleryImage(ContentItemMixin, AbstractImage):
+    hover_image = models.ImageField(
+        upload_to='hover_images', null=True, blank=True)
+
     @staticmethod
     def get_form_class():
         from forms import GalleryImageForm
