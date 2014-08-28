@@ -4,5 +4,5 @@
 {% thumbnail image.image image.get_solr_thumbnail_geometry as im %}
 <div>
     <img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
-</div>
+</div><div class='clear'></div>
 {% endthumbnail %}

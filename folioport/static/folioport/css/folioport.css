@@ -15,3 +15,7 @@
 ul.thumbnails.image_picker_selector li .thumbnail a{
     color: black;
 }
+
+.clear {
+    clear:both;
+}
