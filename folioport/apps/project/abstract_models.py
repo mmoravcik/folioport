@@ -1,8 +1,6 @@
 from tagging.fields import TagField
 from tagging.models import Tag, TaggedItem
 
-from djangoratings.fields import AnonymousRatingField
-
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Max
@@ -33,8 +31,6 @@ class AbstractProject(models.Model):
 
     #todo review tagging
     tags = TagField()
-    #todo review rating
-    rating = AnonymousRatingField(range=10, can_change_vote=True)
 
     def __unicode__(self):
         return '%s (%s)' % (self.name, self.order)
@@ -47,9 +43,6 @@ class AbstractProject(models.Model):
 
     def get_tags(self):
         return Tag.objects.get_for_object(self)
-
-    def get_rating(self):
-        return int(round(self.rating.get_rating(), 0))
 
     def get_solr_thumbnail_geometry(self):
         return get_solr_thumbnail_geometry(self.thumbnail_width, self.thumbnail_height)

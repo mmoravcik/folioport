@@ -16,11 +16,6 @@ class ProjectApplication(Application):
         urlpatterns += patterns('',
             url(r'^(?P<project_slug>[\w-]*)-(?P<pk>\d+)/$', self.project_view.as_view(), name='project-detail'),
             url(r'^(?P<category_slug>[\w-]*)/$', self.category_view.as_view(), name="category-detail"),
-            url(r'^rate/(?P<object_id>\d+)/(?P<score>\d+)/', AddRatingFromModel(), {
-                'app_label': 'project',
-                'model': 'project',
-                'field_name': 'rating',
-                }, name='rate_project'),
         )
         return urlpatterns
 

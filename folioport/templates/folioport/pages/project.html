@@ -28,8 +28,6 @@
 <div class='row-fluid'>
     <div class='span9'><h1>{{ project.name }}</h1></div>
     <div class='span2 offset1'>
-        {% include 'widgets/rating/widget.html' %}
-        <br />
         {% include 'widgets/social_add_this/widget.html' %}
     </div>
 </div>
@@ -76,6 +74,5 @@
 
 {% block extrascripts %}
     {{ block.super }}
-    {% include 'widgets/rating/widget.js.html'  with object=project link='projects/rate' %}
     {% include 'widgets/social_add_this/widget.js.html' %}
 {% endblock %}
