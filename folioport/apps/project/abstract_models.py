@@ -3,7 +3,6 @@ from tagging.models import Tag, TaggedItem
 
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import Max
 
 from folioport.base.utils import get_solr_thumbnail_geometry
 
@@ -26,7 +25,7 @@ class AbstractProject(models.Model):
     thumbnail_height = models.IntegerField(default=0)
     thumbnail_width = models.IntegerField(default=100)
     thumbnail_type = models.CharField(max_length=4, choices=THUMBNAIL_TYPE_CHOICE, default=JPEG)
-    order = models.IntegerField(null=True, blank=True)
+    order = models.IntegerField(default=0, null=True, blank=True)
     container = models.ForeignKey('cms.Container', null=True, blank=True)
 
     # TODO review tagging
@@ -52,26 +51,27 @@ class AbstractProject(models.Model):
         return objects[:limit]
 
     # TODO should be using get instead of filter in these queries?
-    def next(self, category_slug = None):
+    def next(self, category_slug=None):
         qs = self._get_filterered_qs(category_slug)
-        p = qs.filter(order__gte=self.order).order_by('order','pk')
+        p = qs.filter(order__gte=self.order).order_by('order', 'pk')
         if not p:
-            p = qs.order_by('order','pk')
-        return p[0] if p else None;
+            p = qs.order_by('order', 'pk')
+        return p[0] if p else None
 
-    def previous(self, category_slug = None):
+    def previous(self, category_slug=None):
         qs = self._get_filterered_qs(category_slug)
-        p = qs.filter(order__lte=self.order).order_by('-order','-pk')
+        p = qs.filter(order__lte=self.order).order_by('-order', '-pk')
         if not p:
-            p = qs.order_by('-order','-pk')
-        return p[0] if p else None;
+            p = qs.order_by('-order', '-pk')
+        return p[0] if p else None
 
-    def _get_filterered_qs(self, category_slug = None):
+    def _get_filterered_qs(self, category_slug=None):
         Project = models.get_model('project', 'Project')
         Category = models.get_model('project', 'Category')
         if category_slug:
             categories = Category.active_objects.filter(slug=category_slug)
             if categories:
+                print Project.objects.filter(category=categories[0]).exclude(id=self.id)
                 return Project.objects.filter(category=categories[0]).exclude(id=self.id)
 
         return Project.objects.all().exclude(id=self.id)

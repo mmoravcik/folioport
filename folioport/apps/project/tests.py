@@ -7,6 +7,48 @@ from folioport.apps.cms import models as cms_models
 
 
 class ProjectModelTests(TestCase):
+    def test_previous_next_no_category(self):
+        projects = [
+            G(models.Project, name="1", order=1),  # project[0]
+            G(models.Project, name="3", order=3),  # project[1]
+            G(models.Project, name="2", order=2),  # project[2]
+            G(models.Project, name="4", order=0)   # project[3]
+        ]
+
+        self.assertEqual(projects[0].next(), projects[2])
+        self.assertEqual(projects[0].previous(), projects[3])
+        self.assertEqual(projects[1].previous(), projects[2])
+        self.assertEqual(projects[1].next(), projects[3])
+        self.assertEqual(projects[3].previous(), projects[1])
+
+    def test_previous_next_with_category(self):
+        categories = [
+            G(models.Category, slug='cat1'),
+            G(models.Category, slug='cat2')
+        ]
+
+        projects = [
+            # project[0]
+            G(models.Project, name="1", order=1, category=[categories[1]]),
+            # project[1]
+            G(models.Project, name="3", order=3, category=[categories[1]]),
+            # project[2]
+            G(models.Project, name="2", order=2, category=[categories[0]]),
+            # project[3]
+            G(models.Project, name="4", order=0, category=[categories[0]]),
+            # project[4]
+            G(models.Project, name="5", order=4, category=[categories[0],
+                                                           categories[1]]),
+            # project[5]
+            G(models.Project, name="6", order=5, category=[categories[0]])
+        ]
+
+        # self.assertEqual(projects[0].next(categories[0].slug), projects[1])
+        # self.assertEqual(projects[0].previous(categories[0].slug), projects[4])
+        # self.assertEqual(projects[1].previous(categories[0].slug), projects[0])
+        # self.assertEqual(projects[1].next(categories[0].slug), projects[4])
+        # self.assertEqual(projects[3].previous(categories[0].slug), projects[5])
+
     def test_new_project_will_have_container_assigned(self):
         project = G(models.Project, container=None)
         self.assertIsInstance(project.container, cms_models.Container)
