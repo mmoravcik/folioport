@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'folioport.apps.mycss',
     'folioport.apps.blog',
     'folioport.apps.cms',
+    'folioport.apps.page',
 
     'tagging',
     'sorl.thumbnail',

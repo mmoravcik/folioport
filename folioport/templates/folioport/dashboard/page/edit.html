@@ -1,0 +1,20 @@
+{% extends 'dashboard/layout.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <h1 class="page-header">{% trans 'EDIT THE PAGE' %}</h1>
+    {{ form.media }}
+    <div style='float:left;width:300px;'>
+        <form enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <br />
+            <input class='btn btn-primary' type="submit" value="{% trans 'Update page' %}" />
+            &nbsp; <a href="{% url 'folioport:dashboard:page:list' %}">{% trans 'Cancel' %}</a>
+        </form>
+    </div>
+    {% include 'dashboard/cms/includes/container_content.html' %}
+
+
+{% endblock %}

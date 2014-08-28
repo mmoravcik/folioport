@@ -5,7 +5,7 @@ from django.middleware.csrf import get_token
 from ajaxuploader.views import AjaxFileUploader
 
 Project = get_model('project', 'Project')
-Container = get_model('cms', 'Container')
+Page = get_model('page', 'Page')
 
 
 class HomeView(TemplateView):
@@ -13,6 +13,9 @@ class HomeView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
+        landing_pages = Page.objects.filter(type=Page.LANDING_PAGE)
+        if landing_pages:
+            context['page'] = landing_pages[0]
         context['projects'] = Project.objects.all()
 
         return context

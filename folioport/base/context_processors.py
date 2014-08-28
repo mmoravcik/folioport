@@ -3,6 +3,7 @@ from django.conf import settings
 
 Category = get_model('project', 'Category')
 Project = get_model('project', 'Project')
+Page = get_model('page', 'Page')
 
 
 def folioport_project(request):
@@ -11,4 +12,5 @@ def folioport_project(request):
         'GOOGLE_ANALYTICS_ACCOUNT': settings.GOOGLE_ANALYTICS_ACCOUNT,
         'folioport_projects': Project.objects.all(),
         'folioport_content_types': settings.FOLIOPORT_CONTENT_TYPES,
+        'folioport_pages': Page.objects.all().exclude(type=Page.LANDING_PAGE)
     }
