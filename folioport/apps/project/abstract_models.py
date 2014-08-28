@@ -29,7 +29,7 @@ class AbstractProject(models.Model):
     order = models.IntegerField(null=True, blank=True)
     container = models.ForeignKey('cms.Container', null=True, blank=True)
 
-    #todo review tagging
+    # TODO review tagging
     tags = TagField()
 
     def __unicode__(self):
@@ -51,7 +51,7 @@ class AbstractProject(models.Model):
         objects = TaggedItem.objects.get_related(self, self.__class__)
         return objects[:limit]
 
-    #todo should be using get instead of filter in these queries?
+    # TODO should be using get instead of filter in these queries?
     def next(self, category_slug = None):
         qs = self._get_filterered_qs(category_slug)
         p = qs.filter(order__gte=self.order).order_by('order','pk')
