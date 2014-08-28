@@ -87,12 +87,6 @@ class AbstractProject(models.Model):
             container = Container.objects.create(title=self.name)
             self.container = container
             self.save()
-        if self.order is None:
-            Project = models.get_model('project', 'Project')
-            max_order = Project.objects.all().aggregate(Max('order'))['order__max']
-            if not max_order: max_order = 1
-            self.order = max_order + 10
-            self.save()
 
     def delete(self):
         if self.container:
