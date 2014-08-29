@@ -14,7 +14,7 @@ class AbstractContainer(models.Model):
     class Meta:
         abstract = True
 
-    def get_items(self):
+    def get_item_objects(self):
         items = []
         for item in self.item_set.all().order_by('containeritems__position'):
             Item = models.get_model('cms', item.item_class)
@@ -32,7 +32,7 @@ class AbstractContainer(models.Model):
 
     def render(self):
         html = ''
-        for item in self.get_items():
+        for item in self.get_item_objects():
             html += item.render()
         return html
 

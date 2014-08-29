@@ -13,7 +13,7 @@
         &nbsp; <a href="{% url 'folioport:dashboard:cms:container-list' %}">{% trans 'Cancel' %}</a>
     </form>
 
-    {% for item in object.get_items %}
+    {% for item in object.get_item_objects %}
         <div style='width:80%; border:solid 1px #333; padding: 15px; margin:15px'>
             {{ item.render }}
             <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk %}">edit</a>

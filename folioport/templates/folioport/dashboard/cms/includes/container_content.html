@@ -1,5 +1,5 @@
 Content<br />
-{% for item in object.container.get_items %}
+{% for item in object.container.get_item_objects %}
 <div style='width:1000px; float:left; border:solid 1px #333; padding: 15px; margin:15px'>
     {{ item.render }}
     <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk %}?next={{ request.get_full_path }}">edit</a>
