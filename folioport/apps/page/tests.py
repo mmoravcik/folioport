@@ -1,6 +1,6 @@
 from django_dynamic_fixture import G
 
-from django.test import TestCase
+from django.test import TestCase, Client
 
 from folioport.apps.page.models import Page
 from folioport.apps.cms import models as cms_models
@@ -26,7 +26,10 @@ class PageModelTests(TestCase):
         self.assertEqual(cms_models.Item.objects.all().count(), 1)
         self.assertEquals(other_item.container, new_container)
 
-
-
+    def test_get_absolute_url(self):
+        page = G(Page)
+        response = Client().get(page.get_absolute_url())
+        self.assertEqual(response.context[-1]['object'], page)
+        self.assertEqual(response.status_code, 200)
 
 
