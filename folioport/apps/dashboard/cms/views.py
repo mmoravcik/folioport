@@ -6,7 +6,6 @@ from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib import messages
 
 from folioport.base.mixins import LoginRequiredMixin
-from folioport.apps.blog.forms import PostForm
 
 Post = models.get_model('blog', 'Post')
 Container = models.get_model('cms', 'Container')
