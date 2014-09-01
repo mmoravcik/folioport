@@ -17,7 +17,6 @@ class DashboardApplication(Application):
     project_app = project_app
     page_app = page_app
 
-
     def get_urls(self):
         urlpatterns = super(DashboardApplication, self).get_urls()
         urlpatterns += patterns('',

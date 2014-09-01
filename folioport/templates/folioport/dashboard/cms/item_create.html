@@ -10,7 +10,7 @@
         {{ form }}
         <br />
         <input class='btn btn-primary' type="submit" value="{% trans 'Create' %}" />
-        &nbsp; <a href="{% url 'folioport:dashboard:cms:container-list' %}">{% trans 'Cancel' %}</a>
+        &nbsp; <a href="{{ next_url }}">{% trans 'Cancel' %}</a>
     </form>
 
 {% endblock %}

@@ -26,8 +26,16 @@
     <input type='submit' value="Save" />
 </form>
 
+<a href="{{ next_url }}">Cancel</a>
 
-<a href="{% url 'folioport:dashboard:cms:item-create-redirect' %}?class_name=Image&amp;next={{ request.get_full_path }}">Add image</a>
+
+<form action="{% url 'folioport:dashboard:cms:item-create-redirect' %}">
+    <input type='hidden' name='class_name' value='Image' />
+    <input type='hidden' name='next' value='{{ request.get_full_path }}' />
+    <input type='submit' value='Add image' />
+</form>
+
+
 
 <!--
 <div id="file-uploader">

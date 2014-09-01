@@ -30,7 +30,24 @@ class ContainerEditView(LoginRequiredMixin, UpdateView):
         return super(ContainerEditView, self).form_valid(form)
 
 
-class ItemEditView(LoginRequiredMixin, UpdateView):
+class CMSViewMixin(LoginRequiredMixin):
+    def get_template_names(self):
+        if self.model.get_edit_create_template():
+            return [self.model.get_edit_create_template()]
+        return [self.template_name]
+
+    def get_context_data(self, **kwargs):
+        ctx = super(CMSViewMixin, self).get_context_data(**kwargs)
+        ctx['next_url'] = self.get_success_url()
+        return ctx
+
+    def get_success_url(self):
+        if self.request.GET.get('next'):
+            return self.request.GET.get('next')
+        return reverse_lazy('folioport:dashboard:home')
+
+
+class ItemEditView(CMSViewMixin, UpdateView):
     template_name = 'dashboard/cms/item_edit.html'
 
     def get_queryset(self):
@@ -41,16 +58,6 @@ class ItemEditView(LoginRequiredMixin, UpdateView):
         if self.model.get_form_class():
             return self.model.get_form_class()
         return super(ItemEditView, self).get_form_class()
-
-    def get_template_names(self):
-        if self.model.get_edit_create_template():
-            return [self.model.get_edit_create_template()]
-        return [self.template_name]
-
-    def get_success_url(self):
-        if self.request.GET.get('next'):
-            return self.request.GET.get('next')
-        return reverse_lazy('folioport:dashboard:cms:container-list')
 
     def form_valid(self, form):
         messages.info(self.request, 'Item has been saved!')
@@ -65,13 +72,8 @@ class ItemCreateRedirectView(LoginRequiredMixin, RedirectView):
         self.request.GET.get('next', ''))
 
 
-class ItemCreateView(LoginRequiredMixin, CreateView):
+class ItemCreateView(CMSViewMixin, CreateView):
     template_name = 'dashboard/cms/item_create.html'
-
-    def get_template_names(self):
-        if self.model.get_edit_create_template():
-            return [self.model.get_edit_create_template()]
-        return [self.template_name]
 
     def get_form_class(self):
         if self.model.get_form_class():
@@ -82,11 +84,6 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
         self.model = models.get_model('cms', self.kwargs['class_name'])
         return super(ItemCreateView, self).dispatch(*args, **kwargs)
 
-    def get_success_url(self):
-        if self.request.GET.get('next'):
-            return self.request.GET.get('next')
-        return reverse_lazy('folioport:dashboard:cms:container-list')
-
     def form_valid(self, form):
         response = super(ItemCreateView, self).form_valid(form)
         self.object.assign_to_container(self.kwargs['container_id'])
@@ -94,14 +91,9 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
         return response
 
 
-class ItemDeleteView(LoginRequiredMixin, DeleteView):
+class ItemDeleteView(CMSViewMixin, DeleteView):
     template_name = 'dashboard/cms/item_delete.html'
 
     def get_queryset(self):
         self.model = models.get_model('cms', self.kwargs['class_name'])
         return self.model.objects.filter(id=self.kwargs['pk'])
-
-    def get_success_url(self):
-        if self.request.GET.get('next'):
-            return self.request.GET.get('next')
-        return reverse_lazy('folioport:dashboard:cms:container-list')
