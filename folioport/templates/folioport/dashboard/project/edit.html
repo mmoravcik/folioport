@@ -7,20 +7,18 @@
 
 
     <div style='float:left;width:300px;'>
-    {{ form.media }}
-    <form enctype="multipart/form-data" action="" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <br />
-        <input class='btn btn-primary' type="submit" value="{% trans 'Update' %}" />
-        &nbsp; <a href="{% url 'folioport:dashboard:project:list' %}">{% trans 'Cancel' %}</a>
-    </form>
+        {{ form.media }}
+        <form enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <br />
+            <input class='btn btn-primary' type="submit" value="{% trans 'Update' %}" />
+            &nbsp; <a href="{% url 'folioport:dashboard:project:list' %}">{% trans 'Cancel' %}</a>
+        </form>
     </div>
 
-
-    <div style="float:left">
+    <div style='width:1100px; float:left;'>
         {% include 'dashboard/cms/includes/container_content.html' %}
     </div>
-
 
 {% endblock %}

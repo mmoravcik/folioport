@@ -14,7 +14,9 @@
             &nbsp; <a href="{% url 'folioport:dashboard:page:list' %}">{% trans 'Cancel' %}</a>
         </form>
     </div>
-    {% include 'dashboard/cms/includes/container_content.html' %}
 
+    <div style='width:1100px; float:left;'>
+        {% include 'dashboard/cms/includes/container_content.html' %}
+    </div>
 
 {% endblock %}

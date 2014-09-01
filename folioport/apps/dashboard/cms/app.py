@@ -13,6 +13,7 @@ class CmsApplication(Application):
     create_item_view = views.ItemCreateView
     delete_item_view = views.ItemDeleteView
     create_item_redirect_view = views.ItemCreateRedirectView
+    items_order_save_view = views.ItemsOrderSave
 
     def get_urls(self):
         urlpatterns = super(CmsApplication, self).get_urls()
@@ -37,6 +38,9 @@ class CmsApplication(Application):
             url(r'/delete_item/(?P<class_name>\w+)/(?P<pk>\d+)/$',
                 self.delete_item_view.as_view(),
                 name='item-delete'),
+            url(r'/items_order_save/$',
+                self.items_order_save_view.as_view(),
+                name='items-order-save'),
 
             url(r'',
                 self.container_list_view.as_view(),

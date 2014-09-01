@@ -22,6 +22,7 @@ class AbstractContainer(models.Model):
             item_object.class_name = item.item_class
             if item.template:
                 item_object.template = item.template
+            item_object.container_item = item
             items.append(item_object)
         return items
 

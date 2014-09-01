@@ -13,5 +13,28 @@
             timepicker:false,
             format: 'd/m/Y'
         });
-    })
+    });
+
+    $('.sortable').sortable().bind('sortupdate', function(e, ui) {
+
+        var container_id = ui.startparent.attr('data-container-id');
+
+        var item_order = [];
+        ui.startparent.children('li').each(function () {
+            item_order.push(($(this).attr('data-id')));
+        });
+
+        var data = JSON.parse('{"container_id": "'+container_id+'", "item_order": "'+ item_order +'"}');
+
+        $.post( "{% url 'folioport:dashboard:cms:items-order-save' %}", data, function( data ) {
+            if (data.result == 'success') {
+                $.growl('', 'Order of your items has been saved');
+            } else {
+                alert('Sorry! Unable to save your order :(');
+            }
+        });
+
+
+    });
+
 </script>

@@ -1,7 +1,10 @@
+import json
+
 from django.views.generic import RedirectView
+from django.http import HttpResponse
 from django.core.urlresolvers import reverse_lazy
 from django.db import models
-from django.views.generic.list import ListView
+from django.views.generic.list import ListView, View
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib import messages
 
@@ -97,3 +100,21 @@ class ItemDeleteView(CMSViewMixin, DeleteView):
     def get_queryset(self):
         self.model = models.get_model('cms', self.kwargs['class_name'])
         return self.model.objects.filter(id=self.kwargs['pk'])
+
+
+class ItemsOrderSave(View):
+    def post(self, request, *args, **kwargs):
+        item_order = request.POST.get('item_order', [])
+        result = 'success'
+        if item_order:
+            for idx, item in enumerate(item_order.split(',')):
+                try:
+                    container_item = ContainerItems.objects.get(id=item)
+                    container_item.position = idx + 5
+                    container_item.save()
+                except ContainerItems.DoesNotExist:
+                    result = 'fail'
+        response_data = {}
+        response_data['result'] = result
+        return HttpResponse(
+            json.dumps(response_data), content_type="application/json")
