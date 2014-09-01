@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -6,7 +8,8 @@ class AbstractPost(models.Model):
     title = models.CharField(max_length=128)
     slug = models.SlugField(max_length=128)
     active = models.BooleanField(default=True)
-    release_date = models.DateField(null=True, blank=True)
+    release_date = models.DateField(
+        'Date posted', default=datetime.now(), null=True, blank=True)
     order = models.IntegerField(null=True, blank=True)
     container = models.ForeignKey('cms.Container', null=True, blank=True)
 

@@ -6,6 +6,10 @@ Post = get_model('blog', 'Post')
 
 class PostForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        self.fields['release_date'].widget.attrs['class'] = 'cms_date_field'
+
     class Meta:
         model = Post
-        fields = ('title', 'active',)
+        fields = ('title', 'release_date', 'active',)

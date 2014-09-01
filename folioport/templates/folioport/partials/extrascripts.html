@@ -7,4 +7,11 @@
         $(this).find(".hover_image").hide();
         $(this).find(".normal_image").show();
     });
+
+    $(".cms_date_field").each(function(){
+        $(this).datetimepicker({
+            timepicker:false,
+            format: 'd/m/Y'
+        });
+    })
 </script>
