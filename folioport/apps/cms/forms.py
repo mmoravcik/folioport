@@ -7,7 +7,7 @@ from ckeditor.widgets import CKEditorWidget
 class ItemImageForm(forms.ModelForm):
     class Meta:
         model = get_model('cms', 'ItemImage')
-        fields = ('image', 'caption', 'width', 'thumbnail_type')
+        fields = ('image', 'hover_image', 'caption', 'width', 'thumbnail_type')
 
 
 class ImageForm(forms.ModelForm):

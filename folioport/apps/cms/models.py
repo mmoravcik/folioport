@@ -43,7 +43,8 @@ class GalleryImage(ContentItemMixin, AbstractImage):
 
 
 class ItemImage(abstract_models.AbstractItemImage):
-    pass
+    hover_image = models.ImageField(
+        upload_to='single_hover_images', null=True, blank=True)
 
 
 class ItemRandomImage(abstract_models.AbstractRandomImage):
