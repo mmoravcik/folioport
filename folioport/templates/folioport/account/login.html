@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h2>Login</h2>
+
+{% if request.user.is_authenticated %}
+
+    You are loged in as {{ request.user.username }}
+
+{% else %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' name='submit' value='Submit' />
+    </form>
+
+{% endif %}
+
+<br />
+
+<a href="{% url 'folioport:account:register' %}">Register</a>
+
+{% endblock %}

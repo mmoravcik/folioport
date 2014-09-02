@@ -5,6 +5,7 @@ from folioport.apps.dashboard.blog.app import application as blog_app
 from folioport.apps.dashboard.cms.app import application as cms_app
 from folioport.apps.dashboard.project.app import application as project_app
 from folioport.apps.dashboard.page.app import application as page_app
+from folioport.apps.account.app import application as account_app
 
 from . import views
 
@@ -16,6 +17,7 @@ class DashboardApplication(Application):
     home_view = views.HomeView
     project_app = project_app
     page_app = page_app
+    account_app = account_app
 
     def get_urls(self):
         urlpatterns = super(DashboardApplication, self).get_urls()

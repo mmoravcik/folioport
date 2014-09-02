@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.template import loader, Context
 from django.utils.html import mark_safe
@@ -6,6 +7,7 @@ from folioport.base import abstract_models
 
 
 class AbstractContainer(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
     title = models.CharField(max_length=128)
 
     def __unicode__(self):
@@ -67,6 +69,8 @@ class AbstractContainerItems(models.Model):
 
 
 class ContentItemMixin(object):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+
     @staticmethod
     def get_form_class():
         return None

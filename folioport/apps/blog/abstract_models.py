@@ -1,10 +1,14 @@
 from datetime import datetime
 
+from django.contrib.sites.models import Site, get_current_site
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 
 
 class AbstractPost(models.Model):
+    site = models.ForeignKey(Site, null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=128)
     slug = models.SlugField(max_length=128)
     active = models.BooleanField(default=True)
@@ -21,6 +25,8 @@ class AbstractPost(models.Model):
 
     def save(self, *args, **kwargs):
         super(AbstractPost, self).save(*args, **kwargs)
+        if self.site is None:
+            self.site = get_current_site(self.request)
         if self.container is None:
             Container = models.get_model('cms', 'Container')
             container = Container.objects.create(title=self.title)

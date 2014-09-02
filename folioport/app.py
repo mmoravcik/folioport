@@ -4,6 +4,7 @@ from folioport.apps.project.app import application as project_app
 from folioport.apps.blog.app import application as blog_app
 from folioport.apps.page.app import application as page_app
 from folioport.apps.dashboard.app import application as dashboard_app
+from folioport.apps.account.app import application as account_app
 from folioport.base.app import Application
 from folioport.base import views
 
@@ -17,10 +18,12 @@ class FolioportApplication(Application):
     blog_app = blog_app
     dashboard_app = dashboard_app
     page_app = page_app
+    account_app = account_app
 
     def get_urls(self):
         urlpatterns = super(FolioportApplication, self).get_urls()
         urlpatterns += patterns('',
+            url(r'^accounts', include(self.account_app.urls)),
             (r'^projects/', include(self.project_app.urls)),
             (r'^dashboard/', include(self.dashboard_app.urls)),
             (r'^blog/', include(self.blog_app.urls)),
