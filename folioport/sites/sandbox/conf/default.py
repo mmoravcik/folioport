@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'folioport',
+    'folioport.apps.account',
     'folioport.apps.project',
     'folioport.apps.mycss',
     'folioport.apps.blog',
@@ -149,7 +150,6 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'south',
     'django_extensions',
-    'djangoratings',
     'debug_toolbar',
     'ckeditor',
     'ajaxuploader',

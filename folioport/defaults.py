@@ -16,3 +16,5 @@ CKEDITOR_CONFIGS = {
         'width': '70%',
         },
     }
+
+AUTH_USER_MODEL = 'account.FolioportUser'
