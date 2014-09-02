@@ -2,7 +2,7 @@
     {% include 'dashboard/cms/includes/add_content_type.html' %}
 </div>
 
-<ul class='sortable' data-container-id='{{ object.container.id }}'>
+<ul class='sortable'>
 {% for item in object.container.get_item_objects %}
     <li data-id='{{ item.container_item.pk }}' style='width:1000px; border:solid 1px #333; padding: 15px; margin:15px'>
     {{ item.render }}
