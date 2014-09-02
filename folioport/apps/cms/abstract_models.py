@@ -16,7 +16,7 @@ class AbstractContainer(models.Model):
 
     def get_item_objects(self):
         items = []
-        for item in self.item_set.all().order_by('containeritems__position'):
+        for item in self.get_items():
             Item = models.get_model('cms', item.item_class)
             item_object = Item.objects.get(pk=item.item_id)
             item_object.class_name = item.item_class
@@ -26,8 +26,11 @@ class AbstractContainer(models.Model):
             items.append(item_object)
         return items
 
+    def get_items(self):
+        return self.item_set.all().order_by('containeritems__position')
+
     def delete(self):
-        for item in self.item_set.all():
+        for item in self.get_items():
             item.delete()
         return super(AbstractContainer, self).delete()
 
