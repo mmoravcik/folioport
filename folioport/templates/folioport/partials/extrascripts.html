@@ -1,5 +1,5 @@
 <script>
-    $(".image-container").hover(function(){
+    $(".image-container").has('.hover_image').hover(function() {
         $(this).find(".normal_image").hide();
         $(this).find(".hover_image").show();
 
@@ -8,7 +8,7 @@
         $(this).find(".normal_image").show();
     });
 
-    $(".cms_date_field").each(function(){
+    $(".cms_date_field").each(function() {
         $(this).datetimepicker({
             timepicker:false,
             format: 'd/m/Y'
