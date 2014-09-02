@@ -36,9 +36,10 @@
 {% endblock %}
 
 {% block onbodyload %}
+    // TODO refactor following
     $("#id_image option").each(function() {
         var next_url = "?next={{ request.get_full_path}}";
-        $(this).attr("data-img-src", '/static/' + $(this).text());
+        $(this).attr("data-img-src", '/media/' + $(this).text());
         var edit_url = "{% url 'folioport:dashboard:cms:item-edit' 'GalleryImage' '99999999999' %}";
         var correct_edit_url = edit_url.replace(/99999999999/, $(this).attr('value')) + next_url;
 
