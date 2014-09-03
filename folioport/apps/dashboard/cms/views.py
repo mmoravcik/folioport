@@ -108,20 +108,40 @@ class ItemDeleteView(CMSViewMixin, DeleteView):
 class ItemsOrderSave(View):
     def post(self, request, *args, **kwargs):
         item_order = request.POST.get('item_order', "")
-        result = 'success'
+        status = 'success'
         if item_order:
             for idx, item in enumerate(item_order.split(',')):
                 try:
                     container_item = ContainerItems.objects.get(
-                        id=item, container__user=self.request.user)
+                        id=int(item), container__user=self.request.user)
                 except ValueError:
-                    result = 'fail'
+                    status = 'fail'
                 except ContainerItems.DoesNotExist:
-                    result = 'fail'
+                    status = 'fail'
                 else:
                     container_item.position = idx + 5
                     container_item.save()
 
-        response_data = {'result': result}
+        response_data = {'status': status, 'result': ''}
+        return HttpResponse(
+            json.dumps(response_data), content_type="application/json")
+
+
+class ContainerPreviewView(View):
+    def get(self, request, *args, **kwargs):
+        status = 'fail'
+        result = ''
+        try:
+            container = Container.objects.get(
+                id=kwargs['container_id'], user=self.request.user)
+        except ValueError:
+            pass
+        except Container.DoesNotExist:
+            pass
+        else:
+            status = 'success'
+            result = container.render()
+
+        response_data = {'status': status, 'result': result}
         return HttpResponse(
             json.dumps(response_data), content_type="application/json")

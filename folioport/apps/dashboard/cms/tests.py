@@ -1,3 +1,5 @@
+import json
+
 from django_dynamic_fixture import G
 
 from django.core.urlresolvers import reverse
@@ -15,33 +17,40 @@ class CMSDashboardViews(TestCase):
         self.user.save()
         self.client.login(email=self.user.email, password='1')
         self.container = G(models.Container, user=self.user)
-        self.container_items = [
-            G(models.ContainerItems, container=self.container, position=1),
-            G(models.ContainerItems, container=self.container, position=3),
-            G(models.ContainerItems, container=self.container, position=2),
+        self.text_items = [
+            G(models.ItemText, text='Content text 1'),
+            G(models.ItemText, text='Content text 2'),
+            G(models.ItemText, text='Content text 3'),
         ]
+        for idx, item in enumerate(self.text_items):
+            item.assign_to_container(self.container.id, idx+1)
 
     def test_item_reorder(self):
-        self.assertQuerysetEqual(self.container.get_items(), map(repr, [
-            self.container_items[0].item,
-            self.container_items[2].item,
-            self.container_items[1].item,
-        ]))
-
-        data = {'item_order': [
-            self.container_items[2].id,
-            self.container_items[1].id,
-            self.container_items[0].id,
-        ]}
+        self.assertEquals(self.container.get_item_objects(), [
+            self.text_items[0],
+            self.text_items[1],
+            self.text_items[2],
+        ])
+        data = {'item_order': ",".join(map(str, [
+            models.ContainerItems.objects.get(
+                item__item_class=self.text_items[2].__class__.__name__,
+                item__item_id=self.text_items[2].id).id,
+            models.ContainerItems.objects.get(
+                item__item_class=self.text_items[1].__class__.__name__,
+                item__item_id=self.text_items[1].id).id,
+            models.ContainerItems.objects.get(
+                item__item_class=self.text_items[0].__class__.__name__,
+                item__item_id=self.text_items[0].id).id,
+        ]))}
 
         self.client.post(
             reverse('folioport:dashboard:cms:items-order-save'), data)
 
-        self.assertQuerysetEqual(self.container.get_items(), map(repr, [
-            self.container_items[2].item,
-            self.container_items[1].item,
-            self.container_items[0].item,
-        ]))
+        self.assertEquals(self.container.get_item_objects(), [
+            self.text_items[2],
+            self.text_items[1],
+            self.text_items[0],
+        ])
 
     def test_item_reorder_empty_or_wrong_param(self):
         self.client.post(
@@ -51,8 +60,24 @@ class CMSDashboardViews(TestCase):
         self.client.post(
             reverse('folioport:dashboard:cms:items-order-save'), data)
 
-        self.assertQuerysetEqual(self.container.get_items(), map(repr, [
-            self.container_items[0].item,
-            self.container_items[2].item,
-            self.container_items[1].item,
-        ]))
+        self.assertEquals(self.container.get_item_objects(), [
+            self.text_items[0],
+            self.text_items[1],
+            self.text_items[2],
+        ])
+
+    def test_container_preview(self):
+        response = self.client.get(
+            reverse('folioport:dashboard:cms:container-preview',
+                    kwargs={'container_id': 0}))
+        json_response = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json_response['status'], 'fail')
+
+        response = self.client.get(
+            reverse('folioport:dashboard:cms:container-preview',
+                    kwargs={'container_id': self.container.id}))
+        json_response = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json_response['status'], 'success')
+        self.assertEqual(json_response['result'], self.container.render())

@@ -14,6 +14,7 @@ class CmsApplication(Application):
     delete_item_view = views.ItemDeleteView
     create_item_redirect_view = views.ItemCreateRedirectView
     items_order_save_view = views.ItemsOrderSave
+    container_preview_view = views.ContainerPreviewView
 
     def get_urls(self):
         urlpatterns = super(CmsApplication, self).get_urls()
@@ -41,7 +42,9 @@ class CmsApplication(Application):
             url(r'/items_order_save/$',
                 self.items_order_save_view.as_view(),
                 name='items-order-save'),
-
+            url(r'/container_preview/(?P<container_id>\d+)/$',
+                self.container_preview_view.as_view(),
+                name='container-preview'),
             url(r'',
                 self.container_list_view.as_view(),
                 name='container-list'),
