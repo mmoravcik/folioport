@@ -1,7 +1,8 @@
 from django_dynamic_fixture import G
-from django.core.urlresolvers import reverse
 
+from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
+from django.contrib.auth import get_user_model
 
 from folioport.apps.cms import models
 
@@ -9,7 +10,11 @@ from folioport.apps.cms import models
 class CMSDashboardViews(TestCase):
     def setUp(self):
         self.client = Client()
-        self.container = G(models.Container)
+        self.user = G(get_user_model())
+        self.user.set_password('1')
+        self.user.save()
+        self.client.login(email=self.user.email, password='1')
+        self.container = G(models.Container, user=self.user)
         self.container_items = [
             G(models.ContainerItems, container=self.container, position=1),
             G(models.ContainerItems, container=self.container, position=3),
