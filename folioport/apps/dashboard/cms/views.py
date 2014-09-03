@@ -8,7 +8,7 @@ from django.views.generic.list import ListView, View
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib import messages
 
-from folioport.base.mixins import LoginRequiredMixin
+from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin
 
 Post = models.get_model('blog', 'Post')
 Container = models.get_model('cms', 'Container')
@@ -55,7 +55,8 @@ class ItemEditView(CMSViewMixin, UpdateView):
 
     def get_queryset(self):
         self.model = models.get_model('cms', self.kwargs['class_name'])
-        return self.model.objects.filter(id=self.kwargs['pk'])
+        return self.model.objects.filter(
+            user=self.request.user, id=self.kwargs['pk'])
 
     def get_form_class(self):
         if self.model.get_form_class():
@@ -88,6 +89,7 @@ class ItemCreateView(CMSViewMixin, CreateView):
         return super(ItemCreateView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
+        form.instance.assign_to_user(self.request.user)
         response = super(ItemCreateView, self).form_valid(form)
         self.object.assign_to_container(self.kwargs['container_id'])
         messages.info(self.request, 'Item has been created!')
@@ -99,7 +101,8 @@ class ItemDeleteView(CMSViewMixin, DeleteView):
 
     def get_queryset(self):
         self.model = models.get_model('cms', self.kwargs['class_name'])
-        return self.model.objects.filter(id=self.kwargs['pk'])
+        return self.model.objects.filter(
+            user=self.request.user, id=self.kwargs['pk'])
 
 
 class ItemsOrderSave(View):
@@ -109,7 +112,8 @@ class ItemsOrderSave(View):
         if item_order:
             for idx, item in enumerate(item_order.split(',')):
                 try:
-                    container_item = ContainerItems.objects.get(id=item)
+                    container_item = ContainerItems.objects.get(
+                        id=item, container__user=self.request.user)
                 except ValueError:
                     result = 'fail'
                 except ContainerItems.DoesNotExist:

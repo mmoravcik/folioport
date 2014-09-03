@@ -10,7 +10,7 @@ def folioport_project(request):
     return {
         'folioport_project_categories' : Category.objects.filter(active=1),
         'GOOGLE_ANALYTICS_ACCOUNT': settings.GOOGLE_ANALYTICS_ACCOUNT,
-        'folioport_projects': Project.objects.all(),
+        'folioport_projects': Project.on_site.all(),
         'folioport_content_types': settings.FOLIOPORT_CONTENT_TYPES,
-        'folioport_pages': Page.objects.all().exclude(type=Page.LANDING_PAGE)
+        'folioport_pages': Page.on_site.all().exclude(type=Page.LANDING_PAGE)
     }

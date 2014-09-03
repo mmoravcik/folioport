@@ -4,19 +4,20 @@ from django.db import models
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
+from django.contrib.sites.models import get_current_site
 
-from folioport.base.mixins import LoginRequiredMixin
+from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin
 from folioport.apps.project import forms
 
 Project = models.get_model('project', 'Project')
 
 
-class ProjectListView(LoginRequiredMixin, ListView):
+class ProjectListView(FilterUserMixin, LoginRequiredMixin, ListView):
     template_name = 'dashboard/project/list.html'
     model = Project
 
 
-class ProjectEditView(LoginRequiredMixin, UpdateView):
+class ProjectEditView(FilterUserMixin, LoginRequiredMixin, UpdateView):
     model = Project
     form_class = forms.ProjectForm
     template_name = 'dashboard/project/edit.html'
@@ -29,7 +30,7 @@ class ProjectEditView(LoginRequiredMixin, UpdateView):
         return super(ProjectEditView, self).form_valid(form)
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
     model = Project
     form_class = forms.ProjectForm
     template_name = 'dashboard/project/create.html'
@@ -39,11 +40,13 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
             kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.site = get_current_site(self.request)
         messages.info(self.request, 'Project has been created!')
         return super(ProjectCreateView, self).form_valid(form)
 
 
-class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(FilterUserMixin, LoginRequiredMixin, DeleteView):
     model = Project
     template_name = 'dashboard/project/delete.html'
 

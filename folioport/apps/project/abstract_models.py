@@ -1,6 +1,9 @@
 from tagging.fields import TagField
 from tagging.models import Tag, TaggedItem
 
+from django.conf import settings
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -16,6 +19,8 @@ class AbstractProject(models.Model):
         (GIF, 'gif'),
         )
 
+    site = models.ForeignKey(Site)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     name = models.CharField(max_length=128)
     category = models.ManyToManyField('project.Category')
     slug = models.SlugField(max_length=128)
@@ -69,17 +74,19 @@ class AbstractProject(models.Model):
         if category_slug:
             categories = Category.active_objects.filter(slug=category_slug)
             if categories:
-                return Project.objects.filter(
+                return Project.on_site.filter(
                     category__in=[categories[0]]).exclude(id=self.id)
 
-        return Project.objects.all().exclude(id=self.id)
+        return Project.on_site.all().exclude(id=self.id)
 
     def save(self, *args, **kwargs):
         super(AbstractProject, self).save(*args, **kwargs)
         if self.container is None:
             Container = models.get_model('cms', 'Container')
-            container = Container.objects.create(title=self.name)
+            container = Container.objects.create(
+                user=self.user, title=self.name)
             self.container = container
+            self.container.user = self.user
             self.save()
 
     def delete(self):
@@ -97,3 +104,5 @@ class AbstractProject(models.Model):
     def related_projects(self, limit=3):
         objects = TaggedItem.objects.get_related(self, self.__class__)
         return objects[:limit]
+
+    on_site = CurrentSiteManager('site')

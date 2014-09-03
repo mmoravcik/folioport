@@ -4,6 +4,7 @@ from django.db import models
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
+from django.contrib.sites.models import get_current_site
 
 from folioport.base.mixins import FilterUserMixin
 from folioport.base.mixins import LoginRequiredMixin
@@ -26,7 +27,6 @@ class PostEditView(FilterUserMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('folioport:dashboard:blog:post-list')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
         messages.info(self.request, 'Post has been saved!')
         return super(PostEditView, self).form_valid(form)
 
@@ -41,6 +41,7 @@ class PostCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
             kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
+        form.instance.site = get_current_site(self.request)
         form.instance.user = self.request.user
         messages.info(self.request, 'Post has been created!')
         return super(PostCreateView, self).form_valid(form)

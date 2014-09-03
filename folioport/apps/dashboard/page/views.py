@@ -4,19 +4,20 @@ from django.db import models
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
+from django.contrib.sites.models import get_current_site
 
-from folioport.base.mixins import LoginRequiredMixin
+from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin
 from folioport.apps.page.forms import PageForm
 
 Page = models.get_model('page', 'Page')
 
 
-class PageListView(LoginRequiredMixin, ListView):
+class PageListView(FilterUserMixin, LoginRequiredMixin, ListView):
     template_name = 'dashboard/page/list.html'
     model = Page
 
 
-class PageEditView(LoginRequiredMixin, UpdateView):
+class PageEditView(FilterUserMixin, LoginRequiredMixin, UpdateView):
     model = Page
     form_class = PageForm
     template_name = 'dashboard/page/edit.html'
@@ -29,7 +30,7 @@ class PageEditView(LoginRequiredMixin, UpdateView):
         return super(PageEditView, self).form_valid(form)
 
 
-class PageCreateView(LoginRequiredMixin, CreateView):
+class PageCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
     model = Page
     form_class = PageForm
     template_name = 'dashboard/page/create.html'
@@ -39,11 +40,13 @@ class PageCreateView(LoginRequiredMixin, CreateView):
             kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.site = get_current_site(self.request)
         messages.info(self.request, 'Page has been created!')
         return super(PageCreateView, self).form_valid(form)
 
 
-class PageDeleteView(LoginRequiredMixin, DeleteView):
+class PageDeleteView(FilterUserMixin, LoginRequiredMixin, DeleteView):
     model = Page
     template_name = 'dashboard/page/delete.html'
 

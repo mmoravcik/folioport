@@ -7,7 +7,7 @@ from folioport.base import abstract_models
 
 
 class AbstractContainer(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=128)
 
     def __unicode__(self):
@@ -68,8 +68,11 @@ class AbstractContainerItems(models.Model):
         return "%s - %s" % (self.container, self.item)
 
 
-class ContentItemMixin(object):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+class ContentItemMixin(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False)
+
+    class Meta:
+        abstract = True
 
     @staticmethod
     def get_form_class():
@@ -81,6 +84,10 @@ class ContentItemMixin(object):
 
     def render(self):
         return ""
+
+    def assign_to_user(self, user):
+        self.user = user
+        self.save()
 
     def assign_to_container(self, container_id, position=100):
         if container_id and container_id != '0':
@@ -100,7 +107,7 @@ class ContentItemMixin(object):
         super(ContentItemMixin, self).delete()
 
 
-class AbstractItemText(ContentItemMixin, models.Model):
+class AbstractItemText(ContentItemMixin):
     template = 'cms/content_items/text.html'
     text = models.TextField(default='')
 
@@ -116,7 +123,7 @@ class AbstractItemText(ContentItemMixin, models.Model):
         return t.render(c)
 
 
-class AbstractItemRichText(ContentItemMixin, models.Model):
+class AbstractItemRichText(ContentItemMixin):
     template = 'cms/content_items/rich_text.html'
     text = models.TextField(default='')
 
@@ -175,7 +182,7 @@ class AbstractItemEmbed(ContentItemMixin, abstract_models.AbstractEmbed):
         return t.render(c)
 
 
-class AbstractRandomImage(ContentItemMixin, models.Model):
+class AbstractRandomImage(ContentItemMixin):
     template = 'cms/content_items/random_image.html'
     image = models.ManyToManyField('cms.Image')
 
@@ -192,7 +199,7 @@ class AbstractRandomImage(ContentItemMixin, models.Model):
         return t.render(c)
 
 
-class AbstractItemGallery(ContentItemMixin, models.Model):
+class AbstractItemGallery(ContentItemMixin):
     template = 'cms/content_items/gallery.html'
     image = models.ManyToManyField('cms.GalleryImage')
 

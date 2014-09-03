@@ -1,5 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.conf import settings
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 
 
 class AbstractPage(models.Model):
@@ -9,6 +12,8 @@ class AbstractPage(models.Model):
         (CONTENT_PAGE, 'Standard page')
     )
 
+    site = models.ForeignKey(Site)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=128)
     slug = models.SlugField(max_length=128)
     active = models.BooleanField(default=True)
@@ -26,7 +31,8 @@ class AbstractPage(models.Model):
         super(AbstractPage, self).save(*args, **kwargs)
         if self.container is None:
             Container = models.get_model('cms', 'Container')
-            container = Container.objects.create(title=self.title)
+            container = Container.objects.create(
+                user=self.user, title=self.title)
             self.container = container
             self.save()
 
@@ -37,3 +43,5 @@ class AbstractPage(models.Model):
 
     def get_absolute_url(self):
         return reverse('folioport:page:detail', args=[self.slug, self.id])
+
+    on_site = CurrentSiteManager('site')
