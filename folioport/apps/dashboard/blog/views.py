@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.sites.models import get_current_site
 
 from folioport.base.mixins import FilterUserMixin
-from folioport.base.mixins import LoginRequiredMixin
+from folioport.base.mixins import LoginRequiredMixin, AjaxableResponseMixin
 from folioport.apps.blog.forms import PostForm
 
 Post = models.get_model('blog', 'Post')
@@ -18,16 +18,16 @@ class PostListView(FilterUserMixin, LoginRequiredMixin, ListView):
     model = Post
 
 
-class PostEditView(FilterUserMixin, LoginRequiredMixin, UpdateView):
+class PostEditView(FilterUserMixin, LoginRequiredMixin, AjaxableResponseMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'dashboard/blog/edit.html'
 
     def get_success_url(self):
-        return reverse_lazy('folioport:dashboard:blog:post-list')
+        return reverse_lazy('folioport:dashboard:blog:post-edit',
+                            kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        messages.info(self.request, 'Post has been saved!')
         return super(PostEditView, self).form_valid(form)
 
 

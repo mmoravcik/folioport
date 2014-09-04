@@ -6,35 +6,28 @@
     <ul class="nav" id="side-menu">
         <li>
             <a href="{% url 'folioport:dashboard:home' %}">
-                <i class="glyphicon glyphicon-bold"></i> Home
+                Home
             </a>
         </li>
         <li>
             <a href="{% url 'folioport:dashboard:blog:post-list' %}">
-                <i class="glyphicon glyphicon-bold"></i> Blog
+                Blog
             </a>
         </li>
         <li>
             <a href="{% url 'folioport:dashboard:project:list' %}">
-                <i class="glyphicon glyphicon-bold"></i> Projects
+               Projects
             </a>
         </li>
         <li>
             <a href="{% url 'folioport:dashboard:page:list' %}">
-                <i class="glyphicon glyphicon-bold"></i> Pages
+                Pages
             </a>
         </li>
-        <!--
-        <li>
-            <a href="{% url 'folioport:dashboard:cms:container-list' %}">
-                <i class="glyphicon glyphicon-bold"></i> __CMS
-            </a>
-        </li>
-        -->
     </ul>
 
     {% for message in messages %}
-        {{ message }}<br />
+         <div class="alert alert-{{ message.tags }}">{{ message }}</div>
     {% endfor %}
 
     {% block content %}

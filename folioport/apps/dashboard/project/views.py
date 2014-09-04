@@ -6,7 +6,8 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.sites.models import get_current_site
 
-from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin
+from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin, \
+    AjaxableResponseMixin
 from folioport.apps.project import forms
 
 Project = models.get_model('project', 'Project')
@@ -17,7 +18,7 @@ class ProjectListView(FilterUserMixin, LoginRequiredMixin, ListView):
     model = Project
 
 
-class ProjectEditView(FilterUserMixin, LoginRequiredMixin, UpdateView):
+class ProjectEditView(FilterUserMixin, LoginRequiredMixin, AjaxableResponseMixin, UpdateView):
     model = Project
     form_class = forms.ProjectForm
     template_name = 'dashboard/project/edit.html'
@@ -26,7 +27,6 @@ class ProjectEditView(FilterUserMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('folioport:dashboard:project:list')
 
     def form_valid(self, form):
-        messages.info(self.request, 'Project has been saved!')
         return super(ProjectEditView, self).form_valid(form)
 
 

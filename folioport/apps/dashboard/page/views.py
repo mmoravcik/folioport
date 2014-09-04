@@ -6,7 +6,8 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.sites.models import get_current_site
 
-from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin
+from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin, \
+    AjaxableResponseMixin
 from folioport.apps.page.forms import PageForm
 
 Page = models.get_model('page', 'Page')
@@ -17,7 +18,7 @@ class PageListView(FilterUserMixin, LoginRequiredMixin, ListView):
     model = Page
 
 
-class PageEditView(FilterUserMixin, LoginRequiredMixin, UpdateView):
+class PageEditView(FilterUserMixin, LoginRequiredMixin, AjaxableResponseMixin, UpdateView):
     model = Page
     form_class = PageForm
     template_name = 'dashboard/page/edit.html'
@@ -26,7 +27,6 @@ class PageEditView(FilterUserMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('folioport:dashboard:page:list')
 
     def form_valid(self, form):
-        messages.info(self.request, 'Page has been saved!')
         return super(PageEditView, self).form_valid(form)
 
 
