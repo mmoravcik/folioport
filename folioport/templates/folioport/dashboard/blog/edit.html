@@ -1,22 +1,9 @@
-{% extends 'dashboard/layout.html' %}
-{% load i18n %}
+{% extends 'dashboard/edit_base.html' %}
 
-{% block content %}
+{% block header %}
+    EDIT {{ object.title }}
+{% endblock %}
 
-    <h1 class="page-header">{% trans 'EDIT THE POST' %}</h1>
-    {{ form.media }}
-    <div style='float:left;width:300px;'>
-        <form enctype="multipart/form-data" action="" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <br />
-            <input class='btn btn-primary' type="submit" value="{% trans 'Update post' %}" />
-            &nbsp; <a href="{% url 'folioport:dashboard:blog:post-list' %}">{% trans 'Cancel' %}</a>
-        </form>
-    </div>
-
-    <div style='width:1100px; float:left;'>
-        {% include 'dashboard/cms/includes/container_content.html' %}
-    </div>
-
+{% block cancel %}
+    <a href="{% url 'folioport:dashboard:blog:post-list' %}">Cancel</a>
 {% endblock %}

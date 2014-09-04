@@ -1,51 +1,9 @@
-{% extends 'dashboard/layout.html' %}
-{% load i18n %}
+{% extends 'dashboard/edit_base.html' %}
 
-{% block content %}
-
-
-    <h1 class="page-header">{% trans 'EDIT THE PAGE' %}</h1>
-    {{ form.media }}
-
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-      <li class='active'><a href="#content" role="tab" data-toggle="tab">Content</a></li>
-      <li id="preview-tab"><a href="#preview" role="tab" data-toggle="tab">Live preview</a></li>
-      <li><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
-    </ul>
-
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <div class="tab-pane active" id="content">
-          {% include 'dashboard/cms/includes/container_content.html' %}
-      </div>
-      <div class="tab-pane" id="preview">
-          <div id="preview-content"></div>
-      </div>
-      <div class="tab-pane" id="settings">
-           <form enctype="multipart/form-data" action="" method="post">
-                {% csrf_token %}
-                {{ form }}
-                <br />
-                <input class='btn btn-primary' type="submit" value="{% trans 'Update page' %}" />
-                &nbsp; <a href="{% url 'folioport:dashboard:page:list' %}">{% trans 'Cancel' %}</a>
-            </form>
-      </div>
-    </div>
-
-
+{% block header %}
+    EDIT {{ object.title }}
 {% endblock %}
 
-{% block onbodyload %}
-  $('#preview-tab a').click(function (e) {
-      e.preventDefault();
-      $(this).tab('show');
-      $.get('{% url 'folioport:dashboard:cms:container-preview' object.container.id %}', {}, function(data) {
-          if (data.status == 'success') {
-            $('#preview-content').html(data.result);
-          } else {
-            alert('Unable to preview the content');
-          }
-      });
-  });
+{% block cancel %}
+    <a href="{% url 'folioport:dashboard:page:list' %}">Cancel</a>
 {% endblock %}
