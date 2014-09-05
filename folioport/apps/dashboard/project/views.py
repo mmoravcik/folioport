@@ -24,10 +24,18 @@ class ProjectEditView(FilterUserMixin, LoginRequiredMixin, AjaxableResponseMixin
     template_name = 'dashboard/project/edit.html'
 
     def get_success_url(self):
-        return reverse_lazy('folioport:dashboard:project:list')
+        messages.success(self.request, 'Project has been saved')
+        return reverse_lazy('folioport:dashboard:project:edit',
+                            kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         return super(ProjectEditView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        ctx = super(ProjectEditView, self).get_context_data(**kwargs)
+        if self.request.POST and not kwargs['form'].is_valid():
+            ctx['active_tab'] = 'settings-tab'
+        return ctx
 
 
 class ProjectCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):

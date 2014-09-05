@@ -39,7 +39,6 @@
             <button class='btn btn-primary' id="submit-form">Save settings</button>
         </div>
     </div>
-
 {% endblock %}
 
 {% block onbodyload %}
@@ -55,8 +54,14 @@
         });
     });
 
+    {% if active_tab %}
+    $('#{{ active_tab }} a').tab('show');
+    {% endif %}
+
     $('#submit-form').click(function() {
         var frm = $('#edit-form');
+        frm.submit();
+        return;
         $("div").remove('.field-error');
         $.ajax({
             type: frm.attr('method'),
