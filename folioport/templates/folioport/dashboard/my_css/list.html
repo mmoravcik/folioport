@@ -1,0 +1,34 @@
+{% extends 'dashboard/layout.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<h1 class="page-header">CSS!</h1>
+
+    {% if object_list %}
+    <div class='responsive-table'>
+        <table class="table table-hover" style="width:600px;">
+            <tr>
+                <th>{% trans 'CSS' %}</th>
+                <th>{% trans 'Actions' %}</th>
+            </tr>
+
+            {% for my_css in object_list %}
+            <tr>
+                <td>CSS</td>
+                <td class='text-center'>
+                    <a href='{% url "folioport:dashboard:my_css:edit" my_css.id %}'
+                       class='btn btn-outline btn-primary btn-xs'>
+                        {% trans 'edit' %} <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    {% trans 'No pages yet!' %}
+    {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'dashboard/layout.html' %}
+{% load i18n %}
+
+{% block content %}
+
+
+    <h1 class="page-header">
+        {% block header %}{% trans 'EDIT CSS' %}{% endblock %}
+    </h1>
+    {{ form.media }}
+
+    <div style="width:500px; float: left">
+        <form id="edit-form" enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <br />
+        </form>
+        <button class='btn btn-primary' id="submit-form">Save css</button>
+        <a href='{{ request.get_full_path }}'>Cancel</a>
+    </div>
+
+    <div>
+        <h2>Previous CSS files</h2>
+        {% for archive in css_archives %}
+            {{ archive.date_created }} <a data-archive-id='{{ archive.id }}' class='archive-backup'>[+]</a><br />
+            <div style='border-color: #000; padding: 10px;display:none' id='archive-css-{{ archive.id }}'>
+                <div id='archive-css-source-{{ archive.id }}'>{{ archive.css }}</div>
+                <button data-archive-id='{{ archive.id }}' class='archive-restore'>restore this css</button>
+            </div>
+        {% empty %}
+            No backup yet
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block onbodyload %}
+    $('.archive-backup').click(function() {
+        $('#archive-css-' + $(this).attr('data-archive-id')).toggle();
+    });
+
+    $('.archive-restore').click(function() {
+        if (confirm('Do you want to restore this css?')) {
+            var restore = $('#archive-css-source-' + $(this).attr('data-archive-id')).text();
+            $('#id_css').val(restore);
+        }
+    });
+
+
+
+    $('#submit-form').click(function() {
+        var frm = $('#edit-form');
+        frm.submit();
+        return;
+        $("div").remove('.field-error');
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            success: function (data) {
+                $.growl('', 'Settings have been saved');
+            },
+            error: function(data) {
+                var result = data.responseJSON;
+                $.each(result, function(k, v) {
+                    $('#id_' + k).after("<div class='field-error'>" + v + "</div>");
+                });
+            }
+        });
+    });
+{% endblock %}
