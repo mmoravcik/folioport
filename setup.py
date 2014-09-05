@@ -32,7 +32,7 @@ setup(name='folioport',
           'django-dynamic-fixture',
           'django-my-css',
           ],
-      dependency_links = ['http://github.com/mmoravcik/django-my-css/tarball/master#egg=django-my-css'],
+      dependency_links = ['http://github.com/mmoravcik/django-my-css/tarball/master#egg=django-my-css-0.1.1'],
       # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Environment :: Web Environment',
                    'Framework :: Django',
