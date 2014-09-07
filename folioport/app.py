@@ -28,7 +28,6 @@ class FolioportApplication(Application):
             (r'^dashboard/', include(self.dashboard_app.urls)),
             (r'^blog/', include(self.blog_app.urls)),
             (r'^page/', include(self.page_app.urls)),
-            url(r'start$', views.start, name="start"),
             (r'^$', self.home_view.as_view()),
         )
         return urlpatterns
