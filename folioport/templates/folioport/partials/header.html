@@ -1,23 +1,15 @@
-{% load filters %}
+    <a href='/'><strong>[Page name - to come]</strong></a><br />
+    <strong>[Illustrator]</strong>
 
-<div class="navbar navbar-inverse">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href='/'>home</a>
-            Categories:
-            {% for row in folioport_project_categories|columns:3 %}
-            {% for item in row %}
-            <a href="{% url 'folioport:project:category-detail' item.slug %}">{{ item }}</a>
-            {% if not forloop.last %}, {% endif %}
-            {% endfor %}
-            {% endfor %}
-            <br />
+    <br /> <br />
+    <strong>Projects</strong><br />
+    {% for project in folioport_projects %}
+        <a href='{{ project.get_absolute_url }}'>{{ project.name }}</a><br />
+    {% endfor %}
 
-            {% for page in folioport_pages %}
-                <a href="{{ page.get_absolute_url }}">{{ page.title }}</a><br />
-            {% endfor %}
-            <a href="{% url 'folioport:blog:post-list' %}">Blog</a><br />
-
-        </div>
-    </div>
-</div>
+    <br />
+    <strong>Information</strong><br />
+    {% for page in folioport_pages %}
+        <a href="{{ page.get_absolute_url }}">{{ page.title }}</a><br />
+    {% endfor %}
+    <a href='{% url 'folioport:blog:post-list' %}'>Blog</a><br />

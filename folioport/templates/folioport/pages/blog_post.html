@@ -5,23 +5,7 @@
 {% block title %} {{ object.title }} {% endblock %}
 
 {% block content %}
-<div class='row-fluid'>
-    <div class='span9'><h1>{{ object.title }}</h1></div>
-    <div class='span2 offset1'>
-        {% include 'widgets/social_add_this/widget.html' %}
-    </div>
-</div>
-
-{% if object.get_tags %}
-<div class='row-fluid'>
-    <span class='span3'>
-        Tags:
-        {% for tag in object.get_tags %}
-            {{ tag.name }}
-        {% endfor %}
-    </span>
-</div>
-{% endif %}
+<h1>{{ object.title }}</h1>
 
 <div class='row-fluid'>
     {{ object.release_date }}<br />

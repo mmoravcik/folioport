@@ -6,40 +6,9 @@
 
 {% block content %}
 
-<style>
-    .span1,
-    .span2,
-    .span3,
-    .span4,
-    .span5,
-    .span6,
-    .span7,
-    .span8,
-    .span9,
-    .span10,
-    .span11,
-    .span12 {
-        border: solid 0px black;
-    }
-
-
-</style>
+<h1>{{ project.name }}</h1>
 
 <div class='row-fluid'>
-    <div class='span9'><h1>{{ project.name }}</h1></div>
-    <div class='span2 offset1'>
-        {% include 'widgets/social_add_this/widget.html' %}
-    </div>
-</div>
-
-<div class='row-fluid'>
-    <span class='span3'>
-        Tags:
-        {% for tag in project.get_tags %}
-            {{ tag.name }}
-        {% endfor %}
-    </span>
-
     <span class="span2 offset7">
         {% block prev_next %}
         {% if previous_project %}
@@ -56,18 +25,8 @@
     </span>
 </div>
 
-
-
-
 <div class='row-fluid'>
     {{ object.container.render|safe }}
-</div>
-
-<div class='row-fluid'>
-    <div class='span2 offset10'>
-        Related projects:
-        {% include 'widgets/related_projects/widget.html' with project=project %}
-    </div>
 </div>
 
 {% endblock %}

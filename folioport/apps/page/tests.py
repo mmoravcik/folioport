@@ -2,6 +2,7 @@ from django_dynamic_fixture import G
 
 from django.test import TestCase, Client
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 from folioport.apps.page.models import Page
 from folioport.apps.cms import models as cms_models
@@ -33,4 +34,9 @@ class PageModelTests(TestCase):
         self.assertEqual(response.context[-1]['object'], page)
         self.assertEqual(response.status_code, 200)
 
-
+    def test_can_have_only_one_landing_page(self):
+        G(Page, type=Page.LANDING_PAGE, site__id=settings.SITE_ID)
+        G(Page, type=Page.CONTENT_PAGE, site__id=settings.SITE_ID)
+        G(Page, type=Page.CONTENT_PAGE, site__id=settings.SITE_ID)
+        with self.assertRaises(Exception):
+            G(Page, type=Page.LANDING_PAGE, site__id=settings.SITE_ID)

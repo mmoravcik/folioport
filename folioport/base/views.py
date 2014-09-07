@@ -13,6 +13,4 @@ class HomeView(TemplateView):
         landing_pages = Page.on_site.filter(type=Page.LANDING_PAGE)
         if landing_pages:
             context['page'] = landing_pages[0]
-        context['projects'] = Project.on_site.all()
-
         return context

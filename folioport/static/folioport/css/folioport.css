@@ -1,3 +1,7 @@
+body {
+    margin:50px 0 20px 20px;
+}
+
 #ajax_loading {
     display: none;
     color: white;
@@ -18,4 +22,13 @@ ul.thumbnails.image_picker_selector li .thumbnail a{
 
 .clear {
     clear:both;
+}
+
+#main_header {
+    width: 250px;
+    float: left;
+}
+
+#main_content {
+    float:left;
 }

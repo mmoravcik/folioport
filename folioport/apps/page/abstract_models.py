@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
 from django.contrib.sites.managers import CurrentSiteManager
 
 
@@ -27,7 +28,15 @@ class AbstractPage(models.Model):
     def __unicode__(self):
         return self.title
 
+    def clean(self):
+        Page = models.get_model('page', 'Page')
+        if self.type == self.LANDING_PAGE and \
+                Page.on_site.filter(type=self.LANDING_PAGE):
+            raise ValidationError('You can have only one '
+                                  'landing page at any time')
+
     def save(self, *args, **kwargs):
+        self.clean()
         super(AbstractPage, self).save(*args, **kwargs)
         if self.container is None:
             Container = models.get_model('cms', 'Container')
