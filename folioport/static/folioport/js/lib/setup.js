@@ -1,6 +1,6 @@
 $.ajaxSetup ({
-	    // Disable caching of AJAX responses
-	    cache: false
+        // Disable caching of AJAX responses
+        cache: false
 });
 
 $.ajaxSetup({ 
@@ -29,7 +29,7 @@ $.ajaxSetup({
 });
 
 $( document ).ajaxStart( function() {
-	$('#ajax_loading').show();
+    $('#ajax_loading').show();
 }).ajaxStop( function() {
-	$('#ajax_loading').hide();
+    $('#ajax_loading').hide();
 });

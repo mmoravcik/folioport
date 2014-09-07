@@ -152,7 +152,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'debug_toolbar',
     'ckeditor',
-    'ajaxuploader',
 )
 
 MYCSS_ROOT= MEDIA_ROOT + '/css/'

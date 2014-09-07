@@ -1,8 +1,5 @@
 from django.db.models import get_model
 from django.views.generic.base import TemplateView
-from django.middleware.csrf import get_token
-
-from ajaxuploader.views import AjaxFileUploader
 
 Project = get_model('project', 'Project')
 Page = get_model('page', 'Page')
@@ -19,12 +16,3 @@ class HomeView(TemplateView):
         context['projects'] = Project.on_site.all()
 
         return context
-
-
-def start(request):
-    csrf_token = get_token(request)
-    return render_to_response('import.html',
-            {'csrf_token': csrf_token}, context_instance = RequestContext(request))
-
-
-import_uploader = AjaxFileUploader()

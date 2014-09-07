@@ -29,7 +29,6 @@ class FolioportApplication(Application):
             (r'^blog/', include(self.blog_app.urls)),
             (r'^page/', include(self.page_app.urls)),
             url(r'start$', views.start, name="start"),
-            url(r'ajax-upload$', views.import_uploader, name="my_ajax_upload"),
             (r'^$', self.home_view.as_view()),
         )
         return urlpatterns
