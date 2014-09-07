@@ -14,24 +14,4 @@
             format: 'd/m/Y'
         });
     });
-
-    $('.sortable').sortable().bind('sortupdate', function(e, ui) {
-        var item_order = [];
-        ui.startparent.children('li').each(function () {
-            item_order.push(($(this).attr('data-id')));
-        });
-
-        var data = JSON.parse('{"item_order": "'+ item_order +'"}');
-
-        $.post( "{% url 'folioport:dashboard:cms:items-order-save' %}", data, function( data ) {
-            if (data.status == 'success') {
-                $.growl('', 'Order of your items has been saved');
-            } else {
-                alert('Sorry! Unable to save your order :(');
-            }
-        });
-
-
-    });
-
 </script>
