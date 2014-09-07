@@ -46,13 +46,18 @@
 {% endblock %}
 
 {% block css %}
+<link href="{% static 'folioport/css/folioport.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'folioport/js/lib/bootstrap/css/bootstrap.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'folioport/js/lib/bootstrap/css/bootstrap-responsive.css'%}" rel="stylesheet" type="text/css" />
 <link href="{% static 'folioport/css/datepicker.css'%}" rel="stylesheet" type="text/css" />
-{{ block.super }}
+<link href="{% static 'folioport/css/codemirror.css'%}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block extrascripts %}
 <script src="{% static 'folioport/js/lib/datepicker.js'%}" type="text/javascript"></script>
 <script src="{% static 'folioport/js/lib/html.sortable.js'%}" type="text/javascript"></script>
+<script src="{% static 'folioport/js/lib/codemirror.js'%}" type="text/javascript"></script>
+<script src="{% static 'folioport/js/lib/css.js'%}" type="text/javascript"></script>
 {{ block.super }}
 {% endblock %}
 

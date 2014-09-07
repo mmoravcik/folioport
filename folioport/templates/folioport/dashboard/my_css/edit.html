@@ -9,7 +9,7 @@
     </h1>
     {{ form.media }}
 
-    <div style="width:500px; float: left">
+    <div style="width:600px; margin-right: 55px; float: left">
         <form id="edit-form" enctype="multipart/form-data" action="" method="post">
             {% csrf_token %}
             {{ form }}
@@ -41,30 +41,15 @@
     $('.archive-restore').click(function() {
         if (confirm('Do you want to restore this css?')) {
             var restore = $('#archive-css-source-' + $(this).attr('data-archive-id')).text();
+            myCodeMirror.toTextArea();
             $('#id_css').val(restore);
+            myCodeMirror = CodeMirror.fromTextArea($('#id_css').get(0));
         }
     });
-
-
 
     $('#submit-form').click(function() {
         var frm = $('#edit-form');
         frm.submit();
-        return;
-        $("div").remove('.field-error');
-        $.ajax({
-            type: frm.attr('method'),
-            url: frm.attr('action'),
-            data: frm.serialize(),
-            success: function (data) {
-                $.growl('', 'Settings have been saved');
-            },
-            error: function(data) {
-                var result = data.responseJSON;
-                $.each(result, function(k, v) {
-                    $('#id_' + k).after("<div class='field-error'>" + v + "</div>");
-                });
-            }
-        });
     });
+    var myCodeMirror = CodeMirror.fromTextArea($('#id_css').get(0));
 {% endblock %}
