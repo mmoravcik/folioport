@@ -57,3 +57,7 @@ class ItemEmbed(abstract_models.AbstractItemEmbed):
 
 class ItemGallery(abstract_models.AbstractItemGallery):
     pass
+
+
+class ItemHeading(abstract_models.AbstractItemHeading):
+    pass

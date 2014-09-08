@@ -3,6 +3,7 @@ GOOGLE_ANALYTICS_ACCOUNT = 'test'
 FOLIOPORT_CONTENT_TYPES = [
     'ItemImage',
     'ItemText',
+    'ItemHeading',
     'ItemRandomImage',
     'ItemRichText',
     'ItemEmbed',

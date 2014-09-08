@@ -214,3 +214,21 @@ class AbstractItemGallery(ContentItemMixin):
         t = loader.get_template(self.template)
         c = Context({'images': self.image.all()})
         return t.render(c)
+
+
+class AbstractItemHeading(ContentItemMixin):
+    template = 'cms/content_items/heading.html'
+    text = models.CharField(max_length=256, default="")
+    level = models.PositiveSmallIntegerField(default=2)
+
+    class Meta:
+        abstract = True
+
+    def __unicode__(self):
+        return "%s (level %s)" % (self.text, self.level)
+
+    def render(self):
+        t = loader.get_template(self.template)
+        c = Context({'text': mark_safe(self.text),
+                     'level': self.level})
+        return t.render(c)
