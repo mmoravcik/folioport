@@ -71,7 +71,7 @@ class ProjectModelTests(TestCase):
 
         self.assertEqual(cms_models.Container.objects.all().count(), 1)
         self.assertEqual(cms_models.Item.objects.all().count(), 1)
-        self.assertEquals(other_item.container, new_container)
+        self.assertEqual(other_item.container, new_container)
 
     def test_get_absolute_url(self):
         project = self._create_project()

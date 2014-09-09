@@ -10,7 +10,7 @@ class HomeView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
-        landing_pages = Page.on_site.filter(type=Page.LANDING_PAGE)
+        landing_pages = Page.objects.filter(type=Page.LANDING_PAGE)
         if landing_pages:
             context['page'] = landing_pages[0]
         return context

@@ -7,6 +7,11 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 
+class BlogManager(CurrentSiteManager):
+    def active(self):
+        return self.get_query_set().filter(active=True)
+
+
 class AbstractPost(models.Model):
     site = models.ForeignKey(Site)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -41,4 +46,4 @@ class AbstractPost(models.Model):
     def get_absolute_url(self):
         return reverse('folioport:blog:post-detail', args=[self.slug, self.id])
 
-    on_site = CurrentSiteManager('site')
+    objects = BlogManager()

@@ -2,18 +2,18 @@ from django_dynamic_fixture import G
 
 from django.test import TestCase, Client
 from django.conf import settings
-from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 
 from folioport.apps.page.models import Page
 from folioport.apps.cms import models as cms_models
 
 
 class PageModelTests(TestCase):
-    def test_new_post_will_have_container_assigned(self):
+    def test_new_page_will_have_container_assigned(self):
         page = G(Page, container=None)
         self.assertIsInstance(page.container, cms_models.Container)
 
-    def test_post_delete_will_remove_container_and_its_items(self):
+    def test_page_delete_will_remove_container_and_its_items(self):
         page = G(Page)
         new_container = G(cms_models.Container)
         self.assertEqual(cms_models.Container.objects.all().count(), 2)
@@ -26,7 +26,7 @@ class PageModelTests(TestCase):
 
         self.assertEqual(cms_models.Container.objects.all().count(), 1)
         self.assertEqual(cms_models.Item.objects.all().count(), 1)
-        self.assertEquals(other_item.container, new_container)
+        self.assertEqual(other_item.container, new_container)
 
     def test_get_absolute_url(self):
         page = G(Page, site__id=settings.SITE_ID)
@@ -40,3 +40,34 @@ class PageModelTests(TestCase):
         G(Page, type=Page.CONTENT_PAGE, site__id=settings.SITE_ID)
         with self.assertRaises(Exception):
             G(Page, type=Page.LANDING_PAGE, site__id=settings.SITE_ID)
+
+    def test_active_projects(self):
+        active_page = G(Page, site__id=settings.SITE_ID, active=True)
+        nonactive_page = G(Page, site__id=settings.SITE_ID, active=False)
+        active_page_different_site = G(Page, site__id=999, active=True)
+        self.assertIn(active_page, Page.objects.active().all())
+        self.assertEqual(1, len(Page.objects.active().all()))
+
+
+class PageViewTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_detail_view_non_active_page(self):
+        page = G(Page, site__id=settings.SITE_ID, active=False)
+        response = self.client.get(reverse('folioport:page:detail',
+                                   kwargs={'page_slug': 'a', 'pk': page.id}))
+        self.assertEqual(404, response.status_code)
+
+    def test_detail_view_different_site(self):
+        page = G(Page, site__id=999, active=True)
+        response = self.client.get(reverse('folioport:page:detail',
+                                   kwargs={'page_slug': 'a', 'pk': page.id}))
+        self.assertEqual(404, response.status_code)
+
+    def test_detail_view_good_page(self):
+        page = G(Page, site__id=settings.SITE_ID, active=True)
+        response = self.client.get(reverse('folioport:page:detail',
+                                   kwargs={'page_slug': 'a', 'pk': page.id}))
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.context['object'], page)

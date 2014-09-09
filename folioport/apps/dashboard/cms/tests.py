@@ -26,7 +26,7 @@ class CMSDashboardViews(TestCase):
             item.assign_to_container(self.container.id, idx+1)
 
     def test_item_reorder(self):
-        self.assertEquals(self.container.get_item_objects(), [
+        self.assertEqual(self.container.get_item_objects(), [
             self.text_items[0],
             self.text_items[1],
             self.text_items[2],
@@ -46,7 +46,7 @@ class CMSDashboardViews(TestCase):
         self.client.post(
             reverse('folioport:dashboard:cms:items-order-save'), data)
 
-        self.assertEquals(self.container.get_item_objects(), [
+        self.assertEqual(self.container.get_item_objects(), [
             self.text_items[2],
             self.text_items[1],
             self.text_items[0],
@@ -60,7 +60,7 @@ class CMSDashboardViews(TestCase):
         self.client.post(
             reverse('folioport:dashboard:cms:items-order-save'), data)
 
-        self.assertEquals(self.container.get_item_objects(), [
+        self.assertEqual(self.container.get_item_objects(), [
             self.text_items[0],
             self.text_items[1],
             self.text_items[2],

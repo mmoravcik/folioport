@@ -2,16 +2,17 @@ from django.db import models
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
-from folioport.base.mixins import FilterSiteMixin
 
 Post = models.get_model('blog', 'Post')
 
 
-class PostDetailView(FilterSiteMixin, DetailView):
+class PostDetailView(DetailView):
     template_name = 'pages/blog_post.html'
     model = Post
+    queryset = Post.objects.active()
 
 
-class PostListView(FilterSiteMixin, ListView):
+class PostListView(ListView):
     template_name = 'pages/blog_list.html'
+    queryset = Post.objects.active()
     model = Post

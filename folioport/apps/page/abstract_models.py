@@ -6,6 +6,10 @@ from django.core.exceptions import ValidationError
 from django.contrib.sites.managers import CurrentSiteManager
 
 
+class PageManager(CurrentSiteManager):
+    def active(self):
+        return self.get_query_set().filter(active=True)
+
 class AbstractPage(models.Model):
     LANDING_PAGE, CONTENT_PAGE = 1, 2
     TYPE_CHOICES = (
@@ -31,7 +35,7 @@ class AbstractPage(models.Model):
     def clean(self):
         Page = models.get_model('page', 'Page')
         if self.type == self.LANDING_PAGE and \
-                Page.on_site.filter(type=self.LANDING_PAGE):
+                Page.objects.filter(type=self.LANDING_PAGE):
             raise ValidationError('You can have only one '
                                   'landing page at any time')
 
@@ -53,4 +57,4 @@ class AbstractPage(models.Model):
     def get_absolute_url(self):
         return reverse('folioport:page:detail', args=[self.slug, self.id])
 
-    on_site = CurrentSiteManager('site')
+    objects = PageManager()
