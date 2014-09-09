@@ -55,25 +55,31 @@
 
 {% block extrascripts %}
 <script src="{% static 'folioport/js/lib/datepicker.js'%}" type="text/javascript"></script>
-<script src="{% static 'folioport/js/lib/html.sortable.js'%}" type="text/javascript"></script>
+
+<ascript src="{% static 'folioport/js/lib/html.sortable.js'%}" type="text/javascript"></ascript>
+
+<script src="{% static 'folioport/js/lib/jquery.sortable.js'%}" type="text/javascript"></script>
 <script src="{% static 'folioport/js/lib/codemirror.js'%}" type="text/javascript"></script>
 <script src="{% static 'folioport/js/lib/css.js'%}" type="text/javascript"></script>
 <script type="text/javascript">
-    $('.sortable').sortable().bind('sortupdate', function(e, ui) {
-        var item_order = [];
-        ui.startparent.children('li').each(function () {
-            item_order.push(($(this).attr('data-id')));
-        });
-
-        var data = JSON.parse('{"item_order": "'+ item_order +'"}');
-
-        $.post( "{% url 'folioport:dashboard:cms:items-order-save' %}", data, function( data ) {
-            if (data.status == 'success') {
-                $.growl('', 'Order of your items has been saved');
-            } else {
-                alert('Sorry! Unable to save your order :(');
+    var sortable_group = $('ol.sortable').sortable({
+        onDrop: function (item, container, _super) {
+            var data = sortable_group.sortable("serialize").get();
+            var item_order = [];
+            for(var i = 0; i < data[0].length; i++) {
+                var obj = data[0][i];
+                item_order.push(obj.id);
             }
-        });
+            var data = JSON.parse('{"item_order": "'+ item_order +'"}');
+            $.post( "{% url 'folioport:dashboard:cms:items-order-save' %}", data, function( data ) {
+                if (data.status == 'success') {
+                    $.growl('', 'Order of your items has been saved');
+                } else {
+                    alert('Sorry! Unable to save your order :(');
+                }
+            });
+            _super(item, container)
+        }
     });
 </script>
 {{ block.super }}

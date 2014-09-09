@@ -32,3 +32,44 @@ ul.thumbnails.image_picker_selector li .thumbnail a{
 #main_content {
     float:left;
 }
+
+
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+ol.sortable li.placeholder {
+  position: relative;
+}
+
+ol.sortable li.placeholder:before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: rgba(0, 0, 0, 0) -moz-use-text-color rgba(0, 0, 0, 0) #FF0000;
+    border-image: none;
+    border-style: solid none solid solid;
+    border-width: 5px medium 5px 5px;
+    content: "";
+    height: 0;
+    left: -5px;
+    margin-top: -5px;
+    position: absolute;
+    top: -4px;
+    width: 0;
+}
+
+.sortable-item {
+    width:1000px; border:solid 1px #333; padding: 15px; margin:15px
+}
+
+ol {
+    list-style-type: none;
+}

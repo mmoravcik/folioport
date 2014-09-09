@@ -2,12 +2,12 @@
     {% include 'dashboard/cms/includes/add_content_type.html' %}
 </div>
 
-<ul class='sortable'>
+<ol class='sortable'>
 {% for item in object.container.get_item_objects %}
-    <li data-id='{{ item.container_item.pk }}' style='width:1000px; border:solid 1px #333; padding: 15px; margin:15px'>
+    <li data-id='{{ item.container_item.pk }}' class='sortable-item'>
     {{ item.render }}
     <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk %}?next={{ request.get_full_path }}">edit</a>
     <a href="{% url 'folioport:dashboard:cms:item-delete' item.class_name item.pk %}?next={{ request.get_full_path }}">delete</a>
     </li>
 {% endfor %}
-</ul>
+</ol>
