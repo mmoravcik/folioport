@@ -10,6 +10,11 @@ from django.db import models
 from folioport.base.utils import get_solr_thumbnail_geometry
 
 
+class ProjectManager(CurrentSiteManager):
+    def active(self):
+        return self.get_query_set().filter(active=True)
+
+
 class AbstractProject(models.Model):
     JPEG, PNG, GIF = "JPEG", "PNG", "GIF"
 
@@ -47,7 +52,7 @@ class AbstractProject(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            'folioport:project:project-detail', args=[self.slug, self.id])
+            'folioport:project:detail', args=[self.slug, self.id])
 
     def get_solr_thumbnail_geometry(self):
         return get_solr_thumbnail_geometry(
@@ -74,10 +79,10 @@ class AbstractProject(models.Model):
         if category_slug:
             categories = Category.active_objects.filter(slug=category_slug)
             if categories:
-                return Project.on_site.filter(
+                return Project.objects.active().filter(
                     category__in=[categories[0]]).exclude(id=self.id)
 
-        return Project.on_site.all().exclude(id=self.id)
+        return Project.objects.active().exclude(id=self.id)
 
     def save(self, *args, **kwargs):
         super(AbstractProject, self).save(*args, **kwargs)
@@ -105,4 +110,4 @@ class AbstractProject(models.Model):
         objects = TaggedItem.objects.get_related(self, self.__class__)
         return objects[:limit]
 
-    on_site = CurrentSiteManager('site')
+    objects = ProjectManager()

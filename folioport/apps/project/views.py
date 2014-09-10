@@ -13,6 +13,7 @@ class ProjectView(FilterSiteMixin, DetailView):
     template_name = 'pages/project.html'
     model = Project
     context_name = 'project'
+    queryset = Project.objects.active()
 
     def get_context_data(self, **kwargs):
         context = DetailView.get_context_data(self, **kwargs)
@@ -30,7 +31,7 @@ class CategoryView(TemplateView):
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
         category = get_category_by_slug(self.kwargs['category_slug'])
-        context['projects'] = Project.on_site.filter(category=category).order_by('order')
+        context['projects'] = Project.objects.active().filter(category=category).order_by('order')
         context['category'] = category
         return context
 
