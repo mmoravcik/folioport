@@ -160,14 +160,6 @@ MYCSS_PATH = MEDIA_URL + '/css/'
 CKEDITOR_UPLOAD_PATH = 'ckuploads'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Basic',
-        'height': 600,
-        'width': '70%',
-        },
-    }
-
 
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TEMPLATE_CONTEXT': True,

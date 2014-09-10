@@ -12,7 +12,13 @@ FOLIOPORT_CONTENT_TYPES = [
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'Basic',
+        'toolbar': [
+           ['Styles','Format','FontSize'],
+           '/',
+           ['Bold','Italic','Underline','StrikeThrough','-','Undo','Redo','-','Cut','Copy','Paste','Find','-','Outdent','Indent'],
+           ['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+           ['Table','-','Link','TextColor','BGColor','-','Print','Source']
+        ],
         'height': 600,
         'width': '70%',
         },
