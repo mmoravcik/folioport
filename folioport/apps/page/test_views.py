@@ -2,7 +2,6 @@ from django_dynamic_fixture import G
 
 from django.test import TestCase, Client
 from django.conf import settings
-from django.core.urlresolvers import reverse
 
 from folioport.apps.page.models import Page
 from folioport.apps.cms import models as cms_models
@@ -47,27 +46,3 @@ class PageModelTests(TestCase):
         active_page_different_site = G(Page, site__id=999, active=True)
         self.assertIn(active_page, Page.objects.active().all())
         self.assertEqual(1, len(Page.objects.active().all()))
-
-
-class PageViewTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-
-    def test_detail_view_non_active_page(self):
-        page = G(Page, site__id=settings.SITE_ID, active=False)
-        response = self.client.get(reverse('folioport:page:detail',
-                                   kwargs={'page_slug': 'a', 'pk': page.id}))
-        self.assertEqual(404, response.status_code)
-
-    def test_detail_view_different_site(self):
-        page = G(Page, site__id=999, active=True)
-        response = self.client.get(reverse('folioport:page:detail',
-                                   kwargs={'page_slug': 'a', 'pk': page.id}))
-        self.assertEqual(404, response.status_code)
-
-    def test_detail_view_good_page(self):
-        page = G(Page, site__id=settings.SITE_ID, active=True)
-        response = self.client.get(reverse('folioport:page:detail',
-                                   kwargs={'page_slug': 'a', 'pk': page.id}))
-        self.assertEqual(200, response.status_code)
-        self.assertEqual(response.context['object'], page)
