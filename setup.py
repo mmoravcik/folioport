@@ -31,6 +31,7 @@ setup(name='folioport',
           'django-ckeditor-updated==4.2.8',
           'django-dynamic-fixture',
           'django-my-css==0.1.2',
+	  'django-crispy-forms',
           ],
       dependency_links = ['http://github.com/mmoravcik/django-my-css/tarball/0.1.2#egg=django-my-css-0.1.2'],
       # See http://pypi.python.org/pypi?%3Aaction=list_classifiers

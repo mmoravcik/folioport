@@ -1,5 +1,7 @@
 import json
 
+from crispy_forms.helper import FormHelper
+
 from django.views.generic import RedirectView
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse_lazy
@@ -53,6 +55,13 @@ class CMSViewMixin(LoginRequiredMixin):
 class ItemEditView(CMSViewMixin, UpdateView):
     template_name = 'dashboard/cms/item_edit.html'
 
+    def get_form(self, form_class):
+        form = super(ItemEditView, self).get_form(form_class)
+        if not getattr(form, 'helper', None):
+            form.helper = FormHelper()
+            form.helper.form_tag = False
+        return form
+
     def get_queryset(self):
         self.model = models.get_model('cms', self.kwargs['class_name'])
         return self.model.objects.filter(
@@ -78,6 +87,13 @@ class ItemCreateRedirectView(LoginRequiredMixin, RedirectView):
 
 class ItemCreateView(CMSViewMixin, CreateView):
     template_name = 'dashboard/cms/item_create.html'
+
+    def get_form(self, form_class):
+        form = super(ItemCreateView, self).get_form(form_class)
+        if not getattr(form, 'helper', None):
+            form.helper = FormHelper()
+            form.helper.form_tag = False
+        return form
 
     def get_form_class(self):
         if self.model.get_form_class():

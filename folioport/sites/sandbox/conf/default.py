@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'debug_toolbar',
     'ckeditor',
+    'crispy_forms',
 )
 
 MYCSS_ROOT= MEDIA_ROOT + '/css/'

@@ -51,6 +51,8 @@
 <link href="{% static 'folioport/js/lib/bootstrap/css/bootstrap-responsive.css'%}" rel="stylesheet" type="text/css" />
 <link href="{% static 'folioport/css/datepicker.css'%}" rel="stylesheet" type="text/css" />
 <link href="{% static 'folioport/css/codemirror.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'folioport/css/uni-form.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'folioport/css/default.uni-form.css'%}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block extrascripts %}
@@ -61,6 +63,7 @@
 <script src="{% static 'folioport/js/lib/jquery.sortable.js'%}" type="text/javascript"></script>
 <script src="{% static 'folioport/js/lib/codemirror.js'%}" type="text/javascript"></script>
 <script src="{% static 'folioport/js/lib/css.js'%}" type="text/javascript"></script>
+<script src="{% static 'folioport/js/lib/uni-form.min.js'%}" type="text/javascript"></script>
 <script type="text/javascript">
     var sortable_group = $('ol.sortable').sortable({
         onDrop: function (item, container, _super) {
@@ -81,6 +84,8 @@
             _super(item, container)
         }
     });
+
+    $('form.uniForm').uniform();
 </script>
 {{ block.super }}
 {% endblock %}

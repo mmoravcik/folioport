@@ -1,13 +1,13 @@
 {% extends 'dashboard/layout.html' %}
+{% load crispy_forms_tags %}
 {% load i18n %}
 
 {% block content %}
 
     <h1 class="page-header">{% trans 'EDIT THE ITEM' %}</h1>
     {{ form.media }}
-    <form enctype="multipart/form-data" action="" method="post">
-        {% csrf_token %}
-        {{ form }}
+    <form enctype="multipart/form-data" class='uniForm' action="" method="post">
+        {% crispy form %}
         <br />
         <input class='btn btn-primary' type="submit" value="{% trans 'Update' %}" />
         &nbsp; <a href="{{ next_url }}">{% trans 'Cancel' %}</a>
