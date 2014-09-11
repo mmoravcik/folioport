@@ -2,6 +2,7 @@ import json
 
 from crispy_forms.helper import FormHelper
 
+from django.forms.models import ModelMultipleChoiceField
 from django.views.generic import RedirectView
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse_lazy
@@ -57,9 +58,14 @@ class ItemEditView(CMSViewMixin, UpdateView):
 
     def get_form(self, form_class):
         form = super(ItemEditView, self).get_form(form_class)
+        # remove form tag for all crispy-form forms
         if not getattr(form, 'helper', None):
             form.helper = FormHelper()
             form.helper.form_tag = False
+        # images are foreign keys and we need to limit them to current user
+        if isinstance(form.fields.get('image', None), ModelMultipleChoiceField):
+            form.fields['image'].queryset = form.fields['image'].queryset.\
+                filter(user=self.request.user)
         return form
 
     def get_queryset(self):
@@ -90,9 +96,14 @@ class ItemCreateView(CMSViewMixin, CreateView):
 
     def get_form(self, form_class):
         form = super(ItemCreateView, self).get_form(form_class)
+        # remove form tag for all crispy-form forms
         if not getattr(form, 'helper', None):
             form.helper = FormHelper()
             form.helper.form_tag = False
+        # images are foreign keys and we need to limit them to current user
+        if isinstance(form.fields.get('image', None), ModelMultipleChoiceField):
+            form.fields['image'].queryset = form.fields['image'].queryset.\
+                filter(user=self.request.user)
         return form
 
     def get_form_class(self):
