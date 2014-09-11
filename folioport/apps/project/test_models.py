@@ -13,10 +13,10 @@ class ProjectModelTests(TestCase):
 
     def test_previous_next_no_category(self):
         projects = [
-            self._create_project(name="1", order=1), #project[0]
-            self._create_project(name="4", order=3), #project[1]
-            self._create_project(name="3", order=2), #project[2]
-            self._create_project(name="0", order=0), #project[3]
+            self._create_project(title="1", order=1), #project[0]
+            self._create_project(title="4", order=3), #project[1]
+            self._create_project(title="3", order=2), #project[2]
+            self._create_project(title="0", order=0), #project[3]
         ]
 
         self.assertEqual(projects[0].next(), projects[2])
@@ -33,18 +33,18 @@ class ProjectModelTests(TestCase):
 
         projects = [
             # project[0]
-            self._create_project(name="1", order=1, category=[categories[1]]),
+            self._create_project(title="1", order=1, category=[categories[1]]),
             # project[1]
-            self._create_project(name="3", order=3, category=[categories[1]]),
+            self._create_project(title="3", order=3, category=[categories[1]]),
             # project[2]
-            self._create_project(name="2", order=2, category=[categories[0]]),
+            self._create_project(title="2", order=2, category=[categories[0]]),
             # project[3]
-            self._create_project(name="4", order=0, category=[categories[0]]),
+            self._create_project(title="4", order=0, category=[categories[0]]),
             # project[4]
-            self._create_project(name="5", order=4, category=[categories[0],
+            self._create_project(title="5", order=4, category=[categories[0],
                                                            categories[1]]),
             # project[5]
-            self._create_project(name="6", order=5, category=[categories[0]])
+            self._create_project(title="6", order=5, category=[categories[0]])
         ]
 
         self.assertEqual(projects[0].next(categories[1].slug), projects[1])

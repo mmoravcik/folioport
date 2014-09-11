@@ -4,7 +4,7 @@
 	{% for related_project in project.related_projects %}
 		{% thumbnail related_project.thumbnail related_project.get_solr_thumbnail_geometry as im %}
 			<a href='{{ related_project.get_absolute_url }}'>
-				<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ related_project.name }}' />
+				<img width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}?' alt='{{ related_project.title }}' />
 			</a>
 		{% endthumbnail %}
 	{% endfor %}

@@ -26,7 +26,7 @@ class AbstractProject(models.Model):
 
     site = models.ForeignKey(Site)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    name = models.CharField(max_length=128)
+    title = models.CharField(max_length=128)
     category = models.ManyToManyField('project.Category')
     slug = models.SlugField(max_length=128)
     active = models.BooleanField(default=True)
@@ -48,7 +48,7 @@ class AbstractProject(models.Model):
         ordering = ['order']
 
     def __unicode__(self):
-        return '%s (%s)' % (self.name, self.order)
+        return '%s (%s)' % (self.title, self.order)
 
     def get_absolute_url(self):
         return reverse(
@@ -89,7 +89,7 @@ class AbstractProject(models.Model):
         if self.container is None:
             Container = models.get_model('cms', 'Container')
             container = Container.objects.create(
-                user=self.user, title=self.name)
+                user=self.user, title=self.title)
             self.container = container
             self.container.user = self.user
             self.save()

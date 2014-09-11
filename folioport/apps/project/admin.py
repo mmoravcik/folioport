@@ -6,7 +6,7 @@ Project = get_model('project', 'Project')
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("name",)}
+    prepopulated_fields = {"slug": ("title",)}
     list_filter = ('category', 'active', )
 
 

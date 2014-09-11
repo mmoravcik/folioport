@@ -8,4 +8,4 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('name', 'thumbnail', 'thumbnail_width', 'tags', 'active',)
+        fields = ('title', 'thumbnail', 'thumbnail_width', 'tags', 'active',)

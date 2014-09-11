@@ -4,7 +4,7 @@
     <br /> <br />
     <strong>Projects</strong><br />
     {% for project in folioport_projects %}
-        <a href='{{ project.get_absolute_url }}'>{{ project.name }}</a><br />
+        <a href='{{ project.get_absolute_url }}'>{{ project.title }}</a><br />
     {% endfor %}
 
     <br />
