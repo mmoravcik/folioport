@@ -1,5 +1,6 @@
 {% extends 'dashboard/layout.html' %}
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -33,7 +34,7 @@
         <div class="tab-pane" id="settings">
             <form id="edit-form" enctype="multipart/form-data" action="" method="post">
                 {% csrf_token %}
-                {{ form }}
+                {% crispy form %}
                 <br />
             </form>
             <button class='btn btn-primary' id="submit-form">Save settings</button>

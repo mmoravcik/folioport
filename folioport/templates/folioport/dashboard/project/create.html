@@ -8,9 +8,11 @@
 
     <h1 class="page-header">CREATE PROJECT</h1>
     {{ form.media }}
-    <form enctype="multipart/form-data" class='uniForm' method="post">
+    <form enctype="multipart/form-data" method="post">
         {% crispy form %}
-        <input type="submit" value="Create" />
+
+        <br /><br />
+        <input class='btn btn-info' type="submit" value="Create" />
     </form>
 
 {% endblock %}

@@ -26,5 +26,5 @@ CKEDITOR_CONFIGS = {
 
 AUTH_USER_MODEL = 'account.FolioportUser'
 
-CRISPY_TEMPLATE_PACK = 'uni_form'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 CRISPY_FAIL_SILENTLY = False
