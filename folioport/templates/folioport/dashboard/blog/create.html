@@ -1,4 +1,5 @@
 {% extends 'dashboard/layout.html' %}
+{% load crispy_forms_tags %}
 {% load i18n %}
 
 {% block title %} Folioport admin {% endblock %}
@@ -8,9 +9,9 @@
     <h1 class="page-header">CREATE THE POST</h1>
     {{ form.media }}
     <form enctype="multipart/form-data" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Create" />
+        {% crispy form %}
+                <br /><br />
+        <input class='btn btn-info' type="submit" value="Create" />
     </form>
 
 {% endblock %}

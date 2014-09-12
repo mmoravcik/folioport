@@ -8,6 +8,18 @@
 
 {% block content %}
 
-Hello Folioport admin
+<h1>Hello Folioport admin</h1>
+<br />
+<a href='{% url "folioport:dashboard:project:create" %}'
+   class='btn btn-primary'>+ Add new project</a><br /><br />
+
+<a href='{% url "folioport:dashboard:blog:post-create" %}'
+   class='btn btn-primary'>+ Add new blog post</a><br /><br />
+
+<a href='{% url "folioport:dashboard:page:create" %}'
+   class='btn btn-primary'>+ Add new page</a>
+
+
+
 
 {% endblock %}

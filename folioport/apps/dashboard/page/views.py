@@ -28,8 +28,8 @@ class PageEditView(FilterUserMixin, LoginRequiredMixin, AjaxableResponseMixin, U
         return reverse_lazy('folioport:dashboard:page:edit',
                             kwargs={'pk': self.object.pk})
 
-    def form_valid(self, form):
-        return super(PageEditView, self).form_valid(form)
+    # def form_valid(self, form):
+    #     return super(PageEditView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         ctx = super(PageEditView, self).get_context_data(**kwargs)

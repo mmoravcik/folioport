@@ -2,11 +2,37 @@
 {% load staticfiles %}
 
 {% block layout %}
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'folioport:dashboard:home' %}">Folioport admin!</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
 <div class="container-fluid">
-    <ul class="nav" id="side-menu">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
         <li>
-            <a href="{% url 'folioport:dashboard:home' %}">
-                Home
+            <a href="{% url 'folioport:dashboard:project:list' %}">
+               Projects
             </a>
         </li>
         <li>
@@ -15,31 +41,30 @@
             </a>
         </li>
         <li>
-            <a href="{% url 'folioport:dashboard:project:list' %}">
-               Projects
-            </a>
-        </li>
-        <li>
             <a href="{% url 'folioport:dashboard:page:list' %}">
                 Pages
             </a>
         </li>
+      </ul>
+      <ul class="nav nav-sidebar">
         <li>
             <a href="{% url 'folioport:dashboard:my_css:redirect-to-edit' %}">
                 CSS
             </a>
         </li>
-    </ul>
 
-    {% for message in messages %}
-         <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-    {% endfor %}
-
-    {% block content %}
-    {% endblock %}
- </div>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {% for message in messages %}
+             <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        {% block content %}
+        {% endblock %}
+     </div>
+  </div>
+</div>
 {% endblock %}
-
 
 {% block meta %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,20 +72,128 @@
 
 {% block css %}
 <link href="{% static 'folioport/css/folioport.css'%}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link href="{% static 'folioport/css/datepicker.css'%}" rel="stylesheet" type="text/css" />
 <link href="{% static 'folioport/css/codemirror.css'%}" rel="stylesheet" type="text/css" />
+<style type='text/css'>
+    /*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+</style>
+
 {% endblock %}
 
 {% block extrascripts %}
 <script src="{% static 'folioport/js/lib/datepicker.js'%}" type="text/javascript"></script>
-
 <ascript src="{% static 'folioport/js/lib/html.sortable.js'%}" type="text/javascript"></ascript>
-
 <script src="{% static 'folioport/js/lib/jquery.sortable.js'%}" type="text/javascript"></script>
 <script src="{% static 'folioport/js/lib/codemirror.js'%}" type="text/javascript"></script>
 <script src="{% static 'folioport/js/lib/css.js'%}" type="text/javascript"></script>
+
 <script type="text/javascript">
     var sortable_group = $('ol.sortable').sortable({
         onDrop: function (item, container, _super) {
