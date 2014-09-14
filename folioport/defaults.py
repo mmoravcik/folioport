@@ -1,13 +1,13 @@
 GOOGLE_ANALYTICS_ACCOUNT = 'test'
 
 FOLIOPORT_CONTENT_TYPES = [
-    'ItemImage',
-    'ItemText',
-    'ItemHeading',
-    'ItemRandomImage',
-    'ItemRichText',
-    'ItemEmbed',
-    'ItemGallery',
+        ('ItemImage', 'Image'),
+        ('ItemText', 'Plain text'),
+        ('ItemHeading', 'Heading'),
+        ('ItemRandomImage', 'Random Image'),
+        ('ItemRichText', 'Rich Text'),
+        ('ItemEmbed', 'Video/Audio embed'),
+        ('ItemGallery', 'Gallery'),
     ]
 
 CKEDITOR_CONFIGS = {
