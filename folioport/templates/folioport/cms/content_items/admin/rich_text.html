@@ -6,11 +6,11 @@
 
     <h1 class="page-header">{% trans 'CREATE THE ITEM' %}</h1>
     {{ form.media }}
-
+        <form action='' method="POST">
         {% crispy form %}
         <br />
         <input class='btn btn-primary' type="submit" value="{% trans 'Create' %}" />
         <a href="{{ next_url }}">Cancel</a>
-
+        </form>
 
 {% endblock %}
