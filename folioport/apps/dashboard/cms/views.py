@@ -5,6 +5,7 @@ from crispy_forms.helper import FormHelper
 from django.forms.models import ModelMultipleChoiceField
 from django.views.generic import RedirectView
 from django.http import HttpResponse
+from django.utils.html import escape
 from django.core.urlresolvers import reverse_lazy
 from django.db import models
 from django.views.generic.list import ListView, View
@@ -117,9 +118,14 @@ class ItemCreateView(CMSViewMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.assign_to_user(self.request.user)
-        response = super(ItemCreateView, self).form_valid(form)
-        self.object.assign_to_container(self.kwargs['container_id'])
-        messages.info(self.request, 'Item has been created!')
+        if self.request.GET.get('_popup'):
+            response = HttpResponse(
+                '<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s"); opener.nicerSelectImage();</script>' %
+                (escape(form.instance._get_pk_val()), escape(form.instance)))
+        else:
+            response = super(ItemCreateView, self).form_valid(form)
+            messages.info(self.request, 'Item has been created!')
+        form.instance.assign_to_container(self.kwargs['container_id'])
         return response
 
 

@@ -13,7 +13,7 @@ def add_new_model(request, model_name, form=None):
         form = get_model_form(normal_model_name)
 
     if request.method == 'POST':
-        form = form(request.POST)
+        form = form(request.POST, request.FILES)
         if form.is_valid():
             try:
                 new_obj = form.save()

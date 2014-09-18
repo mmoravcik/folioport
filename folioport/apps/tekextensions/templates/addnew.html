@@ -1,4 +1,4 @@
-<a href="/add/{{ model }}/" 
+<a href="{% url 'folioport:dashboard:cms:item-create' 4 'Image' %}"
     class="add-another" 
     id="add_id_{{ field }}" 
     onclick="return showAddAnotherPopup(this);">+</a>

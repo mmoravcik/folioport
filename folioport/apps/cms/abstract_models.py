@@ -186,6 +186,11 @@ class AbstractRandomImage(ContentItemMixin):
     template = 'cms/content_items/random_image.html'
     image = models.ManyToManyField('cms.Image')
 
+    @staticmethod
+    def get_form_class():
+        from forms import ItemRandomImageForm
+        return ItemRandomImageForm
+
     class Meta:
         abstract = True
 

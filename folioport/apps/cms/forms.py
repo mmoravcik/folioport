@@ -1,10 +1,13 @@
-from django import forms
-from django.db.models import get_model
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 from ckeditor.widgets import CKEditorWidget
+
+from django import forms
+from django.db.models import get_model
+
+
+from folioport.apps.tekextensions.widgets import MultipleSelectWithPopUp
 
 
 class ItemImageForm(forms.ModelForm):
@@ -39,3 +42,11 @@ class ItemRichTextForm(forms.ModelForm):
     class Meta:
         model = get_model('cms', 'ItemRichText')
         fields = ('text',)
+
+
+class ItemRandomImageForm(forms.ModelForm):
+    image = forms.ModelMultipleChoiceField(queryset=get_model('cms', 'Image').objects.all(), widget=MultipleSelectWithPopUp)
+
+    class Meta:
+        model = get_model('cms', 'ItemRandomImage')
+        fields = ('image',)

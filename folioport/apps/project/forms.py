@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from folioport.apps.tekextensions.widgets import SelectWithPopUp
+from folioport.apps.tekextensions.widgets import MultipleSelectWithPopUp
 
 from django.db.models import get_model
 from django import forms
@@ -9,7 +9,7 @@ Category = get_model('project', 'Category')
 
 
 class ProjectForm(forms.ModelForm):
-    category = forms.ModelChoiceField(Category.objects, widget=SelectWithPopUp)
+    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=MultipleSelectWithPopUp)
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)

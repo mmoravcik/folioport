@@ -1,22 +1,14 @@
 {% extends 'dashboard/layout.html' %}
 {% load staticfiles %}
 
-{% block extrascripts %}
-
-    {{ block.super }}
-    <script src="{% static 'folioport/js/lib/image-picker.js' %}" ></script>
-
-{% endblock %}
-
 {% block css %}
-
     <link href="{% static 'folioport/css/image-picker.css' %}" media="screen" rel="stylesheet" type="text/css" />
     {{ block.super }}
 {% endblock %}
 
 {% block content %}
 <h3>Please select images you'd like to use</h3>
-
+{{ form.media }}
 <form action='' method="POST">
     {{ form }}
     {% csrf_token %}
@@ -32,13 +24,16 @@
     <input type='hidden' name='next' value='{{ request.get_full_path }}' />
     <input type='submit' value='Add image' />
 </form>
-
-
-
 {% endblock %}
 
-{% block onbodyload %}
-    // TODO refactor following
+
+{% block extrascripts %}
+{{ block.super }}
+<script src="{% static 'folioport/js/lib/image-picker.js' %}" ></script>
+<script type='text/javascript'>
+// TODO refactor following
+
+function nicerSelectImage() {
     $("#id_image option").each(function() {
         var next_url = "?next={{ request.get_full_path}}";
         $(this).attr("data-img-src", '/media/' + $(this).text());
@@ -51,6 +46,13 @@
 
     });
 
-
     $("#id_image").imagepicker({show_label: true});
+}
+</script>
+{% endblock %}
+
+{% block onbodyload %}
+
+    nicerSelectImage();
+
 {% endblock %}

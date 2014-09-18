@@ -125,7 +125,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.csrf',
     'folioport.base.context_processors.folioport_project',
-    'folioport.apps.tekextensions.context_processors.admin_media_prefix',
+    #'folioport.apps.tekextensions.context_processors.admin_media_prefix',
 )
 
 INSTALLED_APPS = (
