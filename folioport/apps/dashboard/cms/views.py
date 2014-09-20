@@ -46,6 +46,8 @@ class CMSViewMixin(LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         ctx = super(CMSViewMixin, self).get_context_data(**kwargs)
         ctx['next_url'] = self.get_success_url()
+        if self.request.GET.get('_popup'):
+            ctx['is_popup'] = True
         return ctx
 
     def get_success_url(self):
@@ -131,6 +133,9 @@ class ItemCreateView(CMSViewMixin, CreateView):
 
 class ItemDeleteView(CMSViewMixin, DeleteView):
     template_name = 'dashboard/cms/item_delete.html'
+
+    def get_template_names(self):
+        return [self.template_name]
 
     def get_queryset(self):
         self.model = models.get_model('cms', self.kwargs['class_name'])

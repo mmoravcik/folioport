@@ -29,4 +29,4 @@ def add_new_model(request, model_name, form=None):
         form = form()
 
     page_context = {'form': form, 'field': normal_model_name}
-    return render_to_response('popup.html', page_context, context_instance=RequestContext(request))
+    return render_to_response('picker/popup.html', page_context, context_instance=RequestContext(request))

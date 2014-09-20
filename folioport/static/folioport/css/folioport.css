@@ -13,7 +13,7 @@ body {
 }
 
 .image_picker_image {
-    width:250px;
+    width: 100px;
 }
 
 ul.thumbnails.image_picker_selector li .thumbnail a{
@@ -72,4 +72,8 @@ ol.sortable li.placeholder:before {
 
 ol {
     list-style-type: none;
+}
+
+#hint_id_category {
+    display: none;
 }

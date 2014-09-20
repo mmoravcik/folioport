@@ -32,7 +32,7 @@ class AbstractCategory(MPTTModel):
 
 
 class AbstractMedia(models.Model):
-    caption = models.TextField(blank=True)
+    caption = models.CharField(max_length=128, blank=True)
     order = models.IntegerField(default=1)
 
     class Meta:

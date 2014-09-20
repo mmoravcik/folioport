@@ -212,6 +212,11 @@ class AbstractItemGallery(ContentItemMixin):
         abstract = True
 
     @staticmethod
+    def get_form_class():
+        from forms import ItemGalleryForm
+        return ItemGalleryForm
+
+    @staticmethod
     def get_edit_create_template():
         return 'cms/content_items/admin/gallery.html'
 

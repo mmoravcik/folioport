@@ -1,5 +1,6 @@
 {% extends 'dashboard/layout.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block css %}
     <link href="{% static 'folioport/css/image-picker.css' %}" media="screen" rel="stylesheet" type="text/css" />
@@ -10,29 +11,27 @@
 <h3>Please select images you'd like to use</h3>
 {{ form.media }}
 <form action='' method="POST">
-    {{ form }}
-    {% csrf_token %}
-    <br />
-    <input type='submit' value="Save" />
+    {% crispy form %}
+    <br /><br /><br />
+    <input class="btn btn-primary" type='submit' value="Save" /> <a href="{{ next_url }}">Cancel</a>
 </form>
 
-<a href="{{ next_url }}">Cancel</a>
-
-
+<!--
 <form action="{% url 'folioport:dashboard:cms:item-create-redirect' %}">
     <input type='hidden' name='class_name' value='Image' />
     <input type='hidden' name='next' value='{{ request.get_full_path }}' />
     <input type='submit' value='Add image' />
 </form>
+-->
 {% endblock %}
 
 
 {% block extrascripts %}
 {{ block.super }}
 <script src="{% static 'folioport/js/lib/image-picker.js' %}" ></script>
+
 <script type='text/javascript'>
 // TODO refactor following
-
 function nicerSelectImage() {
     $("#id_image option").each(function() {
         var next_url = "?next={{ request.get_full_path}}";

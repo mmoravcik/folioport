@@ -45,8 +45,22 @@ class ItemRichTextForm(forms.ModelForm):
 
 
 class ItemRandomImageForm(forms.ModelForm):
-    image = forms.ModelMultipleChoiceField(queryset=get_model('cms', 'Image').objects.all(), widget=MultipleSelectWithPopUp)
+    image = forms.ModelMultipleChoiceField(
+        queryset=get_model('cms', 'Image').objects.all(),
+        widget=MultipleSelectWithPopUp('Image', 'picker/add_new_in_cms.html'),
+    )
 
     class Meta:
         model = get_model('cms', 'ItemRandomImage')
+        fields = ('image',)
+
+
+class ItemGalleryForm(forms.ModelForm):
+    image = forms.ModelMultipleChoiceField(
+        queryset=get_model('cms', 'GalleryImage').objects.all(),
+        widget=MultipleSelectWithPopUp('GalleryImage', 'picker/add_new_in_cms.html'),
+    )
+
+    class Meta:
+        model = get_model('cms', 'ItemGallery')
         fields = ('image',)
