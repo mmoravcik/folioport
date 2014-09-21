@@ -77,7 +77,7 @@ class AbstractProject(models.Model):
         Project = models.get_model('project', 'Project')
         Category = models.get_model('project', 'Category')
         if category_slug:
-            categories = Category.active_objects.filter(slug=category_slug)
+            categories = Category.objects.active().filter(slug=category_slug)
             if categories:
                 return Project.objects.active().filter(
                     category__in=[categories[0]]).exclude(id=self.id)
