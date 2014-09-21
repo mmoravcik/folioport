@@ -9,7 +9,9 @@ Category = get_model('project', 'Category')
 
 
 class ProjectForm(forms.ModelForm):
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=MultipleSelectWithPopUp)
+    category = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(), widget=MultipleSelectWithPopUp(
+            'Category', 'picker/add_new.html', 'project'))
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
@@ -18,4 +20,16 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ('title', 'thumbnail', 'thumbnail_width', 'category', 'tags', 'active',)
+        fields = ('title', 'thumbnail', 'thumbnail_width',
+                  'category', 'tags', 'active',)
+
+
+class CategoryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+
+    class Meta:
+        model = Category
+        fields = ('name',)

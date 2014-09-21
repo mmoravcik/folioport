@@ -28,8 +28,8 @@ class FolioportApplication(Application):
             (r'^dashboard/', include(self.dashboard_app.urls)),
             (r'^blog/', include(self.blog_app.urls)),
             (r'^page/', include(self.page_app.urls)),
-            url(r'^add/(?P<model_name>\w+)/?$', 'folioport.apps.tekextensions.views.add_new_model'),
-
+            url(r'^add/(?P<app>\w+)/(?P<model_name>\w+)/?$',
+                'folioport.apps.tekextensions.views.add_new_model'),
             (r'^$', self.home_view.as_view()),
         )
         return urlpatterns

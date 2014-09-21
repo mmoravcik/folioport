@@ -1,3 +1,4 @@
+from django.db.models import get_model
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
@@ -6,8 +7,10 @@ from django.forms import ValidationError
 from forms import get_model_form, normalize_model_name
 
 
-def add_new_model(request, model_name, form=None):
+def add_new_model(request, app, model_name, form=None):
     normal_model_name = normalize_model_name(model_name)
+    model = get_model(app, normal_model_name)
+    form = form if form else model.get_form_class()
 
     if not form:
         form = get_model_form(normal_model_name)
@@ -28,5 +31,6 @@ def add_new_model(request, model_name, form=None):
     else:
         form = form()
 
-    page_context = {'form': form, 'field': normal_model_name}
-    return render_to_response('picker/popup.html', page_context, context_instance=RequestContext(request))
+    page_context = {'app': app, 'form': form, 'field': normal_model_name, 'is_popup': True}
+    return render_to_response('picker/popup.html', page_context,
+                              context_instance=RequestContext(request))

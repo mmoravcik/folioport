@@ -1,18 +1,20 @@
-{% load staticfiles %}
+{% extends 'dashboard/layout.html' %}
 {% load crispy_forms_tags %}
-<html>
-<head>
-<title>Add {{ field }}</title>
+{% load i18n %}
+{% load staticfiles %}
+
+{% block extrascripts %}
+{{ block.super }}
 <script src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
+
 <h1>Add {{ field }}</h1>
-<form method="POST" enctype="multipart/form-data" action="/add/{{ field }}">
-        {% csrf_token %}
+<form method="POST" enctype="multipart/form-data" action="/add/{{ app }}/{{ field }}">
         <table>
-        {{ form }}
+        {% crispy form %}
         </table>
-<p><input type="submit" /> | <a href="javascript:window.close()">Cancel</a></p>
+<p><input class='btn btn-primary' type="submit" value="Save" />  <a href="javascript:window.close()">Cancel</a></p>
 </form>
-</body>
-</html>
+{% endblock %}

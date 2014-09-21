@@ -4,9 +4,10 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 
 
 class PopUpBaseWidget(object):
-    def __init__(self, model=None, template='picker/add_new.html', *args, **kwargs):
+    def __init__(self, model=None, template='picker/add_new.html', app='None', *args, **kwargs):
         self.model = model
         self.template = template
+        self.app = app
         super(PopUpBaseWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, *args, **kwargs):
@@ -16,7 +17,7 @@ class PopUpBaseWidget(object):
             self.model = name
 
         popupplus = render_to_string(
-            self.template, {'field': name, 'model': self.model})
+            self.template, {'app': self.app, 'field': name, 'model': self.model})
         return html+popupplus
 
     def _media(self):

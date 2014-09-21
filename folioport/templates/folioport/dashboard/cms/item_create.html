@@ -11,7 +11,8 @@
         {% crispy form %}
         <br />
         <input class='btn btn-primary' type="submit" value="{% trans 'Create' %}" />
-        &nbsp; <a href="{{ next_url }}">{% trans 'Cancel' %}</a>
+        &nbsp;
+        <a href="{% if is_popup %}javascript:window.close(){% else %}{{ next_url }}{% endif %}">Cancel</a></p>
     </form>
 
 {% endblock %}

@@ -3,7 +3,10 @@ from folioport.base.abstract_models import AbstractCategory
 
 
 class Category(AbstractCategory):
-    pass
+    @staticmethod
+    def get_form_class():
+        from folioport.apps.project.forms import CategoryForm
+        return CategoryForm
 
 
 class Project(AbstractProject):
