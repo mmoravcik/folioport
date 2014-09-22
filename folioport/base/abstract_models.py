@@ -1,25 +1,31 @@
-from django.db import models
-from django.template.defaultfilters import slugify
-
 from mptt.models import MPTTModel, TreeForeignKey
+
+from django.conf import settings
+from django.db import models
+from django.contrib.sites.managers import CurrentSiteManager
+from django.contrib.sites.models import Site
+from django.template.defaultfilters import slugify
 
 from folioport.base.utils import get_solr_thumbnail_geometry
 
 
-class CategoryManager(models.Manager):
+class CategoryManager(CurrentSiteManager):
     def active(self):
         return self.get_query_set().filter(active=True)
 
 
 class AbstractCategory(MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=128)
     slug = models.SlugField(max_length=128, blank=True, default="")
     parent = TreeForeignKey('self', null=True, blank=True,
         related_name='children')
     active = models.BooleanField(default=True)
+    site = models.ForeignKey(Site)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     class Meta:
         abstract = True
+        unique_together = ("name", "site")
 
     class MPTTMeta:
         order_insertion_by = ['name']

@@ -43,6 +43,12 @@ class ProjectCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
     form_class = forms.ProjectForm
     template_name = 'dashboard/project/create.html'
 
+    def get_form(self, form_class):
+        form = super(ProjectCreateView, self).get_form(form_class)
+        form.fields['category'].queryset = form.fields['category'].queryset.\
+            filter(user=self.request.user)
+        return form
+
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:project:edit',
             kwargs={'pk': self.object.pk})
