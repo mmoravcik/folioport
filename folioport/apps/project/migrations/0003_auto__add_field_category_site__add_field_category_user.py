@@ -10,12 +10,12 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'Category.site'
         db.add_column(u'project_category', 'site',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['sites.Site']),
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['sites.Site']),
                       keep_default=False)
 
         # Adding field 'Category.user'
         db.add_column(u'project_category', 'user',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['account.FolioportUser']),
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['account.FolioportUser']),
                       keep_default=False)
 
 

@@ -78,4 +78,20 @@
             }
         });
     });
+
+    /*
+    $('#addCmsItem').click(function(e) {
+        var str = $("#addContentTypeForm").serializeArray();
+        var url = '{% url 'folioport:dashboard:cms:item-create' object.container.id 'class_name' %}';
+        url = url.replace("class_name", 'ItemText');
+        $.get(url, {}, function(data) {
+            alert(data);
+        });
+
+        $('#folioportModal').modal();
+        $('#folioportModalTitle').text('Create an item');
+
+        return false;
+    });
+    */
 {% endblock %}
