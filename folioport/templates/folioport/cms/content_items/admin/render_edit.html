@@ -1,0 +1,11 @@
+<div style="background-color: #eee; padding:5px">
+    {{ item.class_name }}<br />
+    <a href='#' class="show_content" data-item-id="item-edit-{{ item.container_item.pk }}">Show content [+]</a>
+    <div class="pull-right">
+        <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk %}?next={{ request.get_full_path }}">edit</a>
+        <a href="{% url 'folioport:dashboard:cms:item-delete' item.class_name item.pk %}?next={{ request.get_full_path }}">delete</a>
+    </div>
+</div>
+<div id="item-edit-{{ item.container_item.pk }}" style="display: none">
+{{ item.render }}
+</div>

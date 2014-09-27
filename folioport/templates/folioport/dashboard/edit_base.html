@@ -42,6 +42,19 @@
 {% endblock %}
 
 {% block onbodyload %}
+    $('.show_content').click(function (e) {
+        e.preventDefault();
+        var itemId = $(this).attr('data-item-id');
+        $('#' + itemId).toggle();
+    });
+
+    $('#show-hide-all-content').click(function (e) {
+        e.preventDefault();
+        $('.show_content').each(function(e) {
+            $(this).click();
+        });
+    });
+
     $('#preview-tab a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
