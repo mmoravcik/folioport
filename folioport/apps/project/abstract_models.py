@@ -27,7 +27,7 @@ class AbstractProject(models.Model):
     site = models.ForeignKey(Site)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=128)
-    category = models.ManyToManyField('project.Category', help_text='')
+    category = models.ManyToManyField('project.Category', blank=True)
     slug = models.SlugField(max_length=128)
     active = models.BooleanField(default=True)
     release_date = models.DateField(null=True, blank=True)

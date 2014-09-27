@@ -44,6 +44,7 @@ class GalleryImage(ContentItemMixin, AbstractImage):
 
 class ItemImage(abstract_models.AbstractItemImage):
     hover_image = models.ImageField(
+        help_text='Image you can select as hover on effect',
         upload_to='single_hover_images', null=True, blank=True)
 
 

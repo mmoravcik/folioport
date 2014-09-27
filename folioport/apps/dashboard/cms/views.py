@@ -64,7 +64,7 @@ class ItemEditView(CMSViewMixin, UpdateView):
         # remove form tag for all crispy-form forms
         if not getattr(form, 'helper', None):
             form.helper = FormHelper()
-            form.helper.form_tag = False
+        form.helper.form_tag = False
         # images are foreign keys and we need to limit them to current user
         if isinstance(form.fields.get('image', None), ModelMultipleChoiceField):
             form.fields['image'].queryset = form.fields['image'].queryset.\
@@ -102,7 +102,7 @@ class ItemCreateView(CMSViewMixin, CreateView):
         # remove form tag for all crispy-form forms
         if not getattr(form, 'helper', None):
             form.helper = FormHelper()
-            form.helper.form_tag = False
+        form.helper.form_tag = False
         # images are foreign keys and we need to limit them to current user
         if isinstance(form.fields.get('image', None), ModelMultipleChoiceField):
             form.fields['image'].queryset = form.fields['image'].queryset.\

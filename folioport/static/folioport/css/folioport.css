@@ -81,3 +81,17 @@ ol {
 #hint_id_image {
     display: none;
 }
+
+.optional_settings {
+    margin-left:40px;
+    border-left:1px #ddd dashed;
+    padding-left:20px;
+}
+
+.form-group {
+    margin: 0px 0 35px 0;
+}
+
+legend {
+    background-color: #eee;
+}
