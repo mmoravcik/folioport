@@ -11,8 +11,9 @@ from django.db import models
 from django.views.generic.list import ListView, View
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib import messages
+from django.template import RequestContext
 
-from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin
+from folioport.base.mixins import LoginRequiredMixin
 
 Post = models.get_model('blog', 'Post')
 Container = models.get_model('cms', 'Container')
@@ -178,7 +179,7 @@ class ContainerPreviewView(View):
             pass
         else:
             status = 'success'
-            result = container.render()
+            result = container.render(RequestContext(request))
 
         response_data = {'status': status, 'result': result}
         return HttpResponse(

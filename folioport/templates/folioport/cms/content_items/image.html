@@ -1,12 +1,1 @@
-{% load thumbnail %}
-
-{% thumbnail image.image image.get_solr_thumbnail_geometry format=image.thumbnail_type as im %}
-<div class='image-container'>
-    {% if image.hover_image %}
-        {% thumbnail image.hover_image image.get_solr_thumbnail_geometry as hover_im %}
-            <img class='hover_image' style='display:none' width='{{ hover_im.width }}' height='{{ hover_im.height }}' src='{{ hover_im.url }}' alt='{{ hover_im.url }}' />
-        {% endthumbnail %}
-    {% endif %}
-    <img class='normal_image' width='{{ im.width }}' height='{{ im.height }}' src='{{ im.url }}' alt='{{ im.url }}' />
-</div>
-{% endthumbnail %}
+{% include 'cms/content_items/includes/image.html' with image=image %}

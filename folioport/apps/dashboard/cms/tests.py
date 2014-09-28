@@ -5,6 +5,7 @@ from django_dynamic_fixture import G
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
+from django.template import Context
 
 from folioport.apps.cms import models
 
@@ -80,4 +81,4 @@ class CMSDashboardViews(TestCase):
         json_response = json.loads(response.content)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json_response['status'], 'success')
-        self.assertEqual(json_response['result'], self.container.render())
+        self.assertEqual(json_response['result'], self.container.render(Context({})))

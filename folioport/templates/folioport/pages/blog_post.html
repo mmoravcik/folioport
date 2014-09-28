@@ -1,6 +1,7 @@
 {% extends "layout.html"  %}
 {% load thumbnail %}
 {% load i18n %}
+{% load cms_item %}
 
 {% block title %} {{ object.title }} {% endblock %}
 
@@ -9,7 +10,7 @@
 
 <div class='row-fluid'>
     {{ object.release_date }}<br />
-    {{ object.container.render|safe }}
+    {% cms_container_render object.container %}
 </div>
 
 {% endblock %}
