@@ -25,6 +25,7 @@ class AbstractPost(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['order', '-release_date']
 
     def __unicode__(self):
         return self.title
