@@ -1,0 +1,12 @@
+{% load endless %}
+{% load cms_item %}
+
+{% paginate object_list %}
+
+{% for post in object_list %}
+    <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a><br/>
+    {{ post.release_date }}<br />
+    {% cms_container_render post.container %}
+{% endfor %}
+
+{% show_more 'show me more' %}

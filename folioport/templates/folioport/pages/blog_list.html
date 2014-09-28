@@ -1,14 +1,18 @@
 {% extends "layout.html"  %}
 {% load thumbnail %}
-{% load cms_item %}
 
 {% block title %}Blog posts{% endblock %}
 
 {% block content %}
 
-{% for post in object_list %}
-    <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a><br/>
-    {{ post.release_date }}<br />
-    {% cms_container_render post.container %}
-{% endfor %}
+{% include 'pages/partials/list_blog_post.html' %}
+
+{% endblock %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    $.endlessPaginate({
+        paginateOnScroll: true,
+        paginateOnScrollMargin: 20
+    });
 {% endblock %}

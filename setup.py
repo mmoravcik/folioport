@@ -20,6 +20,7 @@ setup(name='folioport',
       platforms=['linux'],
       packages=find_packages(exclude=["sandbox*", "tests*"]),
       include_package_data=True,
+      # TODO make this less greedy nom nom
       install_requires=[
           'django==1.6.6',
           'pillow==2.4.0',
@@ -32,6 +33,7 @@ setup(name='folioport',
           'django-dynamic-fixture',
           'django-my-css==0.1.2',
           'django-crispy-forms',
+          'django-endless-pagination==2.0',
           ],
       dependency_links = ['http://github.com/mmoravcik/django-my-css/tarball/0.1.2#egg=django-my-css-0.1.2'],
       # See http://pypi.python.org/pypi?%3Aaction=list_classifiers

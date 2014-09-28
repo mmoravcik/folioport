@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'crispy_forms',
     'folioport.apps.tekextensions',
+    'endless_pagination',
 )
 
 MYCSS_ROOT= MEDIA_ROOT + '/css/'
