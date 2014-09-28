@@ -20,12 +20,12 @@ class AbstractPost(models.Model):
     active = models.BooleanField(default=True)
     release_date = models.DateField(
         'Date posted', default=datetime.now(), null=True, blank=True)
-    order = models.IntegerField(null=True, blank=True)
+    order = models.IntegerField(default=0, null=True, blank=True)
     container = models.ForeignKey('cms.Container', null=True, blank=True)
 
     class Meta:
         abstract = True
-        ordering = ['order', '-release_date']
+        ordering = ['-release_date']
 
     def __unicode__(self):
         return self.title
