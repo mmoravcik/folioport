@@ -1,5 +1,6 @@
 {% extends 'dashboard/layout.html' %}
 {% load i18n %}
+{% load cms_item %}
 
 {% block content %}
 
@@ -15,7 +16,7 @@
 
     {% for item in object.get_item_objects %}
         <div style='width:80%; border:solid 1px #333; padding: 15px; margin:15px'>
-            {{ item.render }}
+            {% cms_item_render item %}
             <a href="{% url 'folioport:dashboard:cms:item-edit' item.class_name item.pk %}">edit</a>
             <a href="{% url 'folioport:dashboard:cms:item-delete' item.class_name item.pk %}">delete</a>
         </div>

@@ -5,7 +5,7 @@
     <br />
     <a id="show-hide-all-content" href="#">Show / hide all content</a>
 </div>
-<strong class="pull-right">Drag items to reorder</strong>
+<p class="pull-right">Drag items to reorder</p>
 <ol class='sortable'>
 {% for item in object.container.get_item_objects %}
     <li data-id='{{ item.container_item.pk }}' class='sortable-item'>

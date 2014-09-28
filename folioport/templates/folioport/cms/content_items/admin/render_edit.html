@@ -1,3 +1,5 @@
+{% load cms_item %}
+
 <div style="background-color: #eee; padding:5px">
     {{ item.class_name }}<br />
     <a href='#' class="show_content" data-item-id="item-edit-{{ item.container_item.pk }}">Show content [+]</a>
@@ -7,5 +9,5 @@
     </div>
 </div>
 <div id="item-edit-{{ item.container_item.pk }}" style="display: none">
-{{ item.render }}
+{% cms_item_render item %}
 </div>
