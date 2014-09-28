@@ -1,10 +1,11 @@
 {% extends "layout.html"  %}
+{% load cms_item %}
 
 {% block title %} Folioport {% endblock %}
 
 {% block content %}
     {% if page %}
-        {{ page.container.render|safe }}
+        {% cms_container_render page.container %}
     {% else %}
         {% include 'partials/project_list.html' %}
     {% endif %}

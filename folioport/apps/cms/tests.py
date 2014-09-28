@@ -1,6 +1,7 @@
 from django_dynamic_fixture import G
 
-from django.test import TestCase, Client
+from django.test import TestCase
+from django.template import Context
 
 from folioport.apps.cms import models
 
@@ -39,10 +40,10 @@ class CMSModelTests(TestCase):
         self.assertEqual(0, len(models.ContainerItems.objects.all()))
 
     def test_container_render(self):
-        item1_rendered = self.text_item.render()
-        item2_rendered = self.image_item.render()
+        item1_rendered = self.text_item.render({})
+        item2_rendered = self.image_item.render({})
         self.text_item.assign_to_container(self.container.id, 10)
         self.image_item.assign_to_container(self.container.id, 10)
 
-        self.assertTrue(item1_rendered in self.container.render())
-        self.assertTrue(item2_rendered in self.container.render())
+        self.assertTrue(item1_rendered in self.container.render(Context({})))
+        self.assertTrue(item2_rendered in self.container.render(Context({})))

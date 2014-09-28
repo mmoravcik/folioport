@@ -1,6 +1,7 @@
 {% extends "layout.html"  %}
 {% load thumbnail %}
 {% load i18n %}
+{% load cms_item %}
 
 {% block title %} {{ project.title }} {% endblock %}
 
@@ -26,7 +27,7 @@
 </div>
 
 <div class='row-fluid'>
-    {{ object.container.render|safe }}
+    {% cms_container_render object.container %}
 </div>
 
 {% endblock %}

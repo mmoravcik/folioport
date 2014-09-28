@@ -1,5 +1,6 @@
 {% extends "layout.html"  %}
 {% load thumbnail %}
+{% load cms_item %}
 
 {% block title %}Blog posts{% endblock %}
 
@@ -8,6 +9,6 @@
 {% for post in object_list %}
     <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a><br/>
     {{ post.release_date }}<br />
-    {{ post.container.render|safe }}
+    {% cms_container_render post.container %}
 {% endfor %}
 {% endblock %}

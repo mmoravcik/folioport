@@ -36,10 +36,10 @@ class AbstractContainer(models.Model):
             item.delete()
         return super(AbstractContainer, self).delete()
 
-    def render(self):
+    def render(self, context):
         html = ''
         for item in self.get_item_objects():
-            html += item.render()
+            html += item.render(context)
         return html
 
 
@@ -82,7 +82,7 @@ class ContentItemMixin(models.Model):
     def get_edit_create_template():
         return None
 
-    def render(self):
+    def render(self, context):
         return ""
 
     def assign_to_user(self, user):
@@ -117,10 +117,10 @@ class AbstractItemText(ContentItemMixin):
     def __unicode__(self):
         return self.text
 
-    def render(self):
+    def render(self, context):
         t = loader.get_template(self.template)
-        c = Context({'text': self.text})
-        return t.render(c)
+        context['text'] = self.text
+        return t.render(context)
 
 
 class AbstractItemRichText(ContentItemMixin):
@@ -142,10 +142,10 @@ class AbstractItemRichText(ContentItemMixin):
     def get_edit_create_template():
         return 'cms/content_items/admin/rich_text.html'
 
-    def render(self):
+    def render(self, context):
         t = loader.get_template(self.template)
-        c = Context({'text': mark_safe(self.text)})
-        return t.render(c)
+        context['text'] = mark_safe(self.text)
+        return t.render(context)
 
 
 class AbstractItemImage(ContentItemMixin, abstract_models.AbstractImage):
@@ -159,10 +159,10 @@ class AbstractItemImage(ContentItemMixin, abstract_models.AbstractImage):
         from forms import ItemImageForm
         return ItemImageForm
 
-    def render(self):
+    def render(self, context):
         t = loader.get_template(self.template)
-        c = Context({'image': self})
-        return t.render(c)
+        context['image'] = self
+        return t.render(context)
 
 
 class AbstractItemEmbed(ContentItemMixin, abstract_models.AbstractEmbed):
@@ -176,10 +176,10 @@ class AbstractItemEmbed(ContentItemMixin, abstract_models.AbstractEmbed):
         from forms import ItemEmbedForm
         return ItemEmbedForm
 
-    def render(self):
+    def render(self, context):
         t = loader.get_template(self.template)
-        c = Context({'embed': self})
-        return t.render(c)
+        context['embed'] = self
+        return t.render(context)
 
 
 class AbstractRandomImage(ContentItemMixin):
@@ -198,10 +198,10 @@ class AbstractRandomImage(ContentItemMixin):
     def get_edit_create_template():
         return 'cms/content_items/admin/random_image.html'
 
-    def render(self):
+    def render(self, context):
         t = loader.get_template(self.template)
-        c = Context({'image': self.image.all().order_by('?')[0]})
-        return t.render(c)
+        context['image'] = self.image.all().order_by('?')[0]
+        return t.render(context)
 
 
 class AbstractItemGallery(ContentItemMixin):
@@ -220,10 +220,10 @@ class AbstractItemGallery(ContentItemMixin):
     def get_edit_create_template():
         return 'cms/content_items/admin/gallery.html'
 
-    def render(self):
+    def render(self, context):
         t = loader.get_template(self.template)
-        c = Context({'images': self.image.all()})
-        return t.render(c)
+        context['images'] = self.image.all()
+        return t.render(context)
 
 
 class AbstractItemHeading(ContentItemMixin):
@@ -237,8 +237,8 @@ class AbstractItemHeading(ContentItemMixin):
     def __unicode__(self):
         return "%s (level %s)" % (self.text, self.level)
 
-    def render(self):
+    def render(self, context):
         t = loader.get_template(self.template)
-        c = Context({'text': mark_safe(self.text),
-                     'level': self.level})
-        return t.render(c)
+        context['text'] = mark_safe(self.text)
+        context['level'] = self.level
+        return t.render(context)
