@@ -85,7 +85,7 @@
     /*
  * Base structure
  */
-
+/* TODO Sort this css (into file or so)*/
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
@@ -200,6 +200,7 @@ body {
 <script src="{% static 'folioport/js/lib/css.js'%}" type="text/javascript"></script>
 
 <script type="text/javascript">
+    // TODO do some DRY in this script tag
     var sortable_group = $('ol.sortable').sortable({
         onDrop: function (item, container, _super) {
             var data = sortable_group.sortable("serialize").get();
@@ -218,6 +219,36 @@ body {
             });
             _super(item, container)
         }
+    });
+
+    var sortable_table_group = $('table.sorted_table').sortable({
+      containerSelector: 'table',
+      itemPath: '> tbody',
+      itemSelector: 'tr',
+      placeholder: '<tr class="placeholder"/>',
+      onDrop: function (item, container, _super) {
+          var data = sortable_table_group.sortable("serialize").get();
+          var item_order = [];
+          for(var i = 0; i < data[0].length; i++) {
+              var obj = data[0][i];
+              item_order.push(obj.id);
+              var object_type = obj.object;
+          }
+          var data = JSON.parse('{"item_order": "'+ item_order +'"}');
+          if (object_type == 'project') {
+              var url = "{% url 'folioport:dashboard:project:order-save' %}";
+          } else {
+              var url = "{% url 'folioport:dashboard:page:order-save' %}";
+          }
+          $.post(url, data, function( data ) {
+              if (data.status == 'success') {
+                  $.growl('', 'Order of your items has been saved');
+              } else {
+                  alert('Sorry! Unable to save your order :(');
+              }
+          });
+          _super(item, container)
+      }
     });
 
 </script>

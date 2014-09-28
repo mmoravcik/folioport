@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.sites.models import get_current_site
 
 from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin, \
-    AjaxableResponseMixin
+    AjaxableResponseMixin, ObjectSaveMixin
 from folioport.apps.page.forms import PageForm
 
 Page = models.get_model('page', 'Page')
@@ -61,3 +61,7 @@ class PageDeleteView(FilterUserMixin, LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         messages.info(self.request, 'Page has been deleted!')
         return reverse_lazy('folioport:dashboard:page:list')
+
+
+class PageOrderSaveView(ObjectSaveMixin):
+    model = Page

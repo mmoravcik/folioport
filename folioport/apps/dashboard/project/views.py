@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.sites.models import get_current_site
 
 from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin, \
-    AjaxableResponseMixin
+    AjaxableResponseMixin, ObjectSaveMixin
 from folioport.apps.project import forms
 
 Project = models.get_model('project', 'Project')
@@ -67,3 +67,7 @@ class ProjectDeleteView(FilterUserMixin, LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         messages.info(self.request, 'Project has been deleted!')
         return reverse_lazy('folioport:dashboard:project:list')
+
+
+class ProjectOrderSaveView(ObjectSaveMixin):
+    model = Project

@@ -11,6 +11,7 @@ class ProjectApplication(Application):
     edit_view = views.ProjectEditView
     create_view = views.ProjectCreateView
     delete_view = views.ProjectDeleteView
+    order_save_view = views.ProjectOrderSaveView
 
     def get_urls(self):
         urlpatterns = super(ProjectApplication, self).get_urls()
@@ -25,6 +26,9 @@ class ProjectApplication(Application):
             url(r'/create',
                 self.create_view.as_view(),
                 name='create'),
+            url(r'/order-save',
+                self.order_save_view.as_view(),
+                name='order-save'),
             url(r'',
                 self.list_view.as_view(),
                 name='list'),

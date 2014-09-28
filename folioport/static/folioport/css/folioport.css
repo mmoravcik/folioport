@@ -67,7 +67,8 @@ ol.sortable li.placeholder:before {
 }
 
 .sortable-item {
-    width:1000px; border:solid 1px #333; padding: 15px; margin:15px
+    width:1000px; border:solid 1px #333; padding: 15px; margin:15px;
+    cursor: move;
 }
 
 ol {
@@ -95,3 +96,54 @@ ol {
 legend {
     background-color: #eee;
 }
+
+.sorted_table tbody tr {
+  cursor: move;
+}
+
+.sorted_table tr.placeholder {
+  display: block;
+  background: red;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+  .sorted_table tr.placeholder:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-left-color: red;
+    margin-top: -5px;
+    left: -5px;
+    border-right: none;
+  }
+
+.sorted_head th {
+  cursor: pointer;
+}
+
+.sorted_head th.placeholder {
+  display: block;
+  background: red;
+  position: relative;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+  .sorted_head th.placeholder:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-top-color: red;
+    top: -6px;
+    margin-left: -5px;
+    border-bottom: none;
+  }

@@ -1,5 +1,6 @@
 import json
 
+from django.views.generic.base import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.sites.models import get_current_site
@@ -54,3 +55,25 @@ class AjaxableResponseMixin(object):
             return self.render_to_json_response(data)
         else:
             return response
+
+
+class ObjectSaveMixin(View):
+    def post(self, request, *args, **kwargs):
+        item_order = request.POST.get('item_order', "")
+        status = 'success'
+        if item_order:
+            for idx, item in enumerate(item_order.split(',')):
+                try:
+                    obj = self.model.objects.get(
+                        id=int(item), user=self.request.user)
+                except ValueError:
+                    status = 'fail'
+                except self.model.DoesNotExist:
+                    status = 'fail'
+                else:
+                    obj.order = idx + 5
+                    obj.save()
+
+        response_data = {'status': status, 'result': ''}
+        return HttpResponse(
+            json.dumps(response_data), content_type="application/json")

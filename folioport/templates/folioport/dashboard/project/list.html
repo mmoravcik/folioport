@@ -11,15 +11,17 @@
 
     {% if object_list %}
     <div class='responsive-table'>
-        <table class="table table-hover" style="width:600px;">
-            <tr>
-                <th>{% trans 'project title' %}</th>
-                <th class='text-center'>{% trans 'Active' %}</th>
-                <th class='text-center'>{% trans 'Actions' %}</th>
-            </tr>
-
+        <table class="table table-hover sorted_table" style="width:600px;">
+            <thead>
+                <tr>
+                    <th>{% trans 'project title' %}</th>
+                    <th class='text-center'>{% trans 'Active' %}</th>
+                    <th class='text-center'>{% trans 'Actions' %}</th>
+                </tr>
+            </thead>
+            <tbody>
             {% for project in object_list %}
-            <tr>
+            <tr data-id='{{ project.pk }}' data-object="project">
                 <td>{{ project.title }}</td>
                 <td class='text-center'>
                     {% if project.active %}
@@ -40,6 +42,7 @@
                 </td>
             </tr>
             {% endfor %}
+            </tbody>
         </table>
     </div>
     {% else %}

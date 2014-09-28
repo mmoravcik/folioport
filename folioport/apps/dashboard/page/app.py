@@ -11,6 +11,7 @@ class PageApplication(Application):
     edit_view = views.PageEditView
     create_view = views.PageCreateView
     delete_view = views.PageDeleteView
+    order_save_view = views.PageOrderSaveView
 
     def get_urls(self):
         urlpatterns = super(PageApplication, self).get_urls()
@@ -25,6 +26,9 @@ class PageApplication(Application):
             url(r'/create',
                 self.create_view.as_view(),
                 name='create'),
+            url(r'/order-save',
+                self.order_save_view.as_view(),
+                name='order-save'),
             url(r'',
                 self.list_view.as_view(),
                 name='list'),
