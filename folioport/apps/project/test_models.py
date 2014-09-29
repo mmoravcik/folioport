@@ -25,10 +25,12 @@ class ProjectModelTests(TestCase):
         self.assertEqual(projects[1].next(), projects[3])
         self.assertEqual(projects[3].previous(), projects[1])
 
-    def test_previous_next_with_category(self):
+    def test_previous_next_with_active_category(self):
         categories = [
-            G(models.Category, slug='cat1', parent=None),
-            G(models.Category, slug='cat2', parent=None)
+            G(models.Category, slug='cat1', parent=None,
+              site__id=settings.SITE_ID, active=True),
+            G(models.Category, slug='cat2', parent=None,
+              site__id=settings.SITE_ID, active=True)
         ]
 
         projects = [
@@ -46,7 +48,6 @@ class ProjectModelTests(TestCase):
             # project[5]
             self._create_project(title="6", order=5, category=[categories[0]])
         ]
-
         self.assertEqual(projects[0].next(categories[1].slug), projects[1])
         self.assertEqual(projects[0].previous(categories[1].slug), projects[4])
         self.assertEqual(projects[1].previous(categories[1].slug), projects[0])

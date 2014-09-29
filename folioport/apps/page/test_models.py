@@ -40,6 +40,13 @@ class PageModelTests(TestCase):
         with self.assertRaises(Exception):
             G(Page, type=Page.LANDING_PAGE, site__id=settings.SITE_ID)
 
+    def test_can_save_landing_page(self):
+        page = G(Page, type=Page.LANDING_PAGE, site__id=settings.SITE_ID)
+        G(Page, type=Page.CONTENT_PAGE, site__id=settings.SITE_ID)
+        page.title = 'new'
+        page.save()
+        self.assertEqual('new', page.title)
+
     def test_active_projects(self):
         active_page = G(Page, site__id=settings.SITE_ID, active=True)
         nonactive_page = G(Page, site__id=settings.SITE_ID, active=False)

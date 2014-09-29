@@ -40,8 +40,8 @@ class CMSModelTests(TestCase):
         self.assertEqual(0, len(models.ContainerItems.objects.all()))
 
     def test_container_render(self):
-        item1_rendered = self.text_item.render({})
-        item2_rendered = self.image_item.render({})
+        item1_rendered = self.text_item.render(Context({}))
+        item2_rendered = self.image_item.render(Context({}))
         self.text_item.assign_to_container(self.container.id, 10)
         self.image_item.assign_to_container(self.container.id, 10)
 
