@@ -2,8 +2,15 @@
     <strong>[Illustrator]</strong>
 
     <br /> <br />
-    <strong>Projects</strong><br />
-    {% for project in folioport_projects %}
+
+    {% for category in folioport_project_categories %}
+        <strong>{{ category.name }}</strong><br />
+        {% for project in category.project_set.active %}
+            <a href='{{ project.get_absolute_url }}'>{{ project.title }}</a><br />
+        {% endfor %}
+    {% endfor %}
+    <br />
+    {% for project in folioport_projects_without_category %}
         <a href='{{ project.get_absolute_url }}'>{{ project.title }}</a><br />
     {% endfor %}
 
