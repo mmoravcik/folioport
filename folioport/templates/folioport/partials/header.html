@@ -1,22 +1,46 @@
-    <a href='/'><strong>[Page name - to come]</strong></a><br />
-    <strong>[Illustrator]</strong>
+<div class="header-block">
+    <div id="header_page_name">
+        <a href='/'>[Page name - to come]</a>
+    </div>
+    <div id="header_page_title">
+        [Page title - to come]
+    </div>
+</div>
 
-    <br /> <br />
-
-    {% for category in folioport_project_categories %}
-        <strong>{{ category.name }}</strong><br />
-        {% for project in category.project_set.active %}
-            <a href='{{ project.get_absolute_url }}'>{{ project.title }}</a><br />
-        {% endfor %}
+{% if folioport_project_categories_with_projects %}
+<div id="header_category_listing" class="header-block">
+{% for category in folioport_project_categories_with_projects %}
+    <div class="header-category-name">{{ category.name }}</div>
+    {% for project in category.project_set.active %}
+        <div class="header-project-listing">
+            <a href='{{ project.get_absolute_url }}'>{{ project.title }}</a>
+        </div>
     {% endfor %}
-    <br />
-    {% for project in folioport_projects_without_category %}
-        <a href='{{ project.get_absolute_url }}'>{{ project.title }}</a><br />
-    {% endfor %}
+{% endfor %}
+</div>
+{% endif %}
 
-    <br />
-    <strong>Information</strong><br />
+<div id="header_no_category_listing" class="header-block">
+{% if not folioport_project_categories_with_projects %}
+    <div class="header-category-name">Projects</div>
+{% endif %}
+{% for project in folioport_projects_without_category %}
+    <div class="header-project-listing" class="no-category">
+        <a href='{{ project.get_absolute_url }}'>{{ project.title }}</a>
+    </div>
+{% endfor %}
+</div>
+
+<div class="header-block">
+    <div id="header_other_info">
+        <strong>Information</strong>
+    </div>
     {% for page in folioport_pages %}
-        <a href="{{ page.get_absolute_url }}">{{ page.title }}</a><br />
+        <div class="header-page-listing">
+            <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+        </div>
     {% endfor %}
-    <a href='{% url 'folioport:blog:post-list' %}'>Blog</a><br />
+    <div class="header-page-listing" class="listing-blog">
+        <a href='{% url 'folioport:blog:post-list' %}'>Blog</a>
+    </div>
+</div>

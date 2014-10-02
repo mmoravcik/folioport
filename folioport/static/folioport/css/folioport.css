@@ -12,8 +12,62 @@ body {
     left: 0;
 }
 
+h1 {
+    margin-top: 0px;
+}
+
+
+/*
+
+HEADER CLASSES
+
+*/
+#main_header {
+    width: 250px;
+    float: left;
+}
+
+#header_page_name {
+    font-weight: bold;
+}
+
+#header_page_title {
+    font-weight: bold;
+}
+
+.header-block {
+    margin-bottom: 30px;
+    width: 250px;
+}
+
+.header-category-name {
+    font-weight:bold;
+}
+/* END HEADER CLASSES */
+
+
+
+.list-blog-post {
+    margin-bottom: 40px;
+}
+
+.list-blog-post-title h2 {
+    font-size: 23px;
+    margin:0px;
+}
+
+.list-blog-post-date {
+    margin:0px 0 12px 0;
+}
+
+.project-container-content {
+    margin-top: 30px;
+}
+
+
+
 .image_picker_image {
-    width: 100px;
+    height: 100px !important;
 }
 
 ul.thumbnails.image_picker_selector li .thumbnail a{
@@ -24,15 +78,13 @@ ul.thumbnails.image_picker_selector li .thumbnail a{
     clear:both;
 }
 
-#main_header {
-    width: 250px;
-    float: left;
+.container-content-item {
+    margin-bottom: 15px;
 }
 
-#main_content {
-    float:left;
+.blog-content {
+    margin-top: 20px;
 }
-
 
 body.dragging, body.dragging * {
   cursor: move !important;
@@ -83,7 +135,7 @@ ol {
     display: none;
 }
 
-.optional_settings {
+.optional-settings {
     margin-left:40px;
     border-left:1px #ddd dashed;
     padding-left:20px;
@@ -97,11 +149,15 @@ legend {
     background-color: #eee;
 }
 
-.sorted_table tbody tr {
+
+/*
+SORTABLE CLASSES
+*/
+.sorted-table tbody tr {
   cursor: move;
 }
 
-.sorted_table tr.placeholder {
+.sorted-table tr.placeholder {
   display: block;
   background: red;
   position: relative;
@@ -110,7 +166,7 @@ legend {
   border: none;
 }
 
-  .sorted_table tr.placeholder:before {
+  .sorted-table tr.placeholder:before {
     content: "";
     position: absolute;
     width: 0;
@@ -122,28 +178,102 @@ legend {
     border-right: none;
   }
 
-.sorted_head th {
-  cursor: pointer;
+/* END SORTABLE */
+
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
-.sorted_head th.placeholder {
-  display: block;
-  background: red;
-  position: relative;
-  width: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
+#wrapper.toggled {
+    padding-left: 250px;
 }
 
-  .sorted_head th.placeholder:before {
-    content: "";
-    position: absolute;
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
     width: 0;
-    height: 0;
-    border: 5px solid transparent;
-    border-top-color: red;
-    top: -6px;
-    margin-left: -5px;
-    border-bottom: none;
-  }
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    /*background: #000;*/
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    padding: 0px 0 0 25px;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    padding: 0px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#menu-toggle {
+   position: relative;
+   left:-32px;
+   z-index: 1001;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #menu-toggle {
+        display:none;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 0px;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}

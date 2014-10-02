@@ -1,18 +1,35 @@
 {% extends 'base.html' %}
-
 {% block layout %}
 
-    <div class="container-fluid">
-        <div id="main_header">
-            {% include 'partials/header.html' %}
-        </div>
-        <div id="main_content">
-        {% block content %}
-            <h1>Hello, world!</h1>
-        {% endblock %}
+<div id="wrapper">
+
+    <!-- Sidebar -->
+
+    <div id="sidebar-wrapper">
+        {% include 'partials/header.html' %}
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="#menu-toggle" class="btn btn-info btn-sm" id="menu-toggle">
+                      <span class="glyphicon glyphicon-align-justify"></span>
+                    </a>
+                    {% block content %}
+                        <h1>Hello, world!</h1>
+                    {% endblock %}
+                </div>
+            </div>
         </div>
     </div>
+    <!-- /#page-content-wrapper -->
 
-    {% include 'partials/footer.html' %}
+ </div>
+ <!-- /#wrapper -->
 
+<div class="clearfix clear"></div>
+{% include 'partials/footer.html' %}
 {% endblock %}

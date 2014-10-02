@@ -34,7 +34,7 @@ function nicerSelectImage() {
 
         var delete_url = "{% url 'folioport:dashboard:cms:item-delete' 'GalleryImage' '99999999999' %}";
         var correct_delete_url = delete_url.replace(/99999999999/, $(this).attr('value')) + next_url;
-        $(this).attr("data-img-label", '<a href="' + correct_edit_url +'">edit</a> &nbsp; <a href="' + correct_delete_url +'">delete</a>' );
+        $(this).attr("data-img-label", '<div class="pull-right"><a href="' + correct_edit_url +'"><span title="edit" class="glyphicon glyphicon-edit"></span></a> &nbsp; <a href="' + correct_delete_url +'"><span title="delete" class="glyphicon glyphicon-trash"></span></a></div>' );
 
     });
 

@@ -20,8 +20,8 @@ class PostForm(forms.ModelForm):
                 'Optional settings',
                 'release_date',
                 'active',
-                css_class='optional_settings',
-                title='Optional settings'
+                css_class='optional-settings',
+                title='Advanced settings'
             )
         )
 

@@ -7,32 +7,25 @@
 
 {% block content %}
 
-<h1>{{ project.title }}</h1>
+<h1 class="project-title">{{ project.title }}</h1>
 
-<div class='row-fluid'>
-    <span class="span2 offset7">
-        {% block prev_next %}
-        {% if previous_project %}
-            <a href="{{ previous_project.get_absolute_url  }}{%if category.slug %}?cat={{ category.slug }}{%endif%}">
-                &laquo; previous
-            </a>
-        {% endif %}
-         {% if next_project %}
-            <a href="{{ next_project.get_absolute_url  }}{%if category.slug %}?cat={{ category.slug }}{%endif%}">
-                next &raquo;
-            </a>
-        {% endif %}
-        {% endblock %}
-    </span>
+<div class='row-fluid project-prev-text'>
+    {% block prev_next %}
+    {% if previous_project %}
+        <a href="{{ previous_project.get_absolute_url  }}{%if category.slug %}?cat={{ category.slug }}{%endif%}">
+            &laquo; previous
+        </a>
+    {% endif %}
+     {% if next_project %}
+        <a href="{{ next_project.get_absolute_url  }}{%if category.slug %}?cat={{ category.slug }}{%endif%}">
+            next &raquo;
+        </a>
+    {% endif %}
+    {% endblock %}
 </div>
 
-<div class='row-fluid'>
+<div class="row-fluid project-container-content">
     {% cms_container_render object.container %}
 </div>
 
-{% endblock %}
-
-{% block extrascripts %}
-    {{ block.super }}
-    {% include 'widgets/social_add_this/widget.js.html' %}
 {% endblock %}

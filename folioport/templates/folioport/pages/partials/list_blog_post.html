@@ -4,9 +4,19 @@
 {% paginate object_list %}
 
 {% for post in object_list %}
-    <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a><br/>
-    {{ post.release_date }}<br />
-    {% cms_container_render post.container %}
+    <div class="list-blog-post">
+        <div class="list-blog-post-title">
+            <h2>
+                <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
+            </h2>
+         </div>
+        <div class="list-blog-post-date">
+            {{ post.release_date }}
+        </div>
+        <div class="list-blog-post-content">
+            {% cms_container_render post.container %}
+        </div>
+    </div>
 {% endfor %}
 
-{% show_more 'show me more' %}
+{% show_more 'Load more...' %}

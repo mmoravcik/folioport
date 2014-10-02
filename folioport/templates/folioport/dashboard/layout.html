@@ -34,6 +34,7 @@
                 <a href="{% url 'folioport:dashboard:project:list' %}">
                    Projects
                 </a>
+
             </li>
             <li>
                 <a href="{% url 'folioport:dashboard:blog:post-list' %}">
@@ -201,15 +202,15 @@ body {
 
 <script type="text/javascript">
     // TODO do some DRY in this script tag
-    var sortable_group = $('ol.sortable').sortable({
+    var sortableGroup = $('ol.sortable').sortable({
         onDrop: function (item, container, _super) {
-            var data = sortable_group.sortable("serialize").get();
-            var item_order = [];
+            var data = sortableGroup.sortable("serialize").get();
+            var itemOrder = [];
             for(var i = 0; i < data[0].length; i++) {
                 var obj = data[0][i];
-                item_order.push(obj.id);
+                itemOrder.push(obj.id);
             }
-            var data = JSON.parse('{"item_order": "'+ item_order +'"}');
+            var data = JSON.parse('{"item_order": "'+ itemOrder +'"}');
             $.post( "{% url 'folioport:dashboard:cms:items-order-save' %}", data, function( data ) {
                 if (data.status == 'success') {
                     $.growl('', 'Order of your items has been saved');
@@ -221,21 +222,21 @@ body {
         }
     });
 
-    var sortable_table_group = $('table.sorted_table').sortable({
+    var sortableTableGroup = $('table.sorted-table').sortable({
       containerSelector: 'table',
       itemPath: '> tbody',
       itemSelector: 'tr',
       placeholder: '<tr class="placeholder"/>',
       onDrop: function (item, container, _super) {
-          var data = sortable_table_group.sortable("serialize").get();
-          var item_order = [];
+          var data = sortableTableGroup.sortable("serialize").get();
+          var itemOrder = [];
           for(var i = 0; i < data[0].length; i++) {
               var obj = data[0][i];
-              item_order.push(obj.id);
-              var object_type = obj.object;
+              itemOrder.push(obj.id);
+              var objectType = obj.object;
           }
-          var data = JSON.parse('{"item_order": "'+ item_order +'"}');
-          if (object_type == 'project') {
+          var data = JSON.parse('{"item_order": "'+ itemOrder +'"}');
+          if (objectType == 'project') {
               var url = "{% url 'folioport:dashboard:project:order-save' %}";
           } else {
               var url = "{% url 'folioport:dashboard:page:order-save' %}";

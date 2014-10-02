@@ -6,10 +6,12 @@
 {% block title %} {{ object.title }} {% endblock %}
 
 {% block content %}
-<h1>{{ object.title }}</h1>
+<h1 class="blog-title">{{ object.title }}</h1>
 
-<div class='row-fluid'>
-    {{ object.release_date }}<br />
+<div class='row-fluid blog-date'>
+    {{ object.release_date }}
+</div>
+<div class="row-fluid blog-content">
     {% cms_container_render object.container %}
 </div>
 

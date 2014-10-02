@@ -9,6 +9,7 @@ Page = get_model('page', 'Page')
 def folioport_project(request):
     return {
         'folioport_project_categories' : Category.objects.active(),
+        'folioport_project_categories_with_projects' : Category.objects.active().exclude(project=None),
         'GOOGLE_ANALYTICS_ACCOUNT': settings.GOOGLE_ANALYTICS_ACCOUNT,
         'folioport_projects': Project.objects.active(),
         'folioport_projects_without_category': Project.objects.active().filter(category=None),

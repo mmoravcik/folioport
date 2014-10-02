@@ -22,8 +22,8 @@ class ItemImageForm(forms.ModelForm):
                 'caption',
                 'width',
                 'thumbnail_type',
-                css_class='optional_settings',
-                title='Optional settings'
+                css_class='optional-settings',
+                title='Advanced settings'
             )
         )
 
@@ -43,8 +43,8 @@ class ImageForm(forms.ModelForm):
                 'caption',
                 'width',
                 'thumbnail_type',
-                css_class='optional_settings',
-                title='Optional settings'
+                css_class='optional-settings',
+                title='Advanced settings'
             )
         )
 
@@ -65,8 +65,8 @@ class GalleryImageForm(forms.ModelForm):
                 'caption',
                 'width',
                 'thumbnail_type',
-                css_class='optional_settings',
-                title='Optional settings'
+                css_class='optional-settings',
+                title='Advanced settings'
             )
         )
 
@@ -85,8 +85,8 @@ class ItemEmbedForm(forms.ModelForm):
                 'caption',
                 'width',
                 'type',
-                css_class='optional_settings',
-                title='Optional settings'
+                css_class='optional-settings',
+                title='Advanced settings'
             )
         )
 

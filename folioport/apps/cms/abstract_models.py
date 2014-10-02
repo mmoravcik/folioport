@@ -39,7 +39,9 @@ class AbstractContainer(models.Model):
     def render(self, context):
         html = ''
         for item in self.get_item_objects():
+            html += "<div class='container-content-item'>"
             html += item.render(context)
+            html += "</div>"
         return html
 
 

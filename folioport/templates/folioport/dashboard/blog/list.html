@@ -36,11 +36,11 @@
                 <td class='text-center'>
                     <a href='{% url "folioport:dashboard:blog:post-edit" post.id %}'
                        class='btn btn-outline btn-primary btn-xs'>
-                        {% trans 'edit' %} <i class="glyphicon glyphicon-edit"></i>
+                       <i class="glyphicon glyphicon-edit"></i> {% trans 'edit' %} </i>
                     </a>
                     <a href='{% url "folioport:dashboard:blog:post-delete" post.id %}'
                        class='btn btn-outline btn-danger btn-xs'>
-                        delete <i class="fa fa-times"></i>
+                       <i class="glyphicon glyphicon-trash"></i> delete </i>
                     </a>
                 </td>
             </tr>

@@ -29,8 +29,8 @@ class ProjectForm(forms.ModelForm):
                 'thumbnail',
                 'thumbnail_width',
                 'active',
-                css_class='optional_settings',
-                title='Optional settings'
+                css_class='optional-settings',
+                title='Advanced settings'
 
             )
         )
