@@ -7,8 +7,6 @@ from . import views
 class CmsApplication(Application):
     name = 'cms'
 
-    container_list_view = views.ContainerListView
-    edit_container_view = views.ContainerEditView
     edit_item_view = views.ItemEditView
     create_item_view = views.ItemCreateView
     delete_item_view = views.ItemDeleteView
@@ -20,10 +18,6 @@ class CmsApplication(Application):
         urlpatterns = super(CmsApplication, self).get_urls()
         urlpatterns += patterns(
             '',
-            url(r'/edit/(?P<pk>\d+)/$',
-                self.edit_container_view.as_view(),
-                name='container-edit'),
-
             url(r'/create_item_redirect/$',
                 self.create_item_redirect_view.as_view(),
                 name='item-create-redirect'),
@@ -45,9 +39,6 @@ class CmsApplication(Application):
             url(r'/container_preview/(?P<container_id>\d+)/$',
                 self.container_preview_view.as_view(),
                 name='container-preview'),
-            url(r'',
-                self.container_list_view.as_view(),
-                name='container-list'),
         )
         return urlpatterns
 

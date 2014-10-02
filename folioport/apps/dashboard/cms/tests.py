@@ -82,3 +82,13 @@ class CMSDashboardViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json_response['status'], 'success')
         self.assertEqual(json_response['result'], self.container.render(Context({})))
+
+    def test_container_preview_fails_for_different_user(self):
+        other_user = G(get_user_model())
+        container = G(models.Container, other_user)
+        response = self.client.get(
+            reverse('folioport:dashboard:cms:container-preview',
+                    kwargs={'container_id': container.id}))
+        json_response = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json_response['status'], 'fail')

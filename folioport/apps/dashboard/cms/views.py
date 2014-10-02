@@ -21,23 +21,6 @@ ContainerItems = models.get_model('cms', 'ContainerItems')
 Item = models.get_model('cms', 'Item')
 
 
-class ContainerListView(LoginRequiredMixin, ListView):
-    template_name = 'dashboard/cms/container_list.html'
-    model = Container
-
-
-class ContainerEditView(LoginRequiredMixin, UpdateView):
-    model = Container
-    template_name = 'dashboard/cms/edit.html'
-
-    def get_success_url(self):
-        return reverse_lazy('folioport:dashboard:cms:container-list')
-
-    def form_valid(self, form):
-        messages.info(self.request, 'Post has been saved!')
-        return super(ContainerEditView, self).form_valid(form)
-
-
 class CMSViewMixin(LoginRequiredMixin):
     def get_template_names(self):
         if self.model.get_edit_create_template():
@@ -184,3 +167,5 @@ class ContainerPreviewView(View):
         response_data = {'status': status, 'result': result}
         return HttpResponse(
             json.dumps(response_data), content_type="application/json")
+
+
