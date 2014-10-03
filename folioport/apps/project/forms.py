@@ -5,6 +5,8 @@ from crispy_forms.bootstrap import AppendedText
 
 from django.db.models import get_model
 from django import forms
+from django.contrib.sites.models import Site
+from django.forms import ValidationError
 
 Project = get_model('project', 'Project')
 Category = get_model('project', 'Category')
@@ -50,6 +52,17 @@ class CategoryForm(forms.ModelForm):
         super(CategoryForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_tag = False
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        try:
+            Category.objects.get(name=cleaned_data['name'],
+                                 site=Site.objects.get_current())
+        except Category.DoesNotExist:
+            pass
+        else:
+            raise ValidationError('Category with this name already exists')
+        return cleaned_data
 
     class Meta:
         model = Category
