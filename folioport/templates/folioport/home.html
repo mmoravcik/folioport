@@ -4,9 +4,12 @@
 {% block title %} Folioport {% endblock %}
 
 {% block content %}
+    <div class="page-heading"> &nbsp;</div>
+    <div class="project-container-content">
     {% if page %}
         {% cms_container_render page.container %}
     {% else %}
         {% include 'partials/project_list.html' %}
     {% endif %}
+    </div>
 {% endblock %}

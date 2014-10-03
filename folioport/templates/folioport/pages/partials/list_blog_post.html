@@ -5,14 +5,14 @@
 
 {% for post in object_list %}
     <div class="list-blog-post">
-        <div class="list-blog-post-title">
-            <h2>
-                <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
-            </h2>
-         </div>
         <div class="list-blog-post-date">
-            {{ post.release_date }}
+            {{ post.release_date|date:folioport_date_format }}
         </div>
+
+        <h2 class="list-blog-post-title">
+            <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
+        </h2>
+
         <div class="list-blog-post-content">
             {% cms_container_render post.container %}
         </div>

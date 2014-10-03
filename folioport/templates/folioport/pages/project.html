@@ -7,24 +7,27 @@
 
 {% block content %}
 
-<h1 class="project-title">{{ project.title }}</h1>
-
-<div class='row-fluid project-prev-text'>
+<div class="page-heading">
     {% block prev_next %}
     {% if previous_project %}
         <a href="{{ previous_project.get_absolute_url  }}{%if category.slug %}?cat={{ category.slug }}{%endif%}">
-            &laquo; previous
+            Previous
         </a>
     {% endif %}
-     {% if next_project %}
+
+    {% if previous_project and next_project %}
+        /
+    {% endif %}
+
+    {% if next_project %}
         <a href="{{ next_project.get_absolute_url  }}{%if category.slug %}?cat={{ category.slug }}{%endif%}">
-            next &raquo;
+            Next
         </a>
     {% endif %}
     {% endblock %}
 </div>
 
-<div class="row-fluid project-container-content">
+<div class="project-container-content">
     {% cms_container_render object.container %}
 </div>
 

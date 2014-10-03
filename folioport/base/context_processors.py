@@ -14,5 +14,6 @@ def folioport_project(request):
         'folioport_projects': Project.objects.active(),
         'folioport_projects_without_category': Project.objects.active().filter(category=None),
         'folioport_content_types': settings.FOLIOPORT_CONTENT_TYPES,
-        'folioport_pages': Page.objects.active().exclude(type=Page.LANDING_PAGE)
+        'folioport_pages': Page.objects.active().exclude(type=Page.LANDING_PAGE),
+        'folioport_date_format': 'j N Y',
     }

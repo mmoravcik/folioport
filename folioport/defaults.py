@@ -24,6 +24,8 @@ CKEDITOR_CONFIGS = {
         },
     }
 
+DATE_FORMAT = 'j N Y'
+
 AUTH_USER_MODEL = 'account.FolioportUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

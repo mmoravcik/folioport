@@ -6,14 +6,39 @@
 {% block title %} {{ object.title }} {% endblock %}
 
 {% block content %}
-<h1 class="blog-title">{{ object.title }}</h1>
+<div class="page-heading">
+    {% block prev_next %}
+    {% if previous_post %}
+        <a href="{{ previous_post.get_absolute_url }}">
+            Previous
+        </a>
+    {% endif %}
 
-<div class='row-fluid blog-date'>
-    {{ object.release_date }}
-</div>
-<div class="row-fluid blog-content">
-    {% cms_container_render object.container %}
+    {% if previous_post and next_post %}
+        /
+    {% endif %}
+
+    {% if next_post %}
+        <a href="{{ next_post.get_absolute_url  }}">
+            Next
+        </a>
+    {% endif %}
+    {% endblock %}
 </div>
 
+<div class="project-container-content">
+
+    <div class="list-blog-post-date">
+        {{ post.release_date|date:folioport_date_format }}
+    </div>
+
+    <h2 class="list-blog-post-title">
+        <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
+    </h2>
+
+    <div class="row-fluid blog-content">
+        {% cms_container_render object.container %}
+    </div>
+</div>
 {% endblock %}
 
