@@ -241,9 +241,18 @@ class AbstractItemGallery(ContentItemMixin):
 
 
 class AbstractItemHeading(ContentItemMixin):
+    LEVEL1, LEVEL2, LEVEL3, LEVEL4 = 1, 2, 3, 4
+    HEADING_CHOICES = (
+        (LEVEL1, '1'),
+        (LEVEL2, '2'),
+        (LEVEL3, '3'),
+        (LEVEL4, '4'),
+    )
+
     template = 'cms/content_items/heading.html'
     text = models.CharField(max_length=256, default="")
-    level = models.PositiveSmallIntegerField(default=2)
+    level = models.PositiveSmallIntegerField(
+        default=LEVEL2, choices=HEADING_CHOICES)
 
     class Meta:
         abstract = True
