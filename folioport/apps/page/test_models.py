@@ -53,3 +53,7 @@ class PageModelTests(TestCase):
         active_page_different_site = G(Page, site__id=999, active=True)
         self.assertIn(active_page, Page.objects.active().all())
         self.assertEqual(1, len(Page.objects.active().all()))
+
+    def test_slug_is_generated(self):
+        project = G(Page, title='Test', slug='')
+        self.assertEqual(project.slug, 'test')

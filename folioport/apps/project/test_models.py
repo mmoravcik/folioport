@@ -79,3 +79,7 @@ class ProjectModelTests(TestCase):
         response = Client().get(project.get_absolute_url())
         self.assertEqual(response.context[-1]['object'], project)
         self.assertEqual(response.status_code, 200)
+
+    def test_slug_is_generated(self):
+        project = G(models.Project, title='Test', slug='')
+        self.assertEqual(project.slug, 'test')

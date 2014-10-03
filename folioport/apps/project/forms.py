@@ -28,6 +28,7 @@ class ProjectForm(forms.ModelForm):
                 'tags',
                 'thumbnail',
                 'thumbnail_width',
+                'slug',
                 'active',
                 css_class='optional-settings',
                 title='Advanced settings'
@@ -38,7 +39,7 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('title', 'category', 'thumbnail', 'thumbnail_width',
-                  'tags', 'active',)
+                  'tags', 'slug', 'active',)
         widgets = {
             'tags': forms.TextInput(attrs={'placeholder': 'any, tag, you, like, ...'})
         }

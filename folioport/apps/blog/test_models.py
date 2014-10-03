@@ -60,3 +60,7 @@ class BlogModelTests(TestCase):
         self.assertEqual(posts[2].next(), posts[3])
         self.assertEqual(posts[2].previous(), posts[1])
         self.assertEqual(posts[3].previous(), posts[2])
+
+    def test_slug_is_generated(self):
+        post = G(Post, title='Test', slug='')
+        self.assertEqual(post.slug, 'test')

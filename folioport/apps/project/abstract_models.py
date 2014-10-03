@@ -6,6 +6,7 @@ from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.text import slugify
 
 from folioport.base.utils import get_solr_thumbnail_geometry
 
@@ -28,7 +29,8 @@ class AbstractProject(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=128)
     category = models.ManyToManyField('project.Category', blank=True)
-    slug = models.SlugField(max_length=128)
+    slug = models.SlugField(help_text='Text to be displayed in URL', max_length=128,
+                            default='', blank=True)
     active = models.BooleanField(default=True)
     release_date = models.DateField(null=True, blank=True)
     thumbnail = models.ImageField(
@@ -85,6 +87,8 @@ class AbstractProject(models.Model):
         return Project.objects.active().exclude(id=self.id)
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(u'%s' % self.title)
         super(AbstractProject, self).save(*args, **kwargs)
         if self.container is None:
             Container = models.get_model('cms', 'Container')

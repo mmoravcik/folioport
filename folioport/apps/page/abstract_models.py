@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.contrib.sites.managers import CurrentSiteManager
+from django.utils.text import slugify
 
 
 class PageManager(CurrentSiteManager):
@@ -20,7 +21,8 @@ class AbstractPage(models.Model):
     site = models.ForeignKey(Site)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=128)
-    slug = models.SlugField(max_length=128)
+    slug = models.SlugField(help_text='Text to be displayed in URL',
+                            max_length=128, default='', blank=True)
     active = models.BooleanField(default=True)
     order = models.IntegerField(null=True, blank=True)
     type = models.SmallIntegerField(choices=TYPE_CHOICES, default=CONTENT_PAGE)
@@ -42,6 +44,8 @@ class AbstractPage(models.Model):
 
     def save(self, *args, **kwargs):
         self.clean()
+        if not self.slug:
+            self.slug = slugify(u'%s' % self.title)
         super(AbstractPage, self).save(*args, **kwargs)
         if self.container is None:
             Container = models.get_model('cms', 'Container')

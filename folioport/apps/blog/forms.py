@@ -19,6 +19,7 @@ class PostForm(forms.ModelForm):
             Fieldset(
                 'Optional settings',
                 'release_date',
+                'slug',
                 'active',
                 css_class='optional-settings',
                 title='Advanced settings'
@@ -27,4 +28,4 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title', 'release_date', 'active',)
+        fields = ('title', 'slug', 'release_date', 'active',)

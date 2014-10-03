@@ -5,6 +5,7 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.text import slugify
 
 
 class BlogManager(CurrentSiteManager):
@@ -16,7 +17,8 @@ class AbstractPost(models.Model):
     site = models.ForeignKey(Site)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=128)
-    slug = models.SlugField(max_length=128)
+    slug = models.SlugField(help_text='Text to be displayed in URL',
+                            default='', blank=True, max_length=128)
     active = models.BooleanField(default=True)
     release_date = models.DateTimeField(
         'Date posted', default=datetime.datetime.now(), null=True, blank=True)
@@ -31,6 +33,9 @@ class AbstractPost(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(u'%s' % self.title)
+
         # if we don't have time, add some so previous / next works
         if self.release_date.time() == datetime.time.min:
             self.release_date = self.release_date + \
