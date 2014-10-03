@@ -43,7 +43,7 @@ class AbstractPage(models.Model):
                                   'landing page at any time')
 
     def save(self, *args, **kwargs):
-        self.clean()
+        self.full_clean()
         if not self.slug:
             self.slug = slugify(u'%s' % self.title)
         super(AbstractPage, self).save(*args, **kwargs)

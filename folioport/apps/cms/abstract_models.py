@@ -70,6 +70,18 @@ class AbstractContainerItems(models.Model):
         return "%s - %s" % (self.container, self.item)
 
 
+class ImageValidationMixin(object):
+    def clean(self):
+        from django.forms import ValidationError
+        if self.image.name.lower().endswith('gif') and \
+                        self.thumbnail_type != abstract_models.AbstractImage.GIF:
+            raise ValidationError('GIF images must have GIF thumbnail')
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(ImageValidationMixin, self).save(*args, **kwargs)
+
+
 class ContentItemMixin(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False)
 
@@ -150,7 +162,7 @@ class AbstractItemRichText(ContentItemMixin):
         return t.render(context)
 
 
-class AbstractItemImage(ContentItemMixin, abstract_models.AbstractImage):
+class AbstractItemImage(ImageValidationMixin, ContentItemMixin, abstract_models.AbstractImage):
     template = 'cms/content_items/image.html'
 
     class Meta:

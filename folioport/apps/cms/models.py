@@ -2,7 +2,8 @@ from django.db import models
 
 from folioport.apps.cms import abstract_models
 from folioport.base.abstract_models import AbstractImage
-from folioport.apps.cms.abstract_models import ContentItemMixin
+from folioport.apps.cms.abstract_models import ContentItemMixin, \
+    ImageValidationMixin
 
 
 class Container(abstract_models.AbstractContainer):
@@ -25,14 +26,14 @@ class ItemRichText(abstract_models.AbstractItemRichText):
     pass
 
 
-class Image(ContentItemMixin, AbstractImage):
+class Image(ImageValidationMixin, ContentItemMixin, AbstractImage):
     @staticmethod
     def get_form_class():
         from forms import ImageForm
         return ImageForm
 
 
-class GalleryImage(ContentItemMixin, AbstractImage):
+class GalleryImage(ImageValidationMixin, ContentItemMixin, AbstractImage):
     hover_image = models.ImageField(
         upload_to='hover_images', null=True, blank=True)
 
