@@ -11,6 +11,7 @@ class CategoryApplication(Application):
     edit_view = views.CategoryEditView
     create_view = views.CategoryCreateView
     delete_view = views.CategoryDeleteView
+    order_save_view = views.CategoryOrderSaveView
 
     def get_urls(self):
         urlpatterns = super(CategoryApplication, self).get_urls()
@@ -25,6 +26,9 @@ class CategoryApplication(Application):
             url(r'/create/(?P<app>\w+)',
                  self.create_view.as_view(),
                  name='create'),
+            url(r'/order-save/(?P<app>\w+)/',
+                self.order_save_view.as_view(),
+                name='order-save'),
             url(r'/list/(?P<app>\w+)',
                 self.list_view.as_view(),
                 name='list'),

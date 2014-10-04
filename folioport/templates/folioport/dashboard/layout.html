@@ -240,12 +240,18 @@ body {
               var obj = data[0][i];
               itemOrder.push(obj.id);
               var objectType = obj.object;
+              if (obj.hasOwnProperty('app')) {
+                var objectApp = obj.app;
+              }
           }
           var data = JSON.parse('{"item_order": "'+ itemOrder +'"}');
           if (objectType == 'project') {
               var url = "{% url 'folioport:dashboard:project:order-save' %}";
-          } else {
+          } else if (objectType == 'page') {
               var url = "{% url 'folioport:dashboard:page:order-save' %}";
+          } else {
+              var url = "{% url 'folioport:dashboard:category:order-save' 'replace' %}";
+              url = url.replace('replace', objectApp);
           }
           $.post(url, data, function( data ) {
               if (data.status == 'success') {

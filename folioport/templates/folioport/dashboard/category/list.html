@@ -12,7 +12,7 @@
 
     {% if object_list %}
     <div class='responsive-table'>
-        <table class="table table-hover" style="width:600px;">
+        <table class="table table-hover sorted-table" style="width:600px;">
             <thead>
             <tr>
                 <th>{% trans 'Category title' %}</th>
@@ -21,7 +21,7 @@
             </thead>
             <tbody>
             {% for category in object_list %}
-            <tr>
+            <tr data-id='{{ category.pk }}' data-object="category" data-app="project">
                 <td>{{ category.name }}</td>
                 <td class='text-center'>
                     <a href='{% url "folioport:dashboard:category:edit" "project" category.id %}'

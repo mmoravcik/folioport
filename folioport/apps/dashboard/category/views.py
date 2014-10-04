@@ -7,8 +7,8 @@ from django.contrib import messages
 from django.contrib.sites.models import get_current_site
 
 from folioport.base.mixins import FilterUserMixin
-from folioport.base.mixins import LoginRequiredMixin, AjaxableResponseMixin
-from folioport.apps.blog.forms import PostForm
+from folioport.base.mixins import LoginRequiredMixin, AjaxableResponseMixin, \
+    ObjectSaveMixin
 
 Post = models.get_model('blog', 'Post')
 
@@ -75,3 +75,8 @@ class CategoryDeleteView(FilterUserMixin, LoginRequiredMixin, DeleteView):
         messages.info(self.request, 'Category has been deleted!')
         return reverse_lazy('folioport:dashboard:category:list',
                             kwargs={'app': 'project'})
+
+
+class CategoryOrderSaveView(ObjectSaveMixin):
+    def get_model(self, kwargs):
+        return models.get_model(kwargs['app'], 'Category')

@@ -22,9 +22,11 @@ class AbstractCategory(MPTTModel):
     active = models.BooleanField(default=True)
     site = models.ForeignKey(Site)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    order = models.SmallIntegerField(default=0)
 
     class Meta:
         abstract = True
+        ordering = ['order']
         unique_together = ("name", "site")
 
     class MPTTMeta:

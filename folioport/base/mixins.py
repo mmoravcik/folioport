@@ -58,17 +58,21 @@ class AjaxableResponseMixin(object):
 
 
 class ObjectSaveMixin(View):
+    def get_model(self, kwargs):
+        return self.model if self.model else None
+
     def post(self, request, *args, **kwargs):
         item_order = request.POST.get('item_order', "")
         status = 'success'
+        model = self.get_model(kwargs)
         if item_order:
             for idx, item in enumerate(item_order.split(',')):
                 try:
-                    obj = self.model.objects.get(
+                    obj = model.objects.get(
                         id=int(item), user=self.request.user)
                 except ValueError:
                     status = 'fail'
-                except self.model.DoesNotExist:
+                except model.DoesNotExist:
                     status = 'fail'
                 else:
                     obj.order = idx + 5
