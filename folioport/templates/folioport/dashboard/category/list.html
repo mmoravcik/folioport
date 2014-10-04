@@ -1,0 +1,46 @@
+{% extends 'dashboard/layout.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<h1 class="page-header">CATEGORIES!</h1>
+<a href='{% url "folioport:dashboard:category:create" "project" %}'
+   class='btn btn-primary btn-lg pull-right'>+ Add new category</a>
+
+<h2>List of your current categories</h2>
+
+
+    {% if object_list %}
+    <div class='responsive-table'>
+        <table class="table table-hover" style="width:600px;">
+            <thead>
+            <tr>
+                <th>{% trans 'Category title' %}</th>
+                <th class='text-center'>{% trans 'Actions' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in object_list %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td class='text-center'>
+                    <a href='{% url "folioport:dashboard:category:edit" "project" category.id %}'
+                       class='btn btn-outline btn-primary btn-xs'>
+                       <i class="glyphicon glyphicon-edit"></i> {% trans 'edit' %} </i>
+                    </a>
+                    <a href='{% url "folioport:dashboard:category:delete" "project" category.id %}'
+                       class='btn btn-outline btn-danger btn-xs'>
+                       <i class="glyphicon glyphicon-trash"></i> delete </i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    {% trans 'No categories yet!' %}
+    {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'dashboard/layout.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block content %}
+
+    <h1 class="page-header">{% trans 'EDIT CATEGORY' %}</h1>
+    {{ form.media }}
+    <form enctype="multipart/form-data" action="" method="post">
+        {% crispy form %}
+        <br />
+        <input class='btn btn-primary' type="submit" value="{% trans 'Update' %}" />
+        &nbsp; <a href="{% url 'folioport:dashboard:category:list' 'project'%}">{% trans 'Cancel' %}</a>
+    </form>
+
+{% endblock %}

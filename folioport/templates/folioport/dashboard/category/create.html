@@ -1,0 +1,17 @@
+{% extends 'dashboard/layout.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block title %} Folioport admin {% endblock %}
+
+{% block content %}
+
+    <h1 class="page-header">CREATE THE CATEGORY</h1>
+    {{ form.media }}
+    <form enctype="multipart/form-data" method="post">
+        {% crispy form %}
+        <br /><br />
+        <input class='btn btn-info' type="submit" value="Create" />
+    </form>
+
+{% endblock %}
