@@ -65,13 +65,13 @@ class CategoryCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
 
 class CategoryDeleteView(FilterUserMixin, LoginRequiredMixin, DeleteView):
     model = Post
-    template_name = 'dashboard/blog/delete.html'
+    template_name = 'dashboard/category/delete.html'
 
     def get_queryset(self):
         Category = models.get_model(self.kwargs['app'], 'Category')
         return Category.objects.filter(user=self.request.user)
 
     def get_success_url(self):
-        messages.info(self.request, 'Post has been deleted!')
+        messages.info(self.request, 'Category has been deleted!')
         return reverse_lazy('folioport:dashboard:category:list',
                             kwargs={'app': 'project'})
