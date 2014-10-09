@@ -15,7 +15,7 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
 
         # Changing field 'FolioportUser.site_id'
-        db.alter_column(u'account_folioportuser', 'site_id_id', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['sites.Site']))
+        db.alter_column(u'account_folioportuser', 'site_id_id', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['sites.Site']))
 
     models = {
         u'account.folioportuser': {
