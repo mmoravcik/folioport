@@ -2,10 +2,10 @@ GOOGLE_ANALYTICS_ACCOUNT = 'test'
 
 FOLIOPORT_CONTENT_TYPES = [
         ('ItemImage', 'Image'),
-        ('ItemText', 'Plain text'),
+        ('ItemRichText', 'Text'),
+        #('ItemText', 'Plain text'),
         ('ItemHeading', 'Heading'),
         ('ItemRandomImage', 'Random Image'),
-        ('ItemRichText', 'Rich Text'),
         ('ItemEmbed', 'Video/Audio embed'),
         ('ItemGallery', 'Gallery'),
     ]
@@ -32,3 +32,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 CRISPY_FAIL_SILENTLY = False
 
 ENDLESS_PAGINATION_PER_PAGE = 5
+
+THUMBNAIL_DEBUG = False
+
+MAIN_DOMAIN = 'heyhey.io'
+
+ALLOWED_HOSTS = ['.' + MAIN_DOMAIN]

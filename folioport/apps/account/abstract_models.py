@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.contrib.sites.models import Site
+from django.conf import settings
 
 
 class FolioportUserManager(BaseUserManager):
@@ -22,6 +24,9 @@ class FolioportUserManager(BaseUserManager):
 
 class AbstractFolioportUser(AbstractBaseUser):
     email = models.EmailField(blank=True, unique=True)
+    subdomain = models.CharField(max_length=100, unique=True)
+    site = models.ForeignKey(Site, blank=True, null=True)
+
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -39,6 +44,13 @@ class AbstractFolioportUser(AbstractBaseUser):
         return self.email
 
     def __unicode__(self):
-        return self.email
+        return "%s - %s - %s" % (self.email, self.subdomain, self.site.id)
+
+    def save(self, *args, **kwargs):
+        if not self.site:
+            domain = '%s.%s' % (self.subdomain, settings.MAIN_DOMAIN)
+            site, created = Site.objects.get_or_create(domain=domain, name=domain)
+            self.site = site
+        return super(AbstractFolioportUser, self).save(*args, **kwargs)
 
     objects = FolioportUserManager()
