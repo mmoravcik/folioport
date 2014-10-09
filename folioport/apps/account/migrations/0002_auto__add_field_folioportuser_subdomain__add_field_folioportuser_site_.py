@@ -15,7 +15,7 @@ class Migration(SchemaMigration):
 
         # Adding field 'FolioportUser.site_id'
         db.add_column(u'account_folioportuser', 'site_id',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['sites.Site'], blank=True),
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['sites.Site'], blank=True),
                       keep_default=False)
 
 
