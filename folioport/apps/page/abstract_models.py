@@ -43,7 +43,8 @@ class AbstractPage(models.Model):
     def clean(self):
         Page = models.get_model('page', 'Page')
         if self.type == self.LANDING_PAGE and \
-                Page.objects.filter(type=self.LANDING_PAGE).exclude(pk=self.id):
+                Page.objects.filter(user=self.user, type=self.LANDING_PAGE).\
+                        exclude(pk=self.id):
             raise ValidationError('You can have only one '
                                   'landing page at any time')
 
