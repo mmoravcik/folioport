@@ -8,4 +8,4 @@ Page = models.get_model('page', 'Page')
 class PageDetailView(DetailView):
     template_name = 'pages/page.html'
     model = Page
-    queryset = Page.objects.active()
+    queryset = Page.site_objects.active()

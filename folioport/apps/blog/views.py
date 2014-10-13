@@ -10,7 +10,7 @@ Post = models.get_model('blog', 'Post')
 class PostDetailView(DetailView):
     template_name = 'pages/blog_post.html'
     model = Post
-    queryset = Post.objects.active()
+    queryset = Post.site_objects.active()
 
     def get_context_data(self, **kwargs):
         context = super(PostDetailView, self).get_context_data()
@@ -18,8 +18,9 @@ class PostDetailView(DetailView):
         context['previous_post'] = self.get_object().previous()
         return context
 
+
 class PostListView(AjaxListView, ListView):
     page_template='pages/partials/list_blog_post.html'
     template_name = 'pages/blog_list.html'
-    queryset = Post.objects.active()
+    queryset = Post.site_objects.active()
     model = Post

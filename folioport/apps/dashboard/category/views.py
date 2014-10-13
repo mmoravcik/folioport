@@ -4,7 +4,6 @@ from django.db import models
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
-from django.contrib.sites.models import get_current_site
 
 from folioport.base.mixins import FilterUserMixin
 from folioport.base.mixins import LoginRequiredMixin, AjaxableResponseMixin, \
@@ -57,7 +56,7 @@ class CategoryCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
         return Category.get_form_class()
 
     def form_valid(self, form):
-        form.instance.site = get_current_site(self.request)
+        form.instance.site = self.request.user.site
         form.instance.user = self.request.user
         messages.info(self.request, 'Category has been created!')
         return super(CategoryCreateView, self).form_valid(form)

@@ -25,6 +25,7 @@ class FolioportUserManager(BaseUserManager):
 class AbstractFolioportUser(AbstractBaseUser):
     email = models.EmailField(blank=True, unique=True)
     subdomain = models.CharField(max_length=100, unique=True)
+    #use_social_media = models.BooleanField(default=True)
     site = models.ForeignKey(Site, blank=True, null=True)
 
     is_active = models.BooleanField(default=True)

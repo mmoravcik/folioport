@@ -47,13 +47,13 @@ class PageModelTests(TestCase):
         page.save()
         self.assertEqual('new', page.title)
 
-    def test_active_projects(self):
+    def test_active_pages(self):
         active_page = G(Page, site__id=settings.SITE_ID, active=True)
         nonactive_page = G(Page, site__id=settings.SITE_ID, active=False)
         active_page_different_site = G(Page, site__id=999, active=True)
         self.assertIn(active_page, Page.objects.active().all())
-        self.assertEqual(1, len(Page.objects.active().all()))
+        self.assertEqual(1, len(Page.site_objects.active().all()))
 
     def test_slug_is_generated(self):
-        project = G(Page, title='Test', slug='')
-        self.assertEqual(project.slug, 'test')
+        page = G(Page, title='Test', slug='')
+        self.assertEqual(page.slug, 'test')

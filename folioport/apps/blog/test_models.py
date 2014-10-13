@@ -41,8 +41,8 @@ class BlogModelTests(TestCase):
         active_post = G(Post, site__id=settings.SITE_ID, active=True)
         nonactive_post = G(Post, site__id=settings.SITE_ID, active=False)
         active_post_different_site = G(Post, site__id=999, active=True)
-        self.assertIn(active_post, Post.objects.active().all())
-        self.assertEqual(1, len(Post.objects.active().all()))
+        self.assertIn(active_post, Post.site_objects.active().all())
+        self.assertEqual(1, len(Post.site_objects.active().all()))
 
     def test_previous_next(self):
         posts = [
@@ -51,6 +51,24 @@ class BlogModelTests(TestCase):
             self._create_post(title="5", release_date=datetime(2014, 10, 20, 2)), #post[2]
             self._create_post(title="1", release_date=datetime(2014, 5, 20)), #post[3]
             self._create_post(title="2", release_date=datetime(2014, 6, 20)), #post[4]
+        ]
+
+        self.assertEqual(posts[0].next(), posts[1])
+        self.assertEqual(posts[0].previous(), posts[4])
+        self.assertEqual(posts[1].previous(), posts[0])
+        self.assertEqual(posts[1].next(), posts[2])
+        self.assertEqual(posts[2].next(), posts[3])
+        self.assertEqual(posts[2].previous(), posts[1])
+        self.assertEqual(posts[3].previous(), posts[2])
+
+    def test_previous_next_different_sites(self):
+        posts = [
+            self._create_post(title="3", release_date=datetime(2014, 9, 20)), #post[0]
+            self._create_post(title="4", release_date=datetime(2014, 10, 20, 1)), #post[1]
+            self._create_post(title="5", release_date=datetime(2014, 10, 20, 2)), #post[2]
+            self._create_post(title="1", release_date=datetime(2014, 5, 20)), #post[3]
+            self._create_post(title="2", release_date=datetime(2014, 6, 20)), #post[4]
+            self._create_post(site=999, title="6", release_date=datetime(2014, 6, 20)), #post[5]
         ]
 
         self.assertEqual(posts[0].next(), posts[1])

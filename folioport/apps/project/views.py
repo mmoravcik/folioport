@@ -3,17 +3,15 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.core.exceptions import ObjectDoesNotExist
 
-from folioport.base.mixins import FilterSiteMixin
-
 Project = models.get_model('project', 'Project')
 Category = models.get_model('project', 'Category')
 
 
-class ProjectView(FilterSiteMixin, DetailView):
+class ProjectView(DetailView):
     template_name = 'pages/project.html'
     model = Project
     context_name = 'project'
-    queryset = Project.objects.active()
+    queryset = Project.site_objects.active()
 
     def get_context_data(self, **kwargs):
         context = DetailView.get_context_data(self, **kwargs)
@@ -25,6 +23,7 @@ class ProjectView(FilterSiteMixin, DetailView):
         return context
 
 
+# TODO check this for site filter
 class CategoryView(TemplateView):
     template_name = 'pages/project_category.html'
        

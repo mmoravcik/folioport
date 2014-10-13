@@ -7,9 +7,14 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.utils.text import slugify
 
 
-class PageManager(CurrentSiteManager):
+class PageManager(models.Manager):
     def active(self):
         return self.get_query_set().filter(active=True)
+
+
+class SitePageManager(PageManager, CurrentSiteManager):
+    pass
+
 
 class AbstractPage(models.Model):
     LANDING_PAGE, CONTENT_PAGE = 1, 2
@@ -63,3 +68,4 @@ class AbstractPage(models.Model):
         return reverse('folioport:page:detail', args=[self.slug, self.id])
 
     objects = PageManager()
+    site_objects = SitePageManager()

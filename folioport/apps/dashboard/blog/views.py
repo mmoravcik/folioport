@@ -37,6 +37,7 @@ class PostEditView(FilterUserMixin, LoginRequiredMixin, AjaxableResponseMixin, U
             ctx['active_tab'] = 'settings-tab'
         return ctx
 
+
 class PostCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -47,7 +48,7 @@ class PostCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
             kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        form.instance.site = get_current_site(self.request)
+        form.instance.site = self.request.user.site
         form.instance.user = self.request.user
         messages.info(self.request, 'Post has been created!')
         return super(PostCreateView, self).form_valid(form)

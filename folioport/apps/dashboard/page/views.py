@@ -4,7 +4,6 @@ from django.db import models
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
-from django.contrib.sites.models import get_current_site
 
 from folioport.base.mixins import LoginRequiredMixin, FilterUserMixin, \
     AjaxableResponseMixin, ObjectSaveMixin
@@ -49,7 +48,7 @@ class PageCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.site = get_current_site(self.request)
+        form.instance.site = self.request.user.site
         messages.info(self.request, 'Page has been created!')
         return super(PageCreateView, self).form_valid(form)
 

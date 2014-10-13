@@ -11,9 +11,13 @@ from django.utils.text import slugify
 from folioport.base.utils import get_solr_thumbnail_geometry
 
 
-class ProjectManager(CurrentSiteManager):
+class ProjectManager(models.Manager):
     def active(self):
         return self.get_query_set().filter(active=True)
+
+
+class SiteProjectManager(ProjectManager, CurrentSiteManager):
+    pass
 
 
 class AbstractProject(models.Model):
@@ -81,10 +85,10 @@ class AbstractProject(models.Model):
         if category_slug:
             categories = Category.objects.active().filter(slug=category_slug)
             if categories:
-                return Project.objects.active().filter(
+                return Project.site_objects.active().filter(
                     category__in=[categories[0]]).exclude(id=self.id)
 
-        return Project.objects.active().exclude(id=self.id)
+        return Project.site_objects.active().exclude(id=self.id)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -115,3 +119,4 @@ class AbstractProject(models.Model):
         return objects[:limit]
 
     objects = ProjectManager()
+    site_objects = SiteProjectManager()

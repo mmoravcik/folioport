@@ -14,9 +14,24 @@ class ProjectModelTests(TestCase):
     def test_previous_next_no_category(self):
         projects = [
             self._create_project(title="1", order=1), #project[0]
-            self._create_project(title="4", order=3), #project[1]
-            self._create_project(title="3", order=2), #project[2]
+            self._create_project(title="3", order=3), #project[1]
+            self._create_project(title="2", order=2), #project[2]
             self._create_project(title="0", order=0), #project[3]
+        ]
+
+        self.assertEqual(projects[0].next(), projects[2])
+        self.assertEqual(projects[0].previous(), projects[3])
+        self.assertEqual(projects[1].previous(), projects[2])
+        self.assertEqual(projects[1].next(), projects[3])
+        self.assertEqual(projects[3].previous(), projects[1])
+
+    def test_previous_next_no_category_different_site(self):
+        projects = [
+            self._create_project(title="1", order=1), #project[0]
+            self._create_project(title="3", order=3), #project[1]
+            self._create_project(title="2", order=2), #project[2]
+            self._create_project(title="0", order=0), #project[3]
+            self._create_project(site=999, title="4", order=4), #project[5]
         ]
 
         self.assertEqual(projects[0].next(), projects[2])

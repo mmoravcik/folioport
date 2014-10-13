@@ -8,9 +8,13 @@ from django.db import models
 from django.utils.text import slugify
 
 
-class BlogManager(CurrentSiteManager):
+class BlogManager(models.Manager):
     def active(self):
         return self.get_query_set().filter(active=True)
+
+
+class SiteBlogManager(BlogManager, CurrentSiteManager):
+    pass
 
 
 class AbstractPost(models.Model):
@@ -65,7 +69,7 @@ class AbstractPost(models.Model):
     # TODO should be using get instead of filter in these queries?
     def next(self):
         Post = models.get_model('blog', 'Post')
-        qs = Post.objects.active().exclude(id=self.id)
+        qs = Post.site_objects.active().exclude(id=self.id)
         p = qs.filter(release_date__gte=self.release_date).\
             order_by('release_date', 'pk')
         if not p:
@@ -74,12 +78,12 @@ class AbstractPost(models.Model):
 
     def previous(self, category_slug=None):
         Post = models.get_model('blog', 'Post')
-        qs = Post.objects.active().exclude(id=self.id)
+        qs = Post.site_objects.active().exclude(id=self.id)
         p = qs.filter(release_date__lte=self.release_date).\
             order_by('-release_date', '-pk')
         if not p:
             p = qs.order_by('-release_date', '-pk')
         return p[0] if p else None
 
-
     objects = BlogManager()
+    site_objects = SiteBlogManager()

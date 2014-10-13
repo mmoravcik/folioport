@@ -9,9 +9,13 @@ from django.template.defaultfilters import slugify
 from folioport.base.utils import get_solr_thumbnail_geometry
 
 
-class CategoryManager(CurrentSiteManager):
+class CategoryManager(models.Manager):
     def active(self):
         return self.get_query_set().filter(active=True)
+
+
+class SiteCategoryManager(CategoryManager, CurrentSiteManager):
+    pass
 
 
 class AbstractCategory(MPTTModel):
@@ -41,6 +45,7 @@ class AbstractCategory(MPTTModel):
         return super(AbstractCategory, self).save(*args, **kwargs)
 
     objects = CategoryManager()
+    site_objects = SiteCategoryManager()
 
 
 class AbstractMedia(models.Model):
