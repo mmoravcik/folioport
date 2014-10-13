@@ -3,6 +3,8 @@ Folioport
 
 Simple portfolio management project
 
+This is work in progress...
+
 Install
 -------
 
