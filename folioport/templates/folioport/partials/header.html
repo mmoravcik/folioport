@@ -12,9 +12,9 @@
 <div id="header_category_listing" class="header-block">
 {% for category in folioport_project_categories_with_projects %}
     <div class="header-category-name">{{ category.name }}</div>
-    {% for project in category.project_set.active %}
+    {% for menu_project in category.project_set.active %}
         <div class="header-project-listing">
-            <a href='{{ project.get_absolute_url }}'>{{ project.title }}</a>
+            <a {% if menu_project.id = project.id %}class='active-menu-item'{% endif %} href='{{ project.get_absolute_url }}'>{{ menu_project.title }}</a>
         </div>
     {% endfor %}
 {% endfor %}
@@ -25,9 +25,11 @@
 {% if not folioport_project_categories_with_projects %}
     <div class="header-category-name">Projects</div>
 {% endif %}
-{% for project in folioport_projects_without_category %}
+{% for menu_project in folioport_projects_without_category %}
     <div class="header-project-listing" class="no-category">
-        <a href='{{ project.get_absolute_url }}'>{{ project.title }}</a>
+        <a {% if menu_project.id = project.id %}class='active-menu-item'{% endif %} href='{{ project.get_absolute_url }}'>
+	        {{ menu_project.title }}
+	    </a>
     </div>
 {% endfor %}
 </div>

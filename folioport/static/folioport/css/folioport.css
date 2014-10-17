@@ -67,6 +67,9 @@ HEADER CLASSES
 }
 /* END HEADER CLASSES */
 
+.active-menu-item {
+	font-weight: bold;
+}
 
 /*
 BLOG

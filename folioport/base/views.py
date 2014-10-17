@@ -8,6 +8,7 @@ Page = get_model('page', 'Page')
 
 class HomeView(TemplateView):
     template_name = 'home.html'
+    landing_page = None
 
     def get(self, request, *args, **kwargs):
         landing_pages = Page.site_objects.active().filter(type=Page.LANDING_PAGE)

@@ -30,7 +30,7 @@ class CategoryView(TemplateView):
     def get_context_data(self, **kwargs):
         context = TemplateView.get_context_data(self, **kwargs)
         category = get_category_by_slug(self.kwargs['category_slug'])
-        context['projects'] = Project.objects.active().filter(category=category).order_by('order')
+        context['projects'] = Project.site_objects.active().filter(category=category).order_by('order')
         context['category'] = category
         return context
 
