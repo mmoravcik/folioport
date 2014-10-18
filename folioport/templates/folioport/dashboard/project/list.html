@@ -11,7 +11,7 @@
 
     {% if object_list %}
     <div class='responsive-table'>
-        <table class="table table-hover sorted-table" style="width:600px;">
+        <table class="table table-hover sorted-table">
             <thead>
                 <tr>
                     <th>{% trans 'project title' %}</th>
@@ -27,7 +27,7 @@
                     {% if project.active %}
                     <i class="glyphicon glyphicon-ok" style="color:green"></i>
                     {% else %}
-                    <i class="glyphicon glyphicon-trash" style="color:red"></i>
+                    <i class="glyphicon glyphicon-remove" style="color:red"></i>
                     {% endif %}
                 </td>
                 <td class='text-center'>

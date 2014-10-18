@@ -21,5 +21,8 @@ class MyCSSArchive(AbstractMyCSSArchive):
     site = models.ForeignKey(Site)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
+    class Meta:
+        ordering = ('-date_created',)
+
 
 from my_css.models import *
