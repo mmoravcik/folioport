@@ -60,6 +60,8 @@ class CategoryForm(forms.ModelForm):
                                  site=Site.objects.get_current())
         except Category.DoesNotExist:
             pass
+        except KeyError:
+            pass
         else:
             raise ValidationError('Category with this name already exists')
         return cleaned_data
