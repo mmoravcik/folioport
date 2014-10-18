@@ -4,7 +4,6 @@ from django.db import models
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib import messages
-from django.contrib.sites.models import get_current_site
 
 from folioport.base.mixins import FilterUserMixin
 from folioport.base.mixins import LoginRequiredMixin, AjaxableResponseMixin

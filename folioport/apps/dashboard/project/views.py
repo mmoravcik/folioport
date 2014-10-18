@@ -22,6 +22,12 @@ class ProjectEditView(FilterUserMixin, LoginRequiredMixin, AjaxableResponseMixin
     form_class = forms.ProjectForm
     template_name = 'dashboard/project/edit.html'
 
+    def get_form(self, form_class):
+        form = super(ProjectEditView, self).get_form(form_class)
+        form.fields['category'].queryset = form.fields['category'].queryset.\
+            filter(user=self.request.user)
+        return form
+
     def get_success_url(self):
         messages.success(self.request, 'Project has been saved')
         return reverse_lazy('folioport:dashboard:project:edit',
