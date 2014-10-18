@@ -14,7 +14,7 @@
     <div class="header-category-name">{{ category.name }}</div>
     {% for menu_project in category.project_set.active %}
         <div class="header-project-listing">
-            <a {% if menu_project.id = project.id %}class='active-menu-item'{% endif %} href='{{ project.get_absolute_url }}'>{{ menu_project.title }}</a>
+            <a {% if menu_project.id = project.id %}class='active-menu-item'{% endif %} href='{{ menu_project.get_absolute_url }}'>{{ menu_project.title }}</a>
         </div>
     {% endfor %}
 {% endfor %}
@@ -27,7 +27,7 @@
 {% endif %}
 {% for menu_project in folioport_projects_without_category %}
     <div class="header-project-listing" class="no-category">
-        <a {% if menu_project.id = project.id %}class='active-menu-item'{% endif %} href='{{ project.get_absolute_url }}'>
+        <a {% if menu_project.id = project.id %}class='active-menu-item'{% endif %} href='{{ menu_project.get_absolute_url }}'>
 	        {{ menu_project.title }}
 	    </a>
     </div>

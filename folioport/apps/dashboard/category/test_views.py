@@ -21,8 +21,9 @@ class DashboardCategoryViewTests(TestCase):
         self.assertEqual(200, response.status_code)
 
         self.assertEqual(Category.objects.all().count(), 0)
-        import ipdb;ipdb.set_trace()
-        response = self.client.post(reverse('folioport:dashboard:category:create',kwargs={'app': 'project'}), { 'name': '1a',      }, follow=True)
+        response = self.client.post(
+            reverse('folioport:dashboard:category:create',
+                    kwargs={'app': 'project'}), {'name': '1a',}, follow=True)
         self.assertEqual(200, response.status_code)
         self.assertEqual(Category.objects.all().count(), 1)
         cat = Category.objects.all()[0]

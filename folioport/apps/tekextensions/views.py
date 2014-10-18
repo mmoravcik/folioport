@@ -21,7 +21,7 @@ def add_new_model(request, app, model_name, form=None):
         form = form(request.POST, request.FILES)
         if form.is_valid():
             form.instance.user = request.user
-            form.instance.site = get_current_site(request)
+            form.instance.site = request.user.site
             try:
                 new_obj = form.save()
             except ValidationError as error:

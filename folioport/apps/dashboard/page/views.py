@@ -37,14 +37,24 @@ class PageEditView(FilterUserMixin, LoginRequiredMixin, AjaxableResponseMixin, U
         return ctx
 
 
-class PageCreateView(FilterUserMixin, LoginRequiredMixin, CreateView):
+class PageCreateView(LoginRequiredMixin, CreateView):
     model = Page
     form_class = PageForm
     template_name = 'dashboard/page/create.html'
 
+    def get_form_kwargs(self):
+        kwargs = super(PageCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def get_success_url(self):
         return reverse_lazy('folioport:dashboard:page:edit',
             kwargs={'pk': self.object.pk})
+
+    def form_invalid(self, form):
+        form.instance.user = self.request.user
+        form.instance.site = self.request.user.site
+        return super(PageCreateView, self).form_invalid(form)
 
     def form_valid(self, form):
         form.instance.user = self.request.user

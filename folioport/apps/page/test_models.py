@@ -2,6 +2,7 @@ from django_dynamic_fixture import G
 
 from django.test import TestCase, Client
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from folioport.apps.page.models import Page
 from folioport.apps.cms import models as cms_models
@@ -33,25 +34,30 @@ class PageModelTests(TestCase):
         self.assertEqual(response.context[-1]['object'], page)
         self.assertEqual(response.status_code, 200)
 
-    def test_can_have_only_one_landing_page(self):
-        G(Page, type=Page.LANDING_PAGE, site__id=settings.SITE_ID)
-        G(Page, type=Page.CONTENT_PAGE, site__id=settings.SITE_ID)
-        G(Page, type=Page.CONTENT_PAGE, site__id=settings.SITE_ID)
-        with self.assertRaises(Exception):
-            G(Page, type=Page.LANDING_PAGE, site__id=settings.SITE_ID)
+    # TODO The following validation has been moved to the form
+    # worth visiting this again later..?
 
-    def test_can_save_landing_page(self):
-        page = G(Page, type=Page.LANDING_PAGE, site__id=settings.SITE_ID)
-        G(Page, type=Page.CONTENT_PAGE, site__id=settings.SITE_ID)
-        page.title = 'new'
-        page.save()
-        self.assertEqual('new', page.title)
+    # def test_can_have_only_one_landing_page(self):
+    #     user = G(get_user_model())
+    #     G(Page, type=Page.LANDING_PAGE, user=user)
+    #     G(Page, type=Page.CONTENT_PAGE, user=user)
+    #     G(Page, type=Page.CONTENT_PAGE, user=user)
+    #     with self.assertRaises(Exception):
+    #         G(Page, type=Page.LANDING_PAGE, user=user)
+
+    # def test_can_save_landing_page(self):
+    #     user = G(get_user_model())
+    #     page = G(Page, type=Page.LANDING_PAGE, user=user)
+    #     G(Page, type=Page.CONTENT_PAGE, user=user)
+    #     page.title = 'new'
+    #     page.save()
+    #     self.assertEqual('new', page.title)
 
     def test_active_pages(self):
-        active_page = G(Page, site__id=settings.SITE_ID, active=True)
-        nonactive_page = G(Page, site__id=settings.SITE_ID, active=False)
+        active_page = G(Page, active=True, site__id=settings.SITE_ID)
+        nonactive_page = G(Page, active=False, site__id=settings.SITE_ID)
         active_page_different_site = G(Page, site__id=999, active=True)
-        self.assertIn(active_page, Page.objects.active().all())
+        self.assertIn(active_page, Page.site_objects.active().all())
         self.assertEqual(1, len(Page.site_objects.active().all()))
 
     def test_slug_is_generated(self):
