@@ -1,5 +1,5 @@
 from django.views import generic
-from django.conf import settings
+from django.core.urlresolvers import reverse_lazy
 
 from . import forms
 
@@ -7,7 +7,7 @@ from . import forms
 class UserRegistrationView(generic.FormView):
     form_class = forms.UserCreationForm
     template_name = 'account/registration.html'
-    success_url = '/'
+    success_url = reverse_lazy('folioport:apps:dashboard:home')
 
     def form_valid(self, form):
         form.save()
