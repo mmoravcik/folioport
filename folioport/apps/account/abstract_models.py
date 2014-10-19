@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.contrib.sites.models import Site
 from django.conf import settings
+from django.contrib.sites.managers import CurrentSiteManager
 
 
 class FolioportUserManager(BaseUserManager):
@@ -22,11 +23,34 @@ class FolioportUserManager(BaseUserManager):
         return user
 
 
+class SiteFolioportUserManager(FolioportUserManager, CurrentSiteManager):
+    pass
+
+
 class AbstractFolioportUser(AbstractBaseUser):
     email = models.EmailField(blank=True, unique=True)
     subdomain = models.CharField(max_length=100, unique=True)
-    #use_social_media = models.BooleanField(default=True)
-    site = models.ForeignKey(Site, blank=True, null=True)
+
+    site_name = models.CharField(max_length=128, blank=True,
+                                 default='', help_text='e.g. John Doe')
+    site_catch_phrase = models.CharField(max_length=128, blank=True,
+                                         default='', help_text='e.g. Illustrator')
+
+    use_social_media = models.BooleanField(default=True)
+    use_system_blog = models.BooleanField('Use blog', default=True)
+    own_blog_link = models.URLField(default='', blank=True,
+        help_text='In case you have your own blog already running, please '
+                  'enter the address including http://, '
+                  'e.g. http://wwww.myblog.com')
+
+    google_analytics_code = models.CharField(max_length=10, blank=True, default='')
+
+    site_logo = models.ImageField(
+        null=True, blank=True, upload_to='images/site_logos')
+    logo_width = models.IntegerField(default=120, blank=True)
+
+
+    site = models.ForeignKey(Site)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -55,3 +79,4 @@ class AbstractFolioportUser(AbstractBaseUser):
         return super(AbstractFolioportUser, self).save(*args, **kwargs)
 
     objects = FolioportUserManager()
+    site_objects = SiteFolioportUserManager()

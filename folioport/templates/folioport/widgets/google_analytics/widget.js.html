@@ -1,9 +1,9 @@
-{% if GOOGLE_ANALYTICS_ACCOUNT %}
+{% if folioport_account.google_analytics_code %}
 
 <script type='text/javascipt'>
 
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', '{{ GOOGLE_ANALYTICS_ACCOUNT }}']);
+    _gaq.push(['_setAccount', '{{ folioport_account.google_analytics_code }}']);
     _gaq.push(['_setDomainName', 'none']);
     _gaq.push(['_trackPageview']);
 

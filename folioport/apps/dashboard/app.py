@@ -8,6 +8,7 @@ from folioport.apps.dashboard.page.app import application as page_app
 from folioport.apps.dashboard.my_css.app import application as my_css_app
 from folioport.apps.account.app import application as account_app
 from folioport.apps.dashboard.category.app import application as category_app
+from folioport.apps.dashboard.account.app import application as account_app
 
 from . import views
 
@@ -22,6 +23,7 @@ class DashboardApplication(Application):
     account_app = account_app
     my_css_app = my_css_app
     category_app = category_app
+    account_app = account_app
 
     def get_urls(self):
         urlpatterns = super(DashboardApplication, self).get_urls()
@@ -32,6 +34,7 @@ class DashboardApplication(Application):
             url(r'^page', include(self.page_app.urls)),
             url(r'^css', include(self.my_css_app.urls)),
             url(r'^category', include(self.category_app.urls)),
+            url(r'^account', include(self.account_app.urls)),
             url(r'^$', self.home_view.as_view(), name='home'),
         )
         return urlpatterns

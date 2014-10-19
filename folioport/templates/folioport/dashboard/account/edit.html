@@ -1,0 +1,21 @@
+{% extends 'dashboard/layout.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block content %}
+
+
+    <h1 class="page-header">
+        {% block header %}{% trans 'ACCOUNT SETTINGS' %}{% endblock %}
+    </h1>
+
+    <form id="edit-form" enctype="multipart/form-data" action="" method="post">
+        {% csrf_token %}
+        {% crispy form %}
+        <br />
+        <input type="submit" class='btn btn-primary' value="Save" />
+    </form>
+{% endblock %}
+
+{% block onbodyload %}
+
+{% endblock %}

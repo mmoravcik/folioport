@@ -1,9 +1,14 @@
+{% load staticfiles %}
+
 <div class="header-block">
     <div id="header_page_name">
-        <a href='/'>Martina Paukova *</a>
+        {% if folioport_account.site_logo %}
+            <a href='/'><img id='logo-image'  width="{{ folioport_account.logo_width }}" src="{{ MEDIA_URL }}{{ folioport_account.site_logo }}" title="home"/></a><br />
+        {% endif %}
+        <a href='/'>{{ folioport_account.site_name }}</a>
     </div>
     <div id="header_page_title">
-        Illustrator *
+        {{ folioport_account.site_catch_phrase }}
     </div>
 </div>
 
@@ -43,12 +48,18 @@
             <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
         </div>
     {% endfor %}
-    <div class="header-page-listing" class="listing-blog">
-        <a href='{% url 'folioport:blog:post-list' %}'>Blog</a>
-    </div>
+    {% if folioport_account.use_system_blog %}
+        <div class="header-page-listing" class="listing-blog">
+            {% if folioport_account.own_blog_link %}
+                <a target="_blank" href='{{ folioport_account.own_blog_link }}'>Blog</a>
+            {% else %}
+                <a href='{% url 'folioport:blog:post-list' %}'>Blog</a>
+            {% endif %}
+        </div>
+    {% endif %}
 </div>
 
-{% comment %}
+{% if folioport_account.use_social_media %}
 <div class="header-block">
     <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
@@ -68,6 +79,6 @@
     <!-- Please call pinit.js only once per page -->
     <script type="text/javascript" async  data-pin-color="red" data-pin-height="28" data-pin-hover="true" src="//assets.pinterest.com/js/pinit.js"></script>
 </div>
-{% endcomment %}
+{% endif %}
 <br /><br />
 <em>* to be dynamic</em>

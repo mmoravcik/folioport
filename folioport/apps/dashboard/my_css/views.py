@@ -22,8 +22,6 @@ class MyCssEditView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('folioport:dashboard:my_css:edit',
                             kwargs={'pk': self.object.pk})
 
-    def form_valid(self, form):
-        return super(MyCssEditView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         ctx = super(MyCssEditView, self).get_context_data(**kwargs)
@@ -35,6 +33,6 @@ class MyCssEditView(LoginRequiredMixin, UpdateView):
 class MyCssRedirectToEditView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         my_css, _ = MyCss.objects.get_or_create(
-            site=get_current_site(self.request), user=self.request.user)
+            site=self.request.user.site, user=self.request.user)
         return reverse_lazy('folioport:dashboard:my_css:edit',
                             kwargs={'pk': my_css.id})
