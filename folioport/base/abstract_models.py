@@ -78,22 +78,22 @@ class AbstractEmbed(AbstractMedia):
 
 
 class AbstractImage(AbstractMedia):
-    JPEG, PNG, GIF = "JPEG","PNG", "GIF"
+    JPEG, PNG, GIF = "JPEG", "PNG", "GIF"
 
     THUMBNAIL_TYPE_CHOICE = (
         (JPEG, 'jpeg'),
         (PNG, 'png'),
         (GIF, 'gif'),
-        )
+    )
 
     image = models.ImageField(upload_to='images')
     thumbnail_type = models.CharField(
         max_length=4, choices=THUMBNAIL_TYPE_CHOICE, default=JPEG)
-    width = models.IntegerField(default=300)
-    height = models.IntegerField(default=0)
+    max_width = models.IntegerField(default=1000)
+    min_width = models.IntegerField(default=250)
 
     def get_solr_thumbnail_geometry(self):
-        return get_solr_thumbnail_geometry(self.width, self.height)
+        return get_solr_thumbnail_geometry(self.max_width)
 
     def __unicode__(self):
         return self.image.name

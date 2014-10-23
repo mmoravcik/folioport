@@ -46,6 +46,10 @@ h1 {
     margin-bottom: 5px;
 }
 
+.responsive_image {
+	width: 80%;
+}
+
 /*
 
 HEADER CLASSES

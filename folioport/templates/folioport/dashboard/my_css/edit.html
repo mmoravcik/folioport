@@ -21,7 +21,7 @@
 
     <div>
         <h2>Previous CSS files</h2>
-        {% for archive in css_archives|slice:'20' %}
+        {% for archive in css_archives|slice:'30' %}
             {{ archive.date_created }} <a data-archive-id='{{ archive.id }}' class='archive-backup'>[+]</a><br />
             <div style='border-color: #000; padding: 10px;display:none' id='archive-css-{{ archive.id }}'>
                 <div id='archive-css-source-{{ archive.id }}'>{{ archive.css }}</div>

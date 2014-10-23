@@ -20,7 +20,8 @@ class ItemImageForm(forms.ModelForm):
                 'Optional settings',
                 'hover_image',
                 'caption',
-                'width',
+                'max_width',
+                'min_width',
                 'thumbnail_type',
                 css_class='optional-settings',
                 title='Advanced settings'
@@ -29,7 +30,7 @@ class ItemImageForm(forms.ModelForm):
 
     class Meta:
         model = get_model('cms', 'ItemImage')
-        fields = ('image', 'hover_image', 'caption', 'width', 'thumbnail_type')
+        fields = ('image', 'hover_image', 'caption', 'max_width', 'min_width', 'thumbnail_type')
 
 
 class ImageForm(forms.ModelForm):
@@ -41,7 +42,8 @@ class ImageForm(forms.ModelForm):
             Fieldset(
                 'Optional settings',
                 'caption',
-                'width',
+                'max_width',
+                'min_width',
                 'thumbnail_type',
                 css_class='optional-settings',
                 title='Advanced settings'
@@ -50,7 +52,7 @@ class ImageForm(forms.ModelForm):
 
     class Meta:
         model = get_model('cms', 'Image')
-        fields = ('image', 'caption', 'width', 'thumbnail_type')
+        fields = ('image', 'caption', 'max_width', 'min_width', 'thumbnail_type')
 
 
 class GalleryImageForm(forms.ModelForm):
@@ -63,7 +65,8 @@ class GalleryImageForm(forms.ModelForm):
                 'Optional settings',
                 'hover_image',
                 'caption',
-                'width',
+                'max_width',
+                'min_width',
                 'thumbnail_type',
                 css_class='optional-settings',
                 title='Advanced settings'
@@ -72,7 +75,7 @@ class GalleryImageForm(forms.ModelForm):
 
     class Meta:
         model = get_model('cms', 'GalleryImage')
-        fields = ('image', 'hover_image', 'caption', 'width', 'thumbnail_type')
+        fields = ('image', 'hover_image', 'caption', 'max_width', 'min_width', 'thumbnail_type')
 
 
 class ItemEmbedForm(forms.ModelForm):
