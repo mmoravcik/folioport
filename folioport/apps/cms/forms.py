@@ -86,7 +86,6 @@ class ItemEmbedForm(forms.ModelForm):
             Field('embed_code'),
             Fieldset(
                 'caption',
-                'width',
                 'type',
                 css_class='optional-settings',
                 title='Advanced settings'
@@ -95,7 +94,7 @@ class ItemEmbedForm(forms.ModelForm):
 
     class Meta:
         model = get_model('cms', 'ItemEmbed')
-        fields = ('embed_code', 'caption', 'width', 'type')
+        fields = ('embed_code', 'caption', 'type')
 
 
 class ItemRichTextForm(forms.ModelForm):

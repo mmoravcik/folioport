@@ -63,11 +63,9 @@ class AbstractEmbed(AbstractMedia):
         (AUDIO, 'Audio'),
         (VIDEO, 'Video'),
         (OTHER, 'Other'),
-        )
+    )
 
     embed_code = models.TextField()
-    width = models.IntegerField(default=300)
-    height = models.IntegerField(default=0)
     type = models.SmallIntegerField(choices=TYPE_CHOICES, default=VIDEO)
 
     def __unicode__(self):
