@@ -47,7 +47,13 @@ h1 {
 }
 
 .responsive_image {
-	width: 80%;
+	width: 90%;
+}
+
+.text-wrapper {
+	max-width: 650px;
+	width: 95%;
+	text-align: justify;
 }
 
 /*
