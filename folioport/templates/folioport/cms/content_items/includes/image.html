@@ -2,15 +2,14 @@
 <div class='image-container'>
 {% if image.thumbnail_type == 'GIF' %}
     <img class='responsive_image'
-         maxWidth='{{ image.max_width }}'
-         minWidth="{{ image.min_width }}"
+         style='max-width:{{image.max_width }}px;min-width:{{ image.min_width }}px'
          src='{{ MEDIA_URL }}{{image.image.name}}' alt="" />
 {% else %}
     {% thumbnail image.image image.get_solr_thumbnail_geometry format=image.thumbnail_type as im %}
 
         {% if image.hover_image %}
             {% thumbnail image.hover_image image.get_solr_thumbnail_geometry as hover_im %}
-                <img class='hover_image responsive_image' style='display:none' maxWidth='{{ hover_im.max_width }}' minWidth='{{ hover_im.min_width }}' src='{{ hover_im.url }}' alt='{{ hover_im.url }}' />
+                <img class='hover_image responsive_image' style='display:none;max-width:{{image.max_width }}px;min-width:{{ image.min_width }}px' src='{{ hover_im.url }}' alt='{{ hover_im.url }}' />
             {% endthumbnail %}
         {% endif %}
         <img class='normal_image responsive_image' style='max-width:{{image.max_width }}px;min-width:{{ image.min_width }}px' src='{{ im.url }}' alt='{{ im.url }}' />
