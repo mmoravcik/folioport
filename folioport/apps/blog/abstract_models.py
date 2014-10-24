@@ -72,8 +72,6 @@ class AbstractPost(models.Model):
         qs = Post.site_objects.active().exclude(id=self.id)
         p = qs.filter(release_date__gte=self.release_date).\
             order_by('release_date', 'pk')
-        if not p:
-            p = qs.order_by('release_date', 'pk')
         return p[0] if p else None
 
     def previous(self, category_slug=None):
@@ -81,8 +79,6 @@ class AbstractPost(models.Model):
         qs = Post.site_objects.active().exclude(id=self.id)
         p = qs.filter(release_date__lte=self.release_date).\
             order_by('-release_date', '-pk')
-        if not p:
-            p = qs.order_by('-release_date', '-pk')
         return p[0] if p else None
 
     objects = BlogManager()

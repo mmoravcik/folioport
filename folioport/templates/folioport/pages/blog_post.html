@@ -10,7 +10,7 @@
     {% block prev_next %}
     {% if previous_post %}
         <a href="{{ previous_post.get_absolute_url }}">
-            Previous
+            Older
         </a>
     {% endif %}
 
@@ -20,7 +20,7 @@
 
     {% if next_post %}
         <a href="{{ next_post.get_absolute_url  }}">
-            Next
+            Newer
         </a>
     {% endif %}
     {% endblock %}

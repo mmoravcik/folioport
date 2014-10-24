@@ -19,6 +19,7 @@ def add_new_model(request, app, model_name, form=None):
 
     if request.method == 'POST':
         form = form(request.POST, request.FILES)
+
         if form.is_valid():
             form.instance.user = request.user
             form.instance.site = request.user.site

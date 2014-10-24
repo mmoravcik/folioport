@@ -57,9 +57,9 @@ class BlogModelTests(TestCase):
         self.assertEqual(posts[0].previous(), posts[4])
         self.assertEqual(posts[1].previous(), posts[0])
         self.assertEqual(posts[1].next(), posts[2])
-        self.assertEqual(posts[2].next(), posts[3])
+        self.assertEqual(posts[2].next(), None)
         self.assertEqual(posts[2].previous(), posts[1])
-        self.assertEqual(posts[3].previous(), posts[2])
+        self.assertEqual(posts[3].previous(), None)
 
     def test_previous_next_different_sites(self):
         posts = [
@@ -75,9 +75,9 @@ class BlogModelTests(TestCase):
         self.assertEqual(posts[0].previous(), posts[4])
         self.assertEqual(posts[1].previous(), posts[0])
         self.assertEqual(posts[1].next(), posts[2])
-        self.assertEqual(posts[2].next(), posts[3])
+        self.assertEqual(posts[2].next(), None)
         self.assertEqual(posts[2].previous(), posts[1])
-        self.assertEqual(posts[3].previous(), posts[2])
+        self.assertEqual(posts[3].previous(), None)
 
     def test_slug_is_generated(self):
         post = G(Post, title='Test', slug='')

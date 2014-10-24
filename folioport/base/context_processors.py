@@ -8,6 +8,12 @@ Page = get_model('page', 'Page')
 
 
 def folioport_project(request):
+    # TODO #FIXME doing this hack for now to allow tests to run
+    try:
+        folioport_account = get_user_model().site_objects.all()[0]
+    except IndexError:
+        folioport_account = None
+
     return {
         'folioport_project_categories' : Category.site_objects.active(),
         'folioport_project_categories_with_projects' : Category.site_objects.active().exclude(project=None),
@@ -16,5 +22,5 @@ def folioport_project(request):
         'folioport_content_types': settings.FOLIOPORT_CONTENT_TYPES,
         'folioport_pages': Page.site_objects.active().exclude(type=Page.LANDING_PAGE),
         'folioport_date_format': 'j N Y',
-        'folioport_account': get_user_model().site_objects.all()[0]
+        'folioport_account': folioport_account,
     }
