@@ -43,9 +43,9 @@
     <div id="header_other_info">
         <strong>Information</strong>
     </div>
-    {% for page in folioport_pages %}
+    {% for menu_page in folioport_pages %}
         <div class="header-page-listing">
-            <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+            <a {% if menu_page.id = page.id %}class='active-menu-item'{% endif %} href="{{ menu_page.get_absolute_url }}">{{ menu_page.title }}</a>
         </div>
     {% endfor %}
     {% if folioport_account.use_system_blog %}
@@ -53,7 +53,7 @@
             {% if folioport_account.own_blog_link %}
                 <a target="_blank" href='{{ folioport_account.own_blog_link }}'>Blog</a>
             {% else %}
-                <a href='{% url 'folioport:blog:post-list' %}'>Blog</a>
+                <a {% if blog_active %}class='active-menu-item'{% endif %} href='{% url 'folioport:blog:post-list' %}'>Blog</a>
             {% endif %}
         </div>
     {% endif %}

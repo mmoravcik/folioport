@@ -13,10 +13,11 @@ class PostDetailView(DetailView):
     queryset = Post.site_objects.active()
 
     def get_context_data(self, **kwargs):
-        context = super(PostDetailView, self).get_context_data()
-        context['next_post'] = self.get_object().next()
-        context['previous_post'] = self.get_object().previous()
-        return context
+        ctx = super(PostDetailView, self).get_context_data()
+        ctx['next_post'] = self.get_object().next()
+        ctx['previous_post'] = self.get_object().previous()
+        ctx['blog_active'] = True
+        return ctx
 
 
 class PostListView(AjaxListView, ListView):
@@ -24,3 +25,8 @@ class PostListView(AjaxListView, ListView):
     template_name = 'pages/blog_list.html'
     queryset = Post.site_objects.active()
     model = Post
+
+    def get_context_data(self, **kwargs):
+        ctx = super(PostListView, self).get_context_data(**kwargs)
+        ctx['blog_active'] = True
+        return ctx

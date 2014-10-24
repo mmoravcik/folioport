@@ -2,13 +2,13 @@
 {% load i18n %}
 {% load cms_item %}
 
-{% block title %} {{ object.title }} {% endblock %}
+{% block title %} {{ page.title }} {% endblock %}
 
 {% block content %}
 <div class="page-heading">&nbsp;</div>
 
 <div class='project-container-content'>
-    {% cms_container_render object.container %}
+    {% cms_container_render page.container %}
 </div>
 
 {% endblock %}
