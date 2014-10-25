@@ -117,10 +117,6 @@ END BLOG
     margin-top: 38px;
 }
 
-.image_picker_image {
-    height: 100px !important;
-}
-
 ul.thumbnails.image_picker_selector li .thumbnail a{
     color: black;
 }
@@ -335,4 +331,8 @@ SORTABLE CLASSES
 
 *, a {
     color: #111;
+}
+
+img.image_picker_image {
+    height: 110px;
 }
