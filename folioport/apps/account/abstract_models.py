@@ -27,6 +27,16 @@ class SiteFolioportUserManager(FolioportUserManager, CurrentSiteManager):
     pass
 
 
+class SocialMedia(models.Model):
+    title = models.CharField(max_length=128)
+    code = models.CharField(max_length=3, unique=True)
+    script_code = models.TextField(default='', blank=True)
+    html_code = models.TextField(default='', blank=True)
+
+    def __unicode__(self):
+        return "%s" % (self.title)
+
+
 class AbstractFolioportUser(AbstractBaseUser):
     email = models.EmailField(blank=True, unique=True)
     subdomain = models.CharField(max_length=100, unique=True)
@@ -36,7 +46,8 @@ class AbstractFolioportUser(AbstractBaseUser):
     site_catch_phrase = models.CharField(max_length=128, blank=True,
                                          default='', help_text='e.g. Illustrator')
 
-    use_social_media = models.BooleanField(default=True)
+    social_media = models.ManyToManyField(SocialMedia, blank=True)
+
     use_system_blog = models.BooleanField('Use blog', default=True)
     own_blog_link = models.URLField(default='', blank=True,
         help_text='In case you have your own blog already running, please '
@@ -70,6 +81,12 @@ class AbstractFolioportUser(AbstractBaseUser):
 
     def __unicode__(self):
         return "%s - %s - %s" % (self.email, self.subdomain, self.site.id)
+
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
+        return self.is_admin
 
     def save(self, *args, **kwargs):
         if not self.site:

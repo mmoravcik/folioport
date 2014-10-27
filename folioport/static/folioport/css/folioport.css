@@ -61,6 +61,7 @@ h1 {
 HEADER CLASSES
 
 */
+
 #main_header {
     width: 250px;
     float: left;
@@ -86,6 +87,10 @@ HEADER CLASSES
 
 .active-menu-item {
 	font-weight: bold;
+}
+
+.social-media-button {
+    margin: 2px 0 2px 0;
 }
 
 /*

@@ -39,7 +39,7 @@ class UserCreationForm(forms.ModelForm):
 class DashboardAccountForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ('site_name', 'site_logo', 'logo_width', 'site_catch_phrase', 'use_social_media',
+        fields = ('site_name', 'site_logo', 'logo_width', 'site_catch_phrase', 'social_media',
                   'use_system_blog', 'own_blog_link', 'google_analytics_code')
 
     def __init__(self, *args, **kwargs):
@@ -52,7 +52,7 @@ class DashboardAccountForm(forms.ModelForm):
             Field('site_logo'),
             Field('logo_width'),
             Field('google_analytics_code'),
-            Field('use_social_media'),
+            Field('social_media'),
             Field('use_system_blog'),
             Field('own_blog_link'),
         )
