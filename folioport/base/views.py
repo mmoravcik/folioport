@@ -15,7 +15,7 @@ class HomeView(TemplateView):
         if landing_pages:
             self.landing_page = landing_pages[0]
         else:
-            projects = Project.site_objects.all().order_by('?')
+            projects = Project.site_objects.active().order_by('?')
             if projects:
                 return HttpResponseRedirect(projects[0].get_absolute_url())
         return super(HomeView, self).get(request, *args, **kwargs)
