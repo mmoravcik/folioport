@@ -59,7 +59,7 @@
     {% endif %}
 </div>
 
-{% if folioport_account.use_social_media %}
+{% if folioport_account.social_media.all.count > 0 %}
 <div class="header-block">
     {% for social_media in folioport_account.social_media.all %}
         <div class="social-media-button">
