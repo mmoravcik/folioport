@@ -1,7 +1,13 @@
 {% extends "layout.html"  %}
 {% load cms_item %}
 
-{% block title %} Folioport {% endblock %}
+{% block title %}
+{% if page %}
+    {{ page.title }}
+{% else %}
+    {{ folioport_account.site_name }}  {{ folioport_account.site_catchphrase }}
+{% endif %}
+{% endblock %}
 
 {% block content %}
     <div class="page-heading"> &nbsp;</div>
