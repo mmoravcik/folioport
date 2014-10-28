@@ -54,7 +54,7 @@ class AbstractFolioportUser(AbstractBaseUser):
                   'enter the address including http://, '
                   'e.g. http://wwww.myblog.com')
 
-    google_analytics_code = models.CharField(max_length=10, blank=True, default='')
+    google_analytics_code = models.CharField(max_length=30, blank=True, default='')
 
     site_logo = models.ImageField(
         null=True, blank=True, upload_to='images/site_logos')
