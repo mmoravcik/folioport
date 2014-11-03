@@ -341,3 +341,10 @@ SORTABLE CLASSES
 img.image_picker_image {
     height: 110px;
 }
+
+#live-preview-frame {
+    width: 90%;
+    height: 800px;
+    border: solid 1px #aaa;
+
+}

@@ -23,6 +23,14 @@ class ProjectView(DetailView):
         return context
 
 
+class ProjectPreview(ProjectView):
+    template_name = 'pages/preview.html'
+    context_name = 'object'
+
+    def get_queryset(self):
+        return Project.objects.filter(user=self.request.user)
+
+
 # TODO check this for site filter
 class CategoryView(TemplateView):
     template_name = 'pages/project_category.html'

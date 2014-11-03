@@ -28,7 +28,7 @@
             {% include 'dashboard/cms/includes/container_content.html' %}
         </div>
         <div class="tab-pane" id="preview">
-            <div id="preview-content"></div>
+            <div id="preview-content"><iframe id="live-preview-frame"></iframe></div>
         </div>
         <div class="tab-pane" id="settings">
             <form id="edit-form" enctype="multipart/form-data" action="" method="post">
@@ -58,6 +58,8 @@
     $('#preview-tab a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
+        $('#live-preview-frame').attr('src', "{{ object.get_preview_url }}");
+        /* TODO review this / delete
         $.get('{% url 'folioport:dashboard:cms:container-preview' object.container.id %}', {}, function(data) {
             if (data.status == 'success') {
                 $('#preview-content').html(data.result);
@@ -65,6 +67,7 @@
                 alert('Unable to preview the content');
             }
         });
+        */
     });
 
     {% if active_tab %}

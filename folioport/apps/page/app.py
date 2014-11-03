@@ -6,12 +6,14 @@ from folioport.apps.page import views
 
 class PageApplication(Application):
     name = 'page'
-    post_view = views.PageDetailView
+    page_view = views.PageDetailView
+    page_preview = views.PagePreview
 
     def get_urls(self):
         urlpatterns = super(PageApplication, self).get_urls()
         urlpatterns += patterns('',
-            url(r'^(?P<page_slug>[\w-]*)-(?P<pk>\d+)/$', self.post_view.as_view(), name='detail'),
+            url(r'^(?P<page_slug>[\w-]*)-(?P<pk>\d+)/$', self.page_view.as_view(), name='detail'),
+            url(r'^preview/(?P<page_slug>[\w-]*)-(?P<pk>\d+)/$', self.page_preview.as_view(), name='preview'),
         )
         return urlpatterns
 

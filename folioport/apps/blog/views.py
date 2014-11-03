@@ -20,6 +20,14 @@ class PostDetailView(DetailView):
         return ctx
 
 
+class PostPreview(PostDetailView):
+    template_name = 'pages/preview.html'
+    context_name = 'object'
+
+    def get_queryset(self):
+        return Post.objects.filter(user=self.request.user)
+
+
 class PostListView(AjaxListView, ListView):
     page_template='pages/partials/list_blog_post.html'
     template_name = 'pages/blog_list.html'

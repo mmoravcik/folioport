@@ -27,7 +27,7 @@ class AbstractProject(models.Model):
         (JPEG, 'jpeg'),
         (PNG, 'png'),
         (GIF, 'gif'),
-        )
+    )
 
     site = models.ForeignKey(Site)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -59,6 +59,9 @@ class AbstractProject(models.Model):
     def get_absolute_url(self):
         return reverse(
             'folioport:project:detail', args=[self.slug, self.id])
+
+    def get_preview_url(self):
+        return reverse('folioport:project:preview', args=[self.slug, self.id])
 
     def get_solr_thumbnail_geometry(self):
         return get_solr_thumbnail_geometry(

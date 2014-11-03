@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load i18n %}
+{% load cms_item %}
+
+{% block title %} {{ object.title }} {% endblock %}
+
+{% block layout %}
+
+<div class="project-container-content">
+    {% cms_container_render object.container %}
+</div>
+
+{% endblock %}

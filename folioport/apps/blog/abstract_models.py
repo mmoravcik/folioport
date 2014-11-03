@@ -66,6 +66,9 @@ class AbstractPost(models.Model):
     def get_absolute_url(self):
         return reverse('folioport:blog:post-detail', args=[self.slug, self.id])
 
+    def get_preview_url(self):
+        return reverse('folioport:blog:post-preview', args=[self.slug, self.id])
+
     # TODO should be using get instead of filter in these queries?
     def next(self):
         Post = models.get_model('blog', 'Post')

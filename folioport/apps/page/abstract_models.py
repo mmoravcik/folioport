@@ -39,6 +39,12 @@ class AbstractPage(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('folioport:page:detail', args=[self.slug, self.id])
+
+    def get_preview_url(self):
+        return reverse('folioport:page:preview', args=[self.slug, self.id])
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(u'%s' % self.title)
