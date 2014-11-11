@@ -29,7 +29,7 @@ class PostPreview(PostDetailView):
 
 
 class PostListView(AjaxListView, ListView):
-    page_template='pages/partials/list_blog_post.html'
+    page_template = 'pages/partials/list_blog_post.html'
     template_name = 'pages/blog_list.html'
     queryset = Post.site_objects.active()
     model = Post

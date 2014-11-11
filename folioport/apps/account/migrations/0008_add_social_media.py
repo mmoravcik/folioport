@@ -2,13 +2,16 @@
 import datetime
 from south.db import db
 from south.v2 import DataMigration
-from django.db import models
+
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
         SocialMedia = orm['account.SocialMedia']
-        facebook, created= SocialMedia.objects.get_or_create(code='FB')
+        try:
+            facebook = SocialMedia.objects.get(code='FB')
+        except SocialMedia.DoesNotExist:
+            facebook = SocialMedia.objects.create(code='FB')
         if not facebook.title:
             facebook.title = 'Facebook'
         facebook.script_code = """
@@ -24,7 +27,10 @@ class Migration(DataMigration):
         facebook.html_code = '<div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>'
         facebook.save()
 
-        twitter, created= SocialMedia.objects.get_or_create(code='TW')
+        try:
+            twitter = SocialMedia.objects.get(code='TW')
+        except SocialMedia.DoesNotExist:
+            twitter = SocialMedia.objects.create(code='TW')
         if not twitter.title:
             twitter.title = 'Twitter'
         twitter.script_code = "<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>"
@@ -32,7 +38,10 @@ class Migration(DataMigration):
         twitter.html_code = '<a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a>'
         twitter.save()
 
-        pinterest, created= SocialMedia.objects.get_or_create(code='PI')
+        try:
+            pinterest = SocialMedia.objects.get(code='PI')
+        except SocialMedia.DoesNotExist:
+            pinterest = SocialMedia.objects.create(code='PI')
         if not pinterest.title:
             pinterest.title = 'Pinterest'
         pinterest.script_code = '<script type="text/javascript" async  data-pin-color="red" data-pin-hover="true" src="//assets.pinterest.com/js/pinit.js"></script>'
