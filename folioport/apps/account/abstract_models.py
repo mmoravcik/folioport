@@ -60,8 +60,7 @@ class AbstractFolioportUser(AbstractBaseUser):
         null=True, blank=True, upload_to='images/site_logos')
     logo_width = models.IntegerField(default=120, blank=True)
 
-
-    site = models.ForeignKey(Site)
+    site = models.ForeignKey(Site, null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

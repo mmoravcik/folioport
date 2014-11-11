@@ -14,6 +14,7 @@ class UserCreationForm(forms.ModelForm):
         widget=forms.PasswordInput)
     redirect_url = forms.CharField(
         widget=forms.HiddenInput, required=False)
+    site = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = get_user_model()
