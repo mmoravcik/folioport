@@ -5,7 +5,6 @@
 {% block content %}
 
     <h1 class="page-header">{% trans 'EDIT CATEGORY' %}</h1>
-    {{ form.media }}
     <form enctype="multipart/form-data" action="" method="post">
         {% crispy form %}
         <br />
@@ -13,4 +12,9 @@
         &nbsp; <a href="{% url 'folioport:dashboard:category:list' 'project'%}">{% trans 'Cancel' %}</a>
     </form>
 
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    {{ form.media }}
 {% endblock %}

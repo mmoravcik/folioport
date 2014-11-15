@@ -7,7 +7,6 @@
     <h1 class="page-header">
         {% block header %}{% trans 'EDIT CSS' %}{% endblock %}
     </h1>
-    {{ form.media }}
 
     <div style="width:600px; margin-right: 55px; float: left">
         <form id="edit-form" enctype="multipart/form-data" action="" method="post">
@@ -52,4 +51,9 @@
         frm.submit();
     });
     var myCodeMirror = CodeMirror.fromTextArea($('#id_css').get(0));
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    {{ form.media }}
 {% endblock %}

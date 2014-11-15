@@ -6,7 +6,7 @@
     {% if not is_popup %}
     <h1 class="page-header">{% trans 'CREATE THE ITEM' %}</h1>
     {% endif %}
-    {{ form.media }}
+
     <form enctype="multipart/form-data" action="" method="post">
         {% crispy form %}
         <br />
@@ -15,4 +15,9 @@
         <a href="{% if is_popup %}javascript:window.close(){% else %}{{ next_url }}{% endif %}">Cancel</a></p>
     </form>
 
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    {{ form.media }}
 {% endblock %}

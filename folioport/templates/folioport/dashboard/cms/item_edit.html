@@ -5,7 +5,7 @@
 {% block content %}
 
     <h1 class="page-header">{% trans 'EDIT THE ITEM' %}</h1>
-    {{ form.media }}
+
     <form enctype="multipart/form-data" action="" method="post">
         {% crispy form %}
         <br />
@@ -13,4 +13,9 @@
         &nbsp; <a href="{{ next_url }}">{% trans 'Cancel' %}</a>
     </form>
 
+{% endblock %}
+
+{% block extrascripts %}
+    {{ block.super }}
+    {{ form.media }}
 {% endblock %}

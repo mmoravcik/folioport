@@ -9,7 +9,6 @@
 
 {% block content %}
 <h3>Please select images you'd like to use</h3>
-{{ form.media }}
 <form action='' method="POST">
     {% crispy form %}
     <br /><br /><br />
@@ -21,6 +20,7 @@
 
 {% block extrascripts %}
 {{ block.super }}
+{{ form.media }}
 <script src="{% static 'folioport/js/lib/image-picker.js' %}" ></script>
 
 <script type='text/javascript'>
