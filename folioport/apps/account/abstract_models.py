@@ -38,7 +38,7 @@ class SocialMedia(models.Model):
 
 
 class AbstractFolioportUser(AbstractBaseUser):
-    email = models.EmailField(blank=True, unique=True)
+    email = models.EmailField(unique=True)
     subdomain = models.CharField(max_length=100, unique=True)
 
     site_name = models.CharField(max_length=128, blank=True,

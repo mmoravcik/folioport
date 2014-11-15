@@ -1,6 +1,7 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Field
+from crispy_forms.layout import Layout, Field
 
+from django.core.validators import validate_slug
 from django.contrib.auth import get_user_model
 from django import forms
 
@@ -19,6 +20,14 @@ class UserCreationForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ('email', 'subdomain',)
+
+    def clean_subdomain(self):
+        subdomain = self.cleaned_data.get('subdomain')
+        try:
+            validate_slug(subdomain)
+        except forms.ValidationError:
+            raise forms.ValidationError("Please enter correct subdomain")
+        return subdomain
 
     def clean_password2(self):
         # Check that the two password entries match
