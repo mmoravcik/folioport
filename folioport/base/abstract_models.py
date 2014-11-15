@@ -31,7 +31,7 @@ class AbstractCategory(MPTTModel):
     class Meta:
         abstract = True
         ordering = ['order']
-        unique_together = ("name", "site")
+        unique_together = ("name", "user")
 
     class MPTTMeta:
         order_insertion_by = ['name']

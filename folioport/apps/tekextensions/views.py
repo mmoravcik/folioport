@@ -4,7 +4,6 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.utils.html import escape
 from django.forms import ValidationError
-from django.contrib.sites.models import get_current_site
 
 from forms import get_model_form, normalize_model_name
 

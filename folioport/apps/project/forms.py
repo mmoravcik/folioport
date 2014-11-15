@@ -3,6 +3,7 @@ from folioport.apps.tekextensions.widgets import MultipleSelectWithPopUp
 from crispy_forms.layout import Layout, Fieldset, Field
 from crispy_forms.bootstrap import AppendedText
 
+from django.db import IntegrityError
 from django.db.models import get_model
 from django import forms
 from django.contrib.sites.models import Site
@@ -54,17 +55,11 @@ class CategoryForm(forms.ModelForm):
         self.helper.form_tag = False
 
     def clean(self):
-        cleaned_data = self.cleaned_data
         try:
-            Category.objects.get(name=cleaned_data['name'],
-                                 site=Site.objects.get_current())
-        except Category.DoesNotExist:
-            pass
-        except KeyError:
-            pass
-        else:
+            cleaned_data = self.cleaned_data
+            return cleaned_data
+        except IntegrityError, e:
             raise ValidationError('Category with this name already exists')
-        return cleaned_data
 
     class Meta:
         model = Category
