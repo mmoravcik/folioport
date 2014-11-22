@@ -36,9 +36,9 @@
         <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
     </h2>
 
-    <div class="row-fluid blog-content">
-        {% cms_container_render object.container %}
-    </div>
+
+    {% cms_container_render object.container %}
+
 </div>
 {% endblock %}
 
