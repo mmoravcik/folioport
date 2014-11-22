@@ -133,7 +133,7 @@ ul.thumbnails.image_picker_selector li .thumbnail a{
 .container-content-item {
    font-weight: regular;
    line-height: 1.25;
-   margin: 2px 0 60px;
+   margin: 2px 0 40px;
    letter-spacing: 0px;
    text-transform: none;
 }
@@ -347,4 +347,9 @@ img.image_picker_image {
     height: 800px;
     border: solid 1px #aaa;
 
+}
+
+.image-caption {
+    margin-top: 9px;
+    font-style: italic;
 }
