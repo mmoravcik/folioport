@@ -3,7 +3,6 @@ from django.db import models
 from django.views.generic import RedirectView
 from django.views.generic.edit import UpdateView
 from django.contrib import messages
-from django.contrib.sites.models import get_current_site
 
 from folioport.apps.my_css.forms import MyCssForm
 from folioport.base.mixins import LoginRequiredMixin
@@ -25,8 +24,7 @@ class MyCssEditView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(MyCssEditView, self).get_context_data(**kwargs)
-        ctx['css_archives'] = MyCssArchive.objects.filter(
-            site=get_current_site(self.request), user=self.request.user)
+        ctx['css_archives'] = MyCssArchive.objects.filter(user=self.request.user)
         return ctx
 
 

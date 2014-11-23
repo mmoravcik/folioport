@@ -14,7 +14,7 @@ class MyCSS(AbstractMyCSS):
         if css_settings.MY_CSS_ARCHIVE_LIFE:
             MyCSSArchive = models.get_model('my_css', 'MyCSSArchive')
             MyCSSArchive.objects.create(
-                css=self.css, user=self.user, site=self.site)
+                css=self.css, user=self.user, site=self.user.site.id)
 
 
 class MyCSSArchive(AbstractMyCSSArchive):
