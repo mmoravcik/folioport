@@ -22,7 +22,7 @@ setup(name='folioport',
       include_package_data=True,
       # TODO make this less greedy nom nom
       install_requires=[
-          'django==1.6.6',
+          'django==1.6.8',
           'pillow==2.4.0',
           'South==0.7.6',
           'sorl-thumbnail==11.12.1b',
