@@ -1,9 +1,7 @@
 from django.core.urlresolvers import reverse_lazy
-from django.db import models
 from django.views.generic import RedirectView
 from django.views.generic.edit import UpdateView
 from django.contrib import messages
-from django.contrib.sites.models import get_current_site
 from django.contrib.auth import get_user_model
 
 from folioport.apps.account.forms import DashboardAccountForm
@@ -15,6 +13,10 @@ class AccountEditView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     form_class = DashboardAccountForm
     template_name = 'dashboard/account/edit.html'
+
+    def get_queryset(self):
+        qs = super(AccountEditView, self).get_queryset()
+        return qs.filter(pgk=self.request.user.pk)
 
     def get_success_url(self):
         messages.success(self.request, 'Account has been saved')
