@@ -34,25 +34,6 @@ class PageModelTests(TestCase):
         self.assertEqual(response.context[-1]['object'], page)
         self.assertEqual(response.status_code, 200)
 
-    # TODO The following validation has been moved to the form
-    # worth visiting this again later..?
-
-    # def test_can_have_only_one_landing_page(self):
-    #     user = G(get_user_model())
-    #     G(Page, type=Page.LANDING_PAGE, user=user)
-    #     G(Page, type=Page.CONTENT_PAGE, user=user)
-    #     G(Page, type=Page.CONTENT_PAGE, user=user)
-    #     with self.assertRaises(Exception):
-    #         G(Page, type=Page.LANDING_PAGE, user=user)
-
-    # def test_can_save_landing_page(self):
-    #     user = G(get_user_model())
-    #     page = G(Page, type=Page.LANDING_PAGE, user=user)
-    #     G(Page, type=Page.CONTENT_PAGE, user=user)
-    #     page.title = 'new'
-    #     page.save()
-    #     self.assertEqual('new', page.title)
-
     def test_active_pages(self):
         active_page = G(Page, active=True, site__id=settings.SITE_ID)
         nonactive_page = G(Page, active=False, site__id=settings.SITE_ID)

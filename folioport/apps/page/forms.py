@@ -33,8 +33,8 @@ class PageForm(forms.ModelForm):
 
     def clean_type(self):
         Page = get_model('page', 'Page')
-        if self.cleaned_data['type'] == Page.LANDING_PAGE:
-            qs = Page.objects.filter(user=self.user, type=Page.LANDING_PAGE)
+        if self.cleaned_data['type'] == Page.LANDING_PAGE and self.data.get('active'):
+            qs = Page.objects.filter(active=True, user=self.user, type=Page.LANDING_PAGE)
             if self.instance.id:
                 qs = qs.exclude(id=self.instance.id)
             if qs:

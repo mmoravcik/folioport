@@ -16,7 +16,7 @@ class AccountEditView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         qs = super(AccountEditView, self).get_queryset()
-        return qs.filter(pgk=self.request.user.pk)
+        return qs.filter(pk=self.request.user.pk)
 
     def get_success_url(self):
         messages.success(self.request, 'Account has been saved')
