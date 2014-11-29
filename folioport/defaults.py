@@ -36,3 +36,6 @@ THUMBNAIL_DEBUG = False
 MAIN_DOMAIN = 'heyhey.io'
 
 ALLOWED_HOSTS = ['.' + MAIN_DOMAIN]
+
+from django.core.urlresolvers import reverse_lazy
+LOGIN_REDIRECT_URL = reverse_lazy('folioport:dashboard:home')
