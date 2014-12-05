@@ -1,0 +1,13 @@
+options:
+  livereload: true
+grunt:
+  files:
+    - 'Gruntfile.js'
+    - 'grunt/*'
+  tasks:
+    - 'default'
+djangoTemplates:
+  options:
+    reload: true
+  files:
+    - 'folioport/templates/**/*.html'

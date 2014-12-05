@@ -1,0 +1,21 @@
+{
+  "name": "folioport",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "almond": "~0.2.9",
+    "jquery": "~2.1.1",
+    "requirejs": "~2.1.10",
+    "backbone": "~1.1.2",
+    "lodash": "~2.4.1",
+    "csswizardry-grids": "~2.2.0",
+    "reset-scss": "*"
+  }
+}
