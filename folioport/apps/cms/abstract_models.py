@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.template import loader, Context
+from django.template import loader
 from django.utils.html import mark_safe
 
 from folioport.base import abstract_models
