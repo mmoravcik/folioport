@@ -1,0 +1,7 @@
+{
+	"name": "folioport",
+	"dependencies": {
+		"jquery": "~1.11.2",
+		"bootstrap": "~3.3.4"
+	}
+}
