@@ -88,12 +88,16 @@
 
 {% block css %}
 <link href="{% static 'src/libs/bootstrap/dist/css/bootstrap.min.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'src/libs/growl/stylesheets/jquery.growl.css'%}" rel="stylesheet" type="text/css" />
+
 <link href="{% static 'folioport/css/lib/datepicker.css'%}" rel="stylesheet" type="text/css" />
 <link href="{% static 'folioport/css/lib/codemirror.css'%}" rel="stylesheet" type="text/css" />
 <link href="{% static 'folioport/css/folioport.css'%}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block extrascripts %}
+<script src="{% static 'src/libs/growl/javascripts/jquery.growl.js'%}" type="text/javascript"></script>
+
 <script src="{% static 'folioport/js/lib/datepicker.js'%}" type="text/javascript"></script>
 <script src="{% static 'folioport/js/lib/jquery.sortable.js'%}" type="text/javascript"></script>
 <script src="{% static 'folioport/js/lib/codemirror.js'%}" type="text/javascript"></script>

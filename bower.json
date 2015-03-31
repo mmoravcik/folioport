@@ -2,6 +2,7 @@
 	"name": "folioport",
 	"dependencies": {
 		"jquery": "~1.11.2",
-		"bootstrap": "~3.3.4"
+		"bootstrap": "~3.3.4",
+		"growl": "~1.2.5"
 	}
 }
