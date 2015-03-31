@@ -31,3 +31,4 @@ folioport/sites/sandbox/conf/local.py
 folioport/sites/sandbox/public/*
 folioport/sites/sandbox/*.sqlite
 
+folioport/static/src/libs
