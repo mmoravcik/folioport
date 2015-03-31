@@ -3,7 +3,6 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
     <h1 class="page-header">
         {% block header %}{% trans 'EDIT' %}{% endblock %}
     </h1>
@@ -59,55 +58,9 @@
         e.preventDefault();
         $(this).tab('show');
         $('#live-preview-frame').attr('src', "{{ object.get_preview_url }}");
-        /* TODO review this / delete
-        $.get('{% url 'folioport:dashboard:cms:container-preview' object.container.id %}', {}, function(data) {
-            if (data.status == 'success') {
-                $('#preview-content').html(data.result);
-            } else {
-                alert('Unable to preview the content');
-            }
-        });
-        */
     });
 
     {% if active_tab %}
-    $('#{{ active_tab }} a').tab('show');
+        $('#{{ active_tab }} a').tab('show');
     {% endif %}
-
-    $('#submit-form').click(function() {
-        var frm = $('#edit-form');
-        frm.submit();
-        return;
-        $("div").remove('.field-error');
-        $.ajax({
-            type: frm.attr('method'),
-            url: frm.attr('action'),
-            data: frm.serialize(),
-            success: function (data) {
-                $.growl('', 'Settings have been saved');
-            },
-            error: function(data) {
-                var result = data.responseJSON;
-                $.each(result, function(k, v) {
-                    $('#id_' + k).after("<div class='field-error'>" + v + "</div>");
-                });
-            }
-        });
-    });
-
-    /*
-    $('#addCmsItem').click(function(e) {
-        var str = $("#addContentTypeForm").serializeArray();
-        var url = '{% url 'folioport:dashboard:cms:item-create' object.container.id 'class_name' %}';
-        url = url.replace("class_name", 'ItemText');
-        $.get(url, {}, function(data) {
-            alert(data);
-        });
-
-        $('#folioportModal').modal();
-        $('#folioportModalTitle').text('Create an item');
-
-        return false;
-    });
-    */
 {% endblock %}
