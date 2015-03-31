@@ -5,29 +5,29 @@
 {% load my_css_tags %}
 
 <head>
-    {% block css %}
+	{% block css %}
 
-    <link rel="stylesheet" href="{% static 'src/libs/bootstrap/dist/css/bootstrap.min.css'%}">
-    <link href="{% static 'folioport/css/folioport.css'%}" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="{% static 'src/libs/bootstrap/dist/css/bootstrap.min.css'%}">
+	<link href="{% static 'folioport/css/folioport.css'%}" rel="stylesheet" type="text/css" />
 
-    <link href="{% my_css 0 %}" rel="stylesheet" type="text/css" />
-    {% endblock %}
+	<link href="{% my_css 0 %}" rel="stylesheet" type="text/css" />
+	{% endblock %}
 
-    <title>{% block title %}Folioport{% endblock %}</title>
+	<title>{% block title %}Folioport{% endblock %}</title>
 
-    {% block meta %}
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta name="created" content='{% now "jS M Y h:i" %}' />
-    <meta name="description" content="{% block description %}{% endblock %}" />
-    <meta name="keywords" content="{% block keywords %}{% endblock %}" />
+	{% block meta %}
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="created" content='{% now "jS M Y h:i" %}' />
+	<meta name="description" content="{% block description %}{% endblock %}" />
+	<meta name="keywords" content="{% block keywords %}{% endblock %}" />
 	<meta name="author" content="heyhey.io" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% endblock %}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% endblock %}
 </head>
 <body>
 
 {% block loading_div %}
-    <div id="ajax_loading">Loading ...</div>
+	<div id="ajax_loading">Loading ...</div>
 {% endblock %}
 
 {% block layout %} {% endblock %}
@@ -44,20 +44,20 @@
 {% include 'widgets/google_analytics/widget.js.html' %}
 
 {% block extrascripts %}
-    {% include 'partials/extrascripts.html' %}
+	{% include 'partials/extrascripts.html' %}
 {% endblock %}
 
 <script type="text/javascript">
-    $(function() {
-    	folioport = window.folioport || {};
-    	folioport.urls = {};
-    	folioport.urls.projectOrderSaveUrl = '{% url 'folioport:dashboard:project:order-save' %}';
-    	folioport.urls.itemOrderSaveUrl =  "{% url 'folioport:dashboard:cms:items-order-save' %}";
-    	folioport.urls.pageOrderSaveUrl = '{% url 'folioport:dashboard:page:order-save' %}';
-    	folioport.urls.categoryOrderSaveUrl = "{% url 'folioport:dashboard:category:order-save' 'replace' %}";
+	$(function() {
+		folioport = window.folioport || {};
+		folioport.urls = {};
+		folioport.urls.projectOrderSaveUrl = '{% url 'folioport:dashboard:project:order-save' %}';
+		folioport.urls.itemOrderSaveUrl =  "{% url 'folioport:dashboard:cms:items-order-save' %}";
+		folioport.urls.pageOrderSaveUrl = '{% url 'folioport:dashboard:page:order-save' %}';
+		folioport.urls.categoryOrderSaveUrl = "{% url 'folioport:dashboard:category:order-save' 'replace' %}";
 
-        {% block onbodyload %}{% endblock %}
-    });
+		{% block onbodyload %}{% endblock %}
+	});
 </script>
 
 </body>
