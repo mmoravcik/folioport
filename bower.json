@@ -5,6 +5,7 @@
 		"bootstrap": "~3.3.4",
 		"growl": "~1.2.5",
 		"codemirror": "~5.1.0",
-		"jquery-sortable": "~0.9.12"
+		"jquery-sortable": "~0.9.12",
+		"eonasdan-bootstrap-datetimepicker": "~4.7.14"
 	}
 }

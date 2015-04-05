@@ -10,12 +10,11 @@ folioport = window.folioport || {};
 	};
 
 	folioport.setupDatePicker = function() {
-	    $(".cms_date_field").each(function() {
+		$(".cms_date_field").each(function() {
 			$(this).datetimepicker({
-				timepicker: false,
-				format: 'd/m/Y'
+				format: 'YYYY-MM-DD'
 			});
-    	});
+		});
 	};
 
 	folioport.setupImageHovers = function() {
